@@ -1,0 +1,568 @@
+/* ============> NAVBAR CSS START <=============== */
+.maindiv {
+  position: relative;
+}
+
+#overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 15vh;
+  z-index: 2;
+}
+
+.navbar {
+  background-color: rgba(0, 0, 0, 0.5);
+  color: white;
+}
+
+.video {
+  position: relative;
+  z-index: -100;
+}
+
+#hr {
+  top: 21%;
+  z-index: -1;
+  background-color: white;
+  border: none;
+  height: 0.5px;
+  width: 97%;
+  align-self: center;
+}
+
+#offcanvasExample {
+  background-color: rgba(0, 0, 0, 0.8);
+  transition: 0.8s linear;
+}
+
+.withtransition {
+  translate: none;
+  rotate: none;
+  scale: none;
+  opacity: 1;
+  transition: 0.2s ease;
+  transform: translate(0%, 0px);
+}
+
+.withouttransition {
+  translate: none;
+  rotate: none;
+  scale: none;
+  opacity: 0;
+  transform: translate(-100%, 0px);
+}
+
+.navbarpara1 {
+  font-size: 2.5vw;
+  font-weight: 600;
+}
+
+.navbarpara2 {
+  font-size: 3vw;
+  font-weight: 600;
+}
+
+@media screen and (max-width : 721px) {
+  #logo {
+    height: 50px;
+  }
+}
+
+@media screen and (max-width : 550px) {
+  #logo {
+    height: 40px;
+  }
+}
+
+@media screen and (max-width : 429px) {
+  #logo {
+    height: 30px;
+  }
+}
+
+.webcolor {
+  color: #FF0057;
+}
+
+.ourbtn {
+  background-color: #FF0057;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 5px;
+  height: 5vh;
+}
+
+.ourbtn1 {
+  color: black;
+  border: none;
+  border-radius: 5px;
+  font-weight: 600;
+  padding: 5px;
+  height: 5vh;
+}
+
+#otpfield {
+  display: none;
+}
+
+#registrationForm {
+  display: none;
+}
+
+#loginbutton ,
+#registrationbutton {
+  height: 3rem;
+  width: 50%;
+  font-size: 20px;
+  font-weight: 600;
+}
+
+
+/* ============> NAVBAR CSS START <=============== */
+
+
+
+/* ============> SERVICES SECTION CSS START <=============== */
+
+.image-container {
+  position: relative;
+}
+
+.hover-box {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background-color: #FF0057;
+  opacity: 0;
+  height: 0px;
+  text-align: center;
+  transition: 0.5s ease;
+}
+
+.image-container:hover .hover-box {
+  opacity: 80%;
+  height: 80px;
+}
+
+.servicesimage {
+  height: 500px;
+}
+
+@media screen and (max-width : 768px) {
+  .servicesimage {
+    height: 300px;
+  }
+
+  .image-container:hover .hover-box {
+    opacity: 80%;
+    height: 60px;
+  }
+}
+
+@media screen and (max-width : 505px) {
+  .servicesimage {
+    height: 250px;
+  }
+
+  .image-container:hover .hover-box {
+    opacity: 80%;
+    height: 50px;
+  }
+}
+
+@media screen and (max-width : 430px) {
+  .servicesimage {
+    height: 250px;
+  }
+
+  .image-container:hover .hover-box {
+    opacity: 80%;
+    height: 40px;
+  }
+}
+
+/* ============> SERVICES SECTION CSS START <=============== */
+
+
+.bg-dark1 {
+  background: linear-gradient(180deg, rgba(88, 112, 135, 0.37) 0%, rgba(217, 217, 217, 0) 100%);
+}
+
+.cards:hover {
+  background-color: #FF0057;
+}
+
+
+
+/* ===========>TESTIMONIAL CSS START<=========== */
+
+/* ===========>TESTIMONIAL CSS END<=========== */
+
+
+/* ===========>UPCOMING EVENTS CSS START<=========== */
+.carinnerdiv {
+  position: absolute;
+  width: 60px;
+  height: 65px;
+  top: 6%;
+  left: 6%;
+  font-size: 1.3rem;
+  font-weight: 600;
+  border-radius: 4px;
+  background: #FF0057;
+}
+
+/* ===========>UPCOMING EVENTS CSS END<=========== */
+
+/* ===========>THOUGHT SECTION CSS START<=========== */
+.thoughtmaindiv {
+  height: 59vh;
+  /* padding: 6% 0 3% 0; */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.thoughtdiv {
+  position: relative;
+  /* height: 15vh; */
+  /* padding: 3%; */
+  border-left: 5px solid #FF0057;
+  border-right: 5px solid #FF0057;
+}
+.thoughtdiv span {
+  font-size: 1.2rem;
+  font-weight: 600;
+}
+
+.thoughtdiv::before {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 5px;
+  background-color:#FF0057 ;
+  top: 0;
+  left: 0;
+}
+
+.thoughtdiv::after {
+  content: '';
+  position: absolute;
+  width: 30%;
+  height: 5px;
+  background-color: #FF0057;
+  bottom: 0;
+  right: 0;
+}
+
+.thoughtheading {
+  background-color: #FF0057;
+  width: 40%;
+  border-radius: 5px;
+  font-weight: 600;
+}
+.thoughtheading span {
+  font-size: 1.2rem;
+}
+
+@media screen and (max-width : 537px) {
+  .thoughtheading {
+    width: 80%;
+  }
+  .thoughtheading span {
+    font-size: 11.9px;
+  }
+}
+/* ===========>THOUGHT SECTION CSS END<=========== */
+
+
+
+.modal-dialog {
+  max-width: 70%; /* Adjust the maximum width as needed */
+  margin: 1.75rem auto;
+}
+
+.modal-content {
+  border-width: 10px;
+  /* border-color: #722F37; */
+}
+
+.myform {
+  text-align: center;
+  padding: .5em;
+  max-width: 100%;
+}
+
+.login img {
+  max-width: 100%;
+  max-height: 80vh; /* Adjust the maximum height as needed */
+  object-fit: contain;
+}
+
+.modal-body {
+  padding: 0;
+}
+
+.btn-close {
+  position: absolute;
+  right: 0;
+  padding: 1em;
+}
+
+h1 {
+  font-size: 2.3em;
+  font-weight: bold;
+}
+
+.btn {
+  color: #fff;
+}
+
+.myform .icon {
+  position: absolute;
+  right: 50px;
+  font-size: 1.2em;
+  line-height: 40px;
+  /* color: #FF0057; */
+}
+
+.login-word {
+  color: #FF0057;
+}
+
+.form-word {
+  color: #fff;
+}
+
+.form-control {
+  /* background-color: inherit; */
+  color: #FF0057;
+  padding-left: 0;
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #FF0057;
+}
+
+.myform .btn {
+  width: 100%;
+  font-weight: 400;
+  background-color: #FF0057;
+  border-radius: 5;
+  padding: 0.5em 0;
+  border-color: #FF0057;
+}
+
+.myform .btn:hover {
+  background-color: inherit;
+  color: #FF0057;
+  border-color: #FF0057;
+}
+/* 
+p {
+  text-align: center;
+  padding-top: 1em;
+  color: white;
+} */
+
+p a {
+  color: #FF0057;
+  text-decoration: none;
+}
+
+p a:hover {
+  color: #FF0057;
+}
+
+/* ============ABOUT PAGE CSS START */
+/* -----------------------about page----------------------------------- */
+section {
+  padding: 60px 0;
+}
+
+.section-bg {
+  background-color: #f7fbfe;
+}
+
+.section-title {
+  text-align: center;
+  padding-bottom: 30px;
+}
+
+.section-title h2 {
+  font-size: 32px;
+  font-weight: 600;
+  margin-bottom: 20px;
+  padding-bottom: 20px;
+  position: relative;
+  color: #eaf4fb;
+}
+
+.section-title h2::before {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 120px;
+  height: 1px;
+  background: #ddd;
+  bottom: 1px;
+  left: calc(50% - 60px);
+}
+
+.section-title h2::after {
+  content: "";
+  position: absolute;
+  display: block;
+  width: 40px;
+  height: 3px;
+  background:#FF0057;
+  bottom: 0;
+  left: calc(50% - 20px);
+}
+
+.section-title p {
+  margin-bottom: 0;
+  color: #ddd;
+}
+
+/*--------------------------------------------------------------
+# What We Do
+--------------------------------------------------------------*/
+.what-we-do .icon-box {
+  text-align: center;
+  padding: 30px 20px;
+  transition: all ease-in-out 0.3s;
+  background: black;
+}
+
+.what-we-do .icon-box .icon {
+  margin: 0 auto;
+  width: 300px;
+  height: 200px;
+  background: red;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 20px;
+  transition: ease-in-out 0.3s;
+}
+
+.what-we-do .icon-box .icon img {
+  width: 300px;
+  height: 200px;
+  border-radius: 30px;
+}
+
+.what-we-do .icon-box h4 {
+  font-weight: 700;
+  margin-bottom: 15px;
+  font-size: 24px;
+}
+
+.what-we-do .icon-box h4 a {
+  color: #FF0057;
+  transition: ease-in-out 0.3s;
+}
+.what-we-do .icon-box p {
+  line-height: 24px;
+  font-size: 14px;
+  margin-bottom: 0;
+  color: #ddd;
+}
+
+.what-we-do .icon-box:hover {
+  border-color: #fff;
+  box-shadow: 0px 0 25px 0 rgba(0, 0, 0, 0.1);
+}
+
+.what-we-do .icon-box:hover h4 a,
+.what-we-do .icon-box:hover .icon i {
+  color: #ddd;
+}
+.card{
+  margin: 10px 0 10px 100px;
+  padding: 10px;
+  border: none;
+  background: linear-gradient(180deg, rgba(28, 36, 49, 0.37) 0%, rgba(217, 217, 217, 0) 100%);
+}
+.card-text{
+  padding-left: 20px;
+  color: #ddd;
+  font-size: 14px;
+}
+ .card-title{
+  padding-left: 20px;
+  color: #FF0057;
+}
+.card-word{
+  padding-left: 20px;
+  color: #FF0057;
+}
+.images img{
+   height: 35vh;
+   width: 100%;
+}
+.card-body .ui-decor-2 {
+  position: absolute;
+  top: 15px;
+  left: 230px;
+  width: 45px;
+
+  background-color: #FF0057;
+}
+.ui-decor-2 {
+  display: inline-block;
+  width: 40px;
+  height: 3px;
+}
+/* ----------------------------------------- */
+.faq .accordion-collapse {
+  border: 0;
+}
+
+.faq .accordion-button {
+  padding: 15px 15px 20px 0;
+  font-weight: 600;
+  border: 0;
+  font-size: 18px;
+  color: #ddd;
+  text-align: left;
+  background-color: black;
+}
+
+.faq .accordion-button:focus {
+  box-shadow: none;
+}
+
+.faq .accordion-button:not(.collapsed) {
+  /* background: none; */
+  color: #FF0057;
+  border-bottom: 0;
+}
+
+.faq .accordion-body {
+  padding: 0 0 25px 0;
+  border: 0;
+}
+.accordion-collapse{
+  background-color: black;
+  color:#eaf4fb ;
+}
+.accordion-button::after {
+  flex-shrink: 0;
+  width: 1.25rem;
+  height: 1.25rem;
+  margin-left: auto;
+  content: "";
+  border-radius: 50%;
+  /* background-image: url(data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16' fill='%23212529'%3e%3cpath fill-rule='evenodd' d='M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z'/%3e%3c/svg%3e); */
+  background-repeat: no-repeat;
+  background-size: 1.25rem;
+  transition: transform .2s ease-in-out;
+  background-color: #FF0057;
+}
+/* ============ABOUT PAGE CSS END */
