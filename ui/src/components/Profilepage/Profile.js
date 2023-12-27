@@ -3,9 +3,14 @@ import '../../App.css';
 import userProfile from "../../images/anjali.jpg";
 import './profile.css';
 import jscookie from 'js-cookie';
+import { useState } from 'react';
 // import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+
 var userData = {};
 function Profile() {
+    const [selectedValue, setSelectedValue] = useState('');
+    const history = useNavigate();
     // const profileData = useSelector((state) => state.userSlice.profileData);
     // console.log("profileData : ",profileData)
     // const userDataCookie = jscookie.get("userdata");
@@ -20,6 +25,29 @@ function Profile() {
     //         // return null;
     //     }
     // }
+    const handleChange = (event) => {
+        const selectedOption = event.target.value;
+        setSelectedValue(selectedOption);
+
+        switch (selectedOption) {
+            case 'dj':
+                history('/djregister');
+                break;
+            case 'caterer':
+                history('/catererregister');
+                break;
+            case 'venue':
+                history('/venueregister');
+                break;
+            case 'decoration':
+                history('/decorationregister');
+                break;
+            default:
+                history('/profile');
+                break;
+        }
+    };
+
     return (<>
         <div className='container p-2 w-75 text-white mb-3 profilemaincontainer'>
             <div className='bg-dark p-2'>
@@ -36,10 +64,12 @@ function Profile() {
                         </div>
                         <div className='profilebuttons d-flex flex-column justify-content-center'>
                             <button className="btn btn-danger w-75 mt-1 " >Buy Passes</button>
-                            <select className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }}><option>Become A Staff</option>
-                                <option>Dj user</option>
-                                <option>Venu user</option>
-                                <option>Decoration user</option>
+                            <select className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }} value={selectedValue} onChange={handleChange}>
+                                <option>Become A Staff</option>
+                                <option className='text-start' value='dj'>Dj user</option>
+                                <option className='text-start' value='caterer'>Caterer Manager</option>
+                                <option className='text-start' value='venue'>Venue Manager</option>
+                                <option className='text-start' value='decoration'>Decoration Manager</option>
                             </select>
                             <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }}>View Quotation</button>
                             <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }}>View Bill</button>

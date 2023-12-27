@@ -36,9 +36,8 @@ function Navbar() {
     const dispatch = useDispatch();
     const navbar = useSelector(state=>state.user);
     useEffect(() => {
-        dispatch((setNavbar('home')));
-        // const token = jscookie.get('user');
-        // setToken(token);
+        const token = jscookie.get('user');
+        setToken(token);
     });
 
     window.addEventListener('scroll', function () {
@@ -104,22 +103,6 @@ function Navbar() {
         setOtp(event.target.value);
     };
 
-    // const handleGenerateOTP = async (event) => {
-    //     event.preventDefault();
-    //     try {
-    //         console.log("userData : ", userData);
-    //         const otpResult = await axios.post(requestedURL + "/generateOtp", userData, { withCredentials: true });
-    //         console.log(otpResult);
-    //         if (otpResult.status === 200) {
-    //             alert("email send successfully");
-    //             console.log("OTP result: ", otpResult);
-    //             navigate("/OtpPage");
-    //         }
-    //     } catch (error) {
-    //         console.error("Error generating OTP : ", error);
-    //     }
-    // }
-
     const getOtp = async (event) => {
         event.preventDefault();
         console.log("user data in getotp ", userData);
@@ -140,6 +123,7 @@ function Navbar() {
                     console.log("result in handle : ", result.status);
                     if (result.status == 201) {
                         alert("Registration Successfull");
+                        setRegistrationmodal(false);
                         event.target.reset();
                     }
                 });
@@ -168,7 +152,6 @@ function Navbar() {
             console.log("result of user status : ", userResultData.status);
             message = userResultData.data.message
             console.log("userResultData.data.message : ", userResultData.data.message);
-
             console.log("massage in login  : ", message);
             alert("login Successfully")
             setLoginmodal(false);
@@ -179,12 +162,10 @@ function Navbar() {
     const handleLoginButtonClick = () => {
         console.log("in login handle ::  ")
         setLoginmodal(true);
-        // document.body.style.overflow = 'hidden';
     };
 
     const handleLoginModalClose = () => {
         setLoginmodal(false);
-        // document.body.style.overflow = 'auto';
     };
 
     const handleRegistrationModalClose = ()=>{
