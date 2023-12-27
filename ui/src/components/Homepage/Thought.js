@@ -1,4 +1,5 @@
-import img from '../images/6.jpg';
+import img from '../../images/6.jpg';
+import './thought.css';
 function Thought() {
     return (<>
         <div className='text-white text-center thoughtmaindiv' style={{background : `url(${img})`,backgroundPosition :"center", backgroundAttachment :'fixed'}}>

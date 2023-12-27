@@ -1,6 +1,7 @@
-import dj from '../images/DjManager.jpeg'
-import caterer from '../images/Caterer.jpg'
-import decoration from '../images/decoration.jpg'
+import dj from '../../images/DjManager.jpeg'
+import caterer from '../../images/Caterer.jpg'
+import decoration from '../../images/decoration.jpg'
+import './servicesection.css';
 function Services() {
     return (<>
         <div className="bg-black p-2">

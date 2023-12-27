@@ -1,10 +1,10 @@
 import React from 'react';
-import concrt from '../images/concrt.jpg';
-import carting from '../images/catring.jpeg';
-import decoreation from '../images/decoration copy.jpg';
-import dj from '../images/bj.jpg'
-import venue from '../images/venue.webp';
-import img from '../images/occassionHub-logo.webp';
+import concrt from '../../images/concrt.jpg';
+import carting from '../../images/catring.jpeg';
+import decoreation from '../../images/decoration copy.jpg';
+import dj from '../../images/bj.jpg'
+import venue from '../../images/venue.webp';
+import img from '../../images/occassionHub-logo.webp';
 import './servicepage.css'
 function Servicepage() {
     return (

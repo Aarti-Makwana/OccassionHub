@@ -1,4 +1,4 @@
-// import img from "../images/Caterer.jpg"
+// import img from "../../images/Caterer.jpg"
 // import { Link } from "react-router-dom";
 // function Upcomingevent() {
 //     return (<>
@@ -85,8 +85,8 @@
 
 // export default Upcomingevent;
 
-import img from "../images/Caterer.jpg"
-import img1 from '../images/concert.jpg';
+import img from "../../images/Caterer.jpg"
+import './upcomingevent.css'
 import { Link } from "react-router-dom";
 function Upcomingevent() {
     return (<>

@@ -1,7 +1,7 @@
-import anjali from '../images/anjali.jpg'
-import aarti from '../images/aarti.jpg'
-import ritik from '../images/ritik.jpg'
-import jayanti from '../images/jayanti.jpg'
+import anjali from '../../images/anjali.jpg'
+import aarti from '../../images/aarti.jpg'
+import ritik from '../../images/ritik.jpg'
+import jayanti from '../../images/jayanti.jpg'
 function Team(){
      return(<>
          <section id="team" class="team" style={{backgroundColor: "black"}}>
@@ -19,7 +19,7 @@ function Team(){
           <div class="col-md-6">
             <div class="card-body">
               <div class="ui-decor-2 "></div>
-              <h5 class="card-title">Ava Taylor</h5>
+              <h5 class="card-title cardtitle">Ava Taylor</h5>
               <h6 class="card-word">Supervisor</h6>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
            
@@ -35,7 +35,7 @@ function Team(){
           <div class="col-md-6">
             <div class="card-body">
               <div class="ui-decor-2 "></div>
-              <h5 class="card-title">Kethy Hilton</h5>
+              <h5 class="card-title cardtitle">Kethy Hilton</h5>
               <h6 class="card-word">Events Manager</h6>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
            
@@ -53,7 +53,7 @@ function Team(){
           <div class="col-md-6">
             <div class="card-body">
               <div class="ui-decor-2 "></div>
-              <h5 class="card-title">Charles Hasman</h5>
+              <h5 class="card-title cardtitle">Charles Hasman</h5>
               <h6 class="card-word">Founder & Director</h6>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
            
@@ -69,7 +69,7 @@ function Team(){
           <div class="col-md-6">
             <div class="card-body">
               <div class="ui-decor-2 "></div>
-              <h5 class="card-title">Anna Sydney</h5>
+              <h5 class="card-title cardtitle">Anna Sydney</h5>
               <h6 class="card-word">Events Manager</h6>
               <p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
            

@@ -1,14 +1,46 @@
 import { Link } from 'react-router-dom';
 import video from '../images/main_video.mp4'
 import logo from '../images/occassionHub-logo.webp'
-import bday from '../images/bday.avif';
-import { useState } from 'react';
+import bday from '../images/Caterer.jpg';
+import { useEffect, useState } from 'react';
 import { adduser, RegisterUserData, userLogin } from '../store/userSlice';
+import jscookie from 'js-cookie';
+import Button from 'react-bootstrap/Button';
+import Modal from 'react-bootstrap/Modal';
 import '../App.css';
+import { setNavbar } from '../store/userSlice';
+import {useDispatch,useSelector} from 'react-redux';
 
-import { useNavigate } from 'react-router-dom';
+import { useNavigate} from 'react-router-dom';
 var result = "";
+const modalCss = {
+    content: {
+        // right: 'auto',
+        // bottom: 'auto',
+        // marginRight: '-50%',
+        // transform: 'translate(-50%, -50%)',
+        backgroundColor: '',
+        border: 'none',
+        borderRadius: '8px',
+        width: '100%',
+        height: '700px'
+        // zIndex :'5'
+
+    }
+}
 function Navbar() {
+
+    const [isLoginmodal, setLoginmodal] = useState(false);
+    const [isRegistrationmodal, setRegistrationmodal] = useState(false);
+    const [token, setToken] = useState('');
+    const dispatch = useDispatch();
+    const navbar = useSelector(state=>state.user);
+    useEffect(() => {
+        dispatch((setNavbar('home')));
+        // const token = jscookie.get('user');
+        // setToken(token);
+    });
+
     window.addEventListener('scroll', function () {
         if (window.scrollY) {
             // document.getElementById("overlay").style.position = 'fixed'
@@ -28,7 +60,6 @@ function Navbar() {
             document.getElementById("navbar").style.backgroundColor = "";
             document.getElementById('content').style.marginTop = '20%'
         }
-
     });
 
     function shownav() {
@@ -88,6 +119,7 @@ function Navbar() {
     //         console.error("Error generating OTP : ", error);
     //     }
     // }
+
     const getOtp = async (event) => {
         event.preventDefault();
         console.log("user data in getotp ", userData);
@@ -104,6 +136,13 @@ function Navbar() {
             if (result.data.Rotp == otp1) {
                 console.log("otp match");
                 var result = RegisterUserData(userData);
+                result.then((result) => {
+                    console.log("result in handle : ", result.status);
+                    if (result.status == 201) {
+                        alert("Registration Successfull");
+                        event.target.reset();
+                    }
+                });
             } else {
                 console.log("not match");
 
@@ -130,214 +169,186 @@ function Navbar() {
             message = userResultData.data.message
             console.log("userResultData.data.message : ", userResultData.data.message);
 
-            console.log("massage in login ", message);
+            console.log("massage in login  : ", message);
+            alert("login Successfully")
+            setLoginmodal(false);
+            event.target.reset();
         });
     }
 
-    const handleForms = (buttonValue)=>{
+    const handleLoginButtonClick = () => {
+        console.log("in login handle ::  ")
+        setLoginmodal(true);
+        // document.body.style.overflow = 'hidden';
+    };
 
-        var loginForm = document.getElementById('loginForm');
-        if(buttonValue == 'registration'){
-            var registrationForm = document.getElementById('registrationForm');
-            registrationForm.style.display = "block";
-            loginForm.style.display = "none";
+    const handleLoginModalClose = () => {
+        setLoginmodal(false);
+        // document.body.style.overflow = 'auto';
+    };
 
-            var registrationbutton = document.getElementById('registrationbutton');
-            registrationbutton.style.color = 'white'
-            registrationbutton.style.backgroundColor = '#FF0057'
-
-            var loginbutton = document.getElementById('loginbutton');
-            loginbutton.style.color = ''
-            loginbutton.style.backgroundColor = ''
-        }
-        else{
-            var loginForm = document.getElementById('loginForm');
-            var registrationForm = document.getElementById('registrationForm');
-            loginForm.style.display = "block";
-
-            registrationForm.style.display = "none";
-            var loginbutton = document.getElementById('loginbutton');
-            loginbutton.style.color = 'white'
-            loginbutton.style.backgroundColor = '#FF0057'
-
-            var registrationbutton = document.getElementById('registrationbutton');
-            registrationbutton.style.color = ''
-            registrationbutton.style.backgroundColor = ''
-        }
+    const handleRegistrationModalClose = ()=>{
+        setRegistrationmodal(false);
     }
 
-
-    return (<>
-        <div className="maindiv">
-            <video autoPlay loop muted plays-inline="true" className="video" width="100%">
-                <source src={video} />
-            </video>
-            <div id="overlay">
-                <nav className="navbar navbar-expand-lg w-100" id="navbar">
-                    <div className="container-fluid row">
-                        <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-start">
-                            <i className="fa fa-bars ms-4" id="humburger" data-bs-toggle="offcanvas"
-                                data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"
-                                style={{ fontSize: "1.5rem", color: "white" }} onClick={() => { shownav() }}></i>
+    return (
+        <>
+            <div className="maindiv">
+                <video autoPlay loop muted plays-inline="true" className="video" width="100%">
+                    <source src={video} />
+                </video>
+                <div id="overlay">
+                    <nav className="navbar navbar-expand-lg w-100" id="navbar">
+                        <div className="container-fluid row">
+                            <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-start">
+                                <i className="fa fa-bars ms-4" id="humburger" data-bs-toggle="offcanvas"
+                                    data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"
+                                    style={{ fontSize: "1.5rem", color: "white" }} onClick={() => { shownav() }}></i>
+                            </div>
+                            <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-center">
+                                <img src={logo} id="logo" height="80vw" alt="" />
+                            </div>
+                            <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-end">
+                                {
+                                    (token) ? (<>
+                                        <span role='button'>
+                                            <Link to='/profile' className='text-decoration-none text-white'>
+                                                <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5">Profile</span>
+                                            </Link>
+                                        </span>
+                                    </>) : (<>
+                                        <span role='button' onClick={handleLoginButtonClick} >
+                                            <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
+                                        </span>
+                                    </>)
+                                }
+                            </div>
                         </div>
-                        <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-center">
-                            <img src={logo} id="logo" height="80vw" alt="" />
-                        </div>
-                        <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-end">
-                            <span role='button' data-bs-toggle="modal" data-bs-target="#staticBackdrop" >
-                                <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5">Login</span>
-                            </span>
-                        </div>
+                    </nav>
+                    <div className="col-lg-12 ms-3" id="hr"></div>
+                    <div className='text-center text-white p-4' id='content' style={{ marginTop: "11%" }}>
+                        <p className='navbarpara1'>Unleash the Extraordinary</p>
+                        <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
                     </div>
-                </nav>
-                <div className="col-lg-12 ms-3" id="hr"></div>
-                <div className='text-center text-white p-4' id='content' style={{ marginTop: "11%" }}>
-                    <p className='navbarpara1'>Unleash the Extraordinary</p>
-                    <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
                 </div>
             </div>
-        </div>
-        <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
-            <div className="offcanvas-header">
-                <button type="button" className="btn text-white bg-dark font-weight-bold mt-2 ms-3 align-items-center" style={{ height: 'auto', width: '40px' }} data-bs-dismiss="offcanvas"
-                    aria-label="Close" onClick={() => { closebutton() }}>
-                    <h5>X</h5>
-                </button>
-            </div>
-            <div className="offcanvas-body">
-                <div className="text-end p-5">
-                    <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>Home</span></Link></div>
-                    <div className="mt-3 fs-4 withouttransition"><Link to='/aboutpage' className='text-white fw-bold text-decoration-none'><span>About</span></Link></div>
-                    <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>Gallery</span></Link></div>
-                    <div className="mt-3 fs-4 withouttransition"><Link to='/servicepage' className='text-white fw-bold text-decoration-none'><span>Services</span></Link></div>
-                    <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>About Us</span></Link></div>
-                    <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Dj Manager</span></div>
-                    <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Oranise a Event</span></div>
-                    <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Catering Manager</span></div>
-                    <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Decoration Manager</span></div>
+            <div className="offcanvas offcanvas-start" tabIndex="-1" id="offcanvasExample" aria-labelledby="offcanvasExampleLabel">
+                <div className="offcanvas-header">
+                    <button type="button" className="btn text-white bg-dark font-weight-bold mt-2 ms-3 align-items-center" style={{ height: 'auto', width: '40px' }} data-bs-dismiss="offcanvas"
+                        aria-label="Close" onClick={() => { closebutton() }}>
+                        <h5>X</h5>
+                    </button>
+                </div>
+                <div className="offcanvas-body">
+                    <div className="text-end p-5">
+                        <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>Home</span></Link></div>
+                        <div className="mt-3 fs-4 withouttransition"><Link to='/aboutpage' className='text-white fw-bold text-decoration-none'><span>About</span></Link></div>
+                        <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>Gallery</span></Link></div>
+                        <div className="mt-3 fs-4 withouttransition"><Link to='/servicepage' className='text-white fw-bold text-decoration-none'><span>Services</span></Link></div>
+                        <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>About Us</span></Link></div>
+                        <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Dj Manager</span></div>
+                        <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Oranise a Event</span></div>
+                        <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Catering Manager</span></div>
+                        <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Decoration Manager</span></div>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div className="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-            <div className="modal-dialog modal-dialog-centered modal-xl">
-                <div className="modal-content">
-                    <div className="modal-header bg-dark">
-                        <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body">
-                        <div className="login py-5 bg-dark">
-                            <div className="container">
-                                <div className="row g-0">
-                                    <div className="col-lg-6" style={{ height: '14rem' }}>
-                                        <img src={bday} style={{ marginTop: '-2rem', height: '30rem' }} className="img-fluid" alt="" />
-                                    </div>
-                                    <div className="myform bg-dark col-lg-6">
-                                        <div className='buttonsdiv'>
-                                            <button id='loginbutton' value='login' onClick={()=>{handleForms('login')}}>Login</button>
-                                            <button id='registrationbutton' value='registration' onClick={()=>{handleForms('registration')}}>Registation</button>
-                                        </div>
-                                        <hr className='text-white' style={{height :'2px'}}/>
-                                        <div className='mt-4' id='registrationForm'>
-                                            <h5 className="modal-title" id="staticBackdropLabel" style={{ color: "white", fontSize: '2rem' }}>REGISTRATION FROM</h5>
-                                            <form onSubmit={handleSubmit}>
-                                                <div className="mb-3 mt-4">
-                                                    <span className="icon"><ion-icon name="person-outline"></ion-icon></span>
-                                                    <input type="name" className="form-control" id="exampleInputName" aria-describedby="nameHelp"
-                                                        placeholder="Name" name="name" onChange={getData} />
-                                                </div>
-                                                <div className="mb-3 mt-4">
-                                                    <span className="icon"><ion-icon name="mail-outline"></ion-icon></span>
-                                                    <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                        placeholder="Enter Email" onChange={getData} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <span className="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
 
-                                                    <input type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={getData} />
-                                                </div>
-                                                <div className="mb-3 mt-4">
-                                                    <span className="icon"><ion-icon name="call-outline"></ion-icon></span>
-                                                    <input type="number" name="contect" className="form-control" id="exampleInputContact" aria-describedby="contactHelp"
-                                                        placeholder="Contact Us" onChange={getData} />
-                                                </div>
-                                                <div className="mb-3 mt-4">
-                                                    <span className="icon"><ion-icon name="location-outline"></ion-icon></span>
-                                                    <input type="text" name="address" className="form-control" id="exampleInputAddress" aria-describedby="addressHelp"
-                                                        placeholder="Address" onChange={getData} />
-                                                </div>
-                                                <button className="btn btn-light mt-3" name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
-                                                <div className="mb-3 mt-4" id='otpfield'>
-                                                    <span className="icon"><ion-icon name="location-outline"></ion-icon></span>
-                                                    <input type="address" name="address" onChange={handleOtpChange} className="form-control" id="exampleInputAddress" aria-describedby="addressHelp"
-                                                        placeholder="Enter Otp" />
-                                                </div>
-                                                <button type="submit" className="btn btn-light mt-3">Sign up</button>
-                                                <p>Have an account? <a>SignIn</a></p>
-                                            </form>
-                                        </div>
-                                        <div id='loginForm'>
-                                            <h5 className="modal-title" id="staticBackdropLabel" style={{ color: "white" , fontSize: '2rem' }}>LOGIN FROM</h5>
-                                            <form onSubmit={loginHandleSubmit}>
-                                                {(message) ? message : ""}
-                                                <div className="mb-3 mt-4">
-                                                    <span className="icon"><ion-icon name="mail-outline"></ion-icon></span>
-                                                    <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                        placeholder="Enter Email" onChange={loginGetData} />
-                                                </div>
-                                                <div className="mb-3">
-                                                    <span className="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                                                    <input type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={loginGetData} />
-                                                </div>
-                                                <button type="submit" className="btn btn-light mt-3">Sign up</button>
-                                                <p>Have an account? <a>SignIn</a></p>
-                                            </form>
-                                        </div>
+            <Modal size="sm" show={isLoginmodal} onHide={handleLoginModalClose} centered  >
+                <Modal.Header closeButton className='bg-black text-white '>
+                    <Modal.Title id="contained-modal-title-vcenter ">
+                        User login
+                    </Modal.Title>
+                </Modal.Header >
+                <Modal.Body className='p-0'>
+                    <div className="login bg-black">
+                        <div className="container">
+                            <div className="row g-0 p-3">
+                                <div className="col-lg-6">
+                                    <img src={bday}  className="img-fluid" alt="" />
+                                </div>
+                                <div className="myform col-lg-6" >
+                                    <div id='loginForm'>
+                                        <h5 className="modal-title" id="staticBackdropLabel" style={{ color: "white", fontSize: '2rem' }}>LOGIN FROM</h5>
+                                        <form onSubmit={loginHandleSubmit}>
+                                            <div className="mb-3 mt-4 d-flex flex-column">
+                                                <i className="fa fa-envelope icon" aria-hidden="true"></i>
+                                                <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                    placeholder="Enter Email" onChange={loginGetData} />
+                                            </div>
+                                            <div className="mb-3">
+                                                <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="Password" onChange={loginGetData} />
+                                                <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
+                                            </div>
+                                            <button type="submit" className="btn btn-light mt-3 fs-6">Sign In</button>
+                                            <p className='fs-5 mt-2'>Don't have an account? <a className='webcolor' onClick={() => { setLoginmodal(false); setRegistrationmodal(true) }}>SignUp</a></p>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-                {/* <div className="modal-header bg-dark">
-                    <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div className="modal-body">
-                    <div className="login py-5 bg-dark">
-                    <div className="container">
-                    <div className="row g-0">
-                    <div className="col-lg-6" style={{ height: '14rem' }}>
-                    <img src={bday} style={{ marginTop: '-2rem', height: '30rem' }} className="img-fluid" alt="" />
-                    </div>
-                    <div className="myform bg-dark col-lg-6">
-                    <h5 className="modal-title" id="staticBackdropLabel" style={{ color: "white", marginLeft: '23rem', fontSize: '2rem' }}>LOGIN FROM</h5>
-                                    <form onSubmit={loginHandleSubmit}>
-                                        {(message) ? message : ""}
-                                        <div className="mb-3 mt-4">
-                                            <span className="icon"><ion-icon name="mail-outline"></ion-icon></span>
-                                            <input type="email" name="email" className="form-control" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                placeholder="Enter Email" onChange={loginGetData} />
-                                        </div>
-                                        <div className="mb-3">
-                                            <span className="icon"><ion-icon name="lock-closed-outline"></ion-icon></span>
-                                            <input type="password" name="password" className="form-control" id="exampleInputPassword1" placeholder="Password" onChange={loginGetData} />
-                                        </div>
-                                        <button type="submit" className="btn btn-light mt-3">Sign up</button>
-                                        <p>Have an account? <a>SignIn</a></p>
-                                    </form>
+                </Modal.Body>
+            </Modal>
+
+            <Modal size="lg" show={isRegistrationmodal} onHide={handleRegistrationModalClose} centered  >
+                <Modal.Header closeButton className='bg-black text-white '>
+                    <Modal.Title id="contained-modal-title-vcenter ">
+                        User
+                    </Modal.Title>
+                </Modal.Header >
+                <Modal.Body className='p-0'>
+                    <div className="login bg-black">
+                        <div className="container">
+                            <div className="row g-0">
+                                <div className="col-lg-6 p-4">
+                                    <img src={bday}  className="img-fluid registerformimage" alt="" />
+                                </div>
+                                <div className="myform col-lg-6" >
+                                    <div className='mt-4' id='registrationForm'>
+                                        <h5 className="modal-title" id="staticBackdropLabel" style={{ color: "white", fontSize: '2rem' }}>REGISTRATION FROM</h5>
+                                        <form onSubmit={handleSubmit}>
+                                            <div className="mb-3 mt-4">
+                                                <i className="fa fa-user icon" aria-hidden="true"></i>
+                                                <input type="name" className="form-control input-field" id="exampleInputName" aria-describedby="nameHelp"
+                                                    placeholder="Name" name="name" onChange={getData} />
+                                            </div>
+                                            <div className="mb-3 mt-4">
+                                                <i className="fa fa-envelope icon" aria-hidden="true"></i>
+                                                <input type="email" name="email" className="form-control  input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                    placeholder="Enter Email" onChange={getData} />
+                                            </div>
+                                            <div className="mb-3">
+                                                <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
+                                                <input type="password" name="password" className="form-control  input-field" id="exampleInputPassword1" placeholder="Password" onChange={getData} />
+                                            </div>
+                                            <div className="mb-3 mt-4">
+                                                <i className="fa fa-phone icon" aria-hidden="true"></i>
+                                                <input type="number" name="contect" className="form-control input-field" id="exampleInputContact" aria-describedby="contactHelp"
+                                                    placeholder="Contact Us" onChange={getData} />
+                                            </div>
+                                            <div className="mb-3 mt-4">
+                                                <i className="fa fa-map-marker icon" aria-hidden="true"></i>
+                                                <input type="text" name="address" className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
+                                                    placeholder="Address" onChange={getData} />
+                                            </div>
+                                            <button className="btn btn-light mt-3" name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
+                                            <div className="mb-3 mt-4" id='otpfield'>
+                                                <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
+                                                <input type="address" name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
+                                                    placeholder="Enter Otp" />
+                                            </div>
+                                            <button type="submit" className="btn btn-light mt-3">Sign up</button>
+                                            <p className='fs-5 mt-2' >Already have an account ? <a className='webcolor' onClick={() => { setRegistrationmodal(false) ; setLoginmodal(true) }}>SignIn</a></p>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div> */}
-
-                {/* <div className="modal-footer">
-                    <button type="button" className="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" className="btn btn-primary">Understood</button>
-                </div> */}
-            </div>
-        </div >
-    </>);
+                </Modal.Body>
+            </Modal>
+        </>);
 }
-
 
 export default Navbar;

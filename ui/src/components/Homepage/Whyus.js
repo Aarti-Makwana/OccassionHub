@@ -1,3 +1,4 @@
+import './whyus.css';
 function Whyus() {
     return (<>
         <div className="bg-black p-1">

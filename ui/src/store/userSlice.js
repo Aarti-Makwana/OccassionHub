@@ -1,19 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from 'axios';
-import { user_requestedUrl } from "../components/urls.js";
+import { user_requestedUrl } from "../urls.js";
 import jscookiee from 'js-cookie';
 
 const initialState = {
-
+    isNavbar : 'home'
 }
 
 const userSlice = createSlice({
     name:'userSlice',
     initialState,
     reducers : {
-        // setMessage:(state,action)=>{
-        //     state.initialState = action.payload;
-        // }
+        setNavbar :(state, payload)=>{
+            console.log(payload.nav);
+            state.isNavbar = "profile"
+        }
     }
 });
 
@@ -41,7 +42,6 @@ export const RegisterUserData = async(userDataForRegistation)=>{
         
         // var result = await axios.post(user_requestedUrl+"/genrateOtp", {email : userData.email});
         // console.log("result : ",result);
-        alert("registaion sucesfully")
         return registaion;
     } catch (error) {
         console.log("erro in registation user ");
@@ -61,4 +61,6 @@ export const userLogin = async (userDataLogin) => {
         console.log("error in userLoginSlice : ",error);
     }
 }
+
+export const {setNavbar} = userSlice.actions;
 export default userSlice.reducer;

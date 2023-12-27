@@ -23,7 +23,7 @@ function EventsDetails() {
                     <div className="row">
                         <div className="col col-lg-7">
                             <h5>Event Category : </h5>
-                        </div>
+                        </div>  
                         <div className="col col-lg-5"><span>
                             Night Party</span></div>
                     </div>

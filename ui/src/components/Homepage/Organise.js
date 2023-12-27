@@ -1,4 +1,4 @@
-import img from '../images/6.jpg';
+import img from '../../images/6.jpg';
 function Organise () {
     return(<>
         <div className="bg-success pt-5 pb-5" style={{background : `url(${img})`,backgroundPosition :"center", backgroundAttachment :'fixed' , marginTop : '-5%'}}>

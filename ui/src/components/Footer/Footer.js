@@ -1,4 +1,4 @@
-import img from '../images/occassionHub-logo.webp';
+import img from '../../images/occassionHub-logo.webp';
 function Footer() {
     return (<>
         <div className="p-1 bg-dark">

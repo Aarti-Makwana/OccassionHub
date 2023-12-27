@@ -1,6 +1,6 @@
-import vision from '../images/vision.jpg'
-import goal from '../images/goals.jpg'
-import approach from '../images/approach.jpg'
+import vision from '../../images/vision.jpg'
+import goal from '../../images/goals.jpg'
+import approach from '../../images/approach.jpg'
 function VisionGoal(){
      return(<>
           <section id="what-we-do" class="what-we-do"  style={{ backgroundColor: "black"}}>

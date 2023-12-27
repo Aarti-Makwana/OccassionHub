@@ -3,7 +3,7 @@ body{
     /* background-color: aqua; */
 }
 .djImageSection{
-    background: url('../images/djCrunch.jpg') center/cover;
+    background: url('../../images/djCrunch.jpg') center/cover;
     height: 80vh;
     background-repeat: no-repeat;
     background-position: center;
