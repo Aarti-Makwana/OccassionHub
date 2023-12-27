@@ -26,7 +26,7 @@ export const adduser = async (userData) => {
         console.log("result : ",result);
         return result;
     } catch (error) {
-        console.log("erro in opt send",error);
+        console.log("error in otp send",error);
     }   
 }
 

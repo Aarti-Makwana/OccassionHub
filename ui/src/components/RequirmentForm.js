@@ -37,7 +37,6 @@ function RequirmentForm() {
             },
         }));
 
-
         if (cateringCheckbox.checked) {
             mealsection.style.display = 'block';
         } else {
