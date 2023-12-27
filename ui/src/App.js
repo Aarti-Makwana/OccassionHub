@@ -11,6 +11,8 @@ import EventsDetails from './components/EventsDetails.js';
 import Servicepage from './components/Servicepage.js';
 import VisionGoal from './components/VisionGoal.js';
 import Team from './components/Team.js';
+import RequirmentForm from './components/RequirmentForm';
+
 import Faq from './components/Faq.js';
 import { Route, Routes } from 'react-router-dom';
 function App() {
@@ -44,6 +46,13 @@ function App() {
           <VisionGoal/>
           <Team/>
           <Faq/>
+        </>
+        }>
+        </Route>
+
+        <Route path='/eventRequest' element={<>
+          <Navbar />
+          <RequirmentForm/>
         </>
         }>
         </Route>

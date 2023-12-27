@@ -45,6 +45,8 @@ export const userRegistration = async (request,response)=>{
             contect: contect,
             address: address,
           });
+
+          
         console.log("newUser : ",newUser);
         payload.user = request.body;
         const expiryTime = {

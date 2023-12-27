@@ -4,25 +4,42 @@ import axios from 'axios';
 import requested_user_url from "../requestedUrl.js";
 
 function RequirmentForm() {
-    const [requestFormData, setRequestFormData] = useState({});
-    var eventType = "";
+    var cateringCheckbox, venuCheckbox, decorationCheckboxnuCheckbox, djCheckbox;
+    const [requestFormData, setRequestFormData] = useState({
+        serviceschoose: {
+            caterer: false,
+            decoration: false,
+            venu: false,
+            dj: false,
+        },
+    });
 
     function customise() {
         const mealsection = document.getElementById('mealsection');
-        const cateringCheckbox = document.getElementById('cateringCheckbox');
+        cateringCheckbox = document.getElementById('cateringCheckbox');
 
         const venusection = document.getElementById('venusection');
-        const venuCheckbox = document.getElementById('venuCheckbox');
+        venuCheckbox = document.getElementById('venuCheckbox');
 
         const decorationsection = document.getElementById('decorationsection');
-        const decorationCheckboxnuCheckbox = document.getElementById('decorationCheckbox');
+        decorationCheckboxnuCheckbox = document.getElementById('decorationCheckbox');
 
         const djsection = document.getElementById('djsection');
-        const djCheckbox = document.getElementById('djCheckbox');
+        djCheckbox = document.getElementById('djCheckbox');
+
+        setRequestFormData((requestFormData) => ({
+            ...requestFormData,
+            serviceschoose: {
+                caterer: cateringCheckbox.checked,
+                venu: venuCheckbox.checked,
+                decoration: decorationCheckboxnuCheckbox.checked,
+                dj: djCheckbox.checked,
+            },
+        }));
+
 
         if (cateringCheckbox.checked) {
             mealsection.style.display = 'block';
-            eventType +="catring";
         } else {
             mealsection.style.display = 'none';
         }
@@ -30,22 +47,18 @@ function RequirmentForm() {
 
         if (venuCheckbox.checked) {
             venusection.style.display = 'block';
-            eventType +="venu";
         } else {
             venusection.style.display = 'none';
         }
 
-
         if (decorationCheckboxnuCheckbox.checked) {
             decorationsection.style.display = 'block';
-            eventType +="decoration";
         } else {
             decorationsection.style.display = 'none';
         }
 
         if (djCheckbox.checked) {
             djsection.style.display = 'block';
-            eventType +="dj";
         } else {
             djsection.style.display = 'none';
         }
@@ -54,30 +67,18 @@ function RequirmentForm() {
 
     const getFormData = (event) => {
         const { name, value, type, checked } = event.target;
-        //   console.log(event.target.value);
-        // setRequestFormData({
-        //   ...requestFormData,
-        // //    [name] :value,
-        //   [name]: type === 'checkbox' ? event.target.checked ?value:"" :value,
-        // });
-
 
         if (type === 'checkbox') {
-            // const updatedEventTypes = checked ? [...requestFormData.eventtype, value] /* Add to array if checked*/ : requestFormData.eventtype.filter((type) => type !== value); // Remove from array if unchecked
-
-            // return {
-            //     ...requestFormData,
-            //     eventtype: updatedEventTypes,
-            //     [name]: value,
-            // };
+            setRequestFormData((requestFormData) => ({
+                ...requestFormData,
+                serviceschoose: {
+                    ...requestFormData.serviceschoose,
+                    [name]: checked,
+                },
+            }));
         } else {
-            // return {
-               
-                setRequestFormData({ ...requestFormData, [name]: value})
-            // };
+            setRequestFormData({ ...requestFormData, [name]: value })
         }
-
-
     }
 
     const eventRequestFormSubmit = async (event) => {
@@ -86,10 +87,10 @@ function RequirmentForm() {
             console.log("requestFormData ", requestFormData)
             console.log('Requested User URL:', requested_user_url);
             const result = await axios.post(`${requested_user_url}/eventRequest`, requestFormData);
-            if(result.status == 201){
+            if (result.status == 201) {
                 console.log(result);
             }
-            else if(result.status==500){
+            else if (result.status == 500) {
                 console.log("error while reponse request form data");
             }
 
@@ -142,7 +143,7 @@ function RequirmentForm() {
                         <div className="col col-lg-6  d-flex justify-content-center">
                             <div className="mb-3 form-check">
                                 <label className="form-check-label" htmlFor="exampleCheck1">Celebration Event</label>
-                                <input type="radio" className="mx-5" id="exampleInputEmail1" name="eventtype" value="Celebration"  onChange={getFormData} aria-describedby="emailHelp" />
+                                <input type="radio" className="mx-5" id="exampleInputEmail1" name="eventtype" value="Celebration" onChange={getFormData} aria-describedby="emailHelp" />
                             </div>
                         </div>
                         <div className="col col-lg-6  d-flex justify-content-center">
@@ -204,31 +205,31 @@ function RequirmentForm() {
 
                     <h4 className="d-flex justify-content-center my-4 grayHeading">Services</h4>
                     <p className="d-flex justify-content-center my-2 whiteText">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Totam dolores necessitatibus dignissimos pariatur libero blanditiis.</p>
-                    <div className="row my-3 whiteText ms-4  ps-5">
-                        <div className="col col-lg-4 col-md-4 col-12">
+                    <div className="row my-2 whiteText ">
+                        <div className="col col-lg-6 col-md-6 col-6  d-flex justify-content-center">
                             <div className="mb-3 form-check">
                                 <label className="form-check-label" htmlFor="exampleCheck1">Decoration</label>
                                 <input type="checkbox" className="form-check-input" name="decoration" value="decoration" onChange={getFormData} id="decorationCheckbox" onClick={customise} />
                             </div>
                         </div>
-                        <div className="col col-lg-4 col-md-4 col-12">
+                        <div className="col col-lg-6 col-md-6 col-6  d-flex justify-content-center">
                             <div className="mb-3 form-check">
                                 <label className="form-check-label" htmlFor="exampleCheck1">Venu</label>
                                 <input type="checkbox" className="form-check-input" name="venu" id="venuCheckbox" value="venu" onChange={getFormData} onClick={customise} />
                             </div>
                         </div>
-                        <div className="col col-lg-4 col-md-4 col-12">
+                        <div className="col col-lg-6 col-md-6 col-6  d-flex justify-content-center">
                             <div className="mb-3 form-check">
                                 <label className="form-check-label ps-4" htmlFor="exampleCheck1">Catring</label>
                                 <input type="checkbox" className="form-check-input" name="catring" id="cateringCheckbox" value="catring" onChange={getFormData} onClick={customise} />
                             </div>
                         </div>
-                        {/* <div className="col col-lg-6 col-md-6 col-6  d-flex justify-content-center">
+                        <div className="col col-lg-6 col-md-6 col-6  d-flex justify-content-center">
                             <div className="mb-3 form-check">
                                 <label className="form-check-label ps-4" htmlFor="exampleCheck1">DJ</label>
                                 <input type="checkbox" className="form-check-input" name="dj" id="djCheckbox" value="dj" onChange={getFormData} onClick={customise} />
                             </div>
-                        </div> */}
+                        </div>
                     </div>
 
 
@@ -352,18 +353,18 @@ function RequirmentForm() {
                     <div className="whiteText mt-4 ms-5 ps-3">
                         <label htmlFor="exampleInputEmail1" className="form-label lastLable">Additional Information</label>
                         <p className='grayHeading lastLable'>Lorem ipsum, dolor sit amet consectetur adipisicing elit. Minus est, hic ex quas cupiditate ab! Distinctio beatae deleniti dolorum. Cupiditate!</p>
-                        <input type="text" className="form-control d-flex w-75 borderPinkInput lastInput" aria-describedby="emailHelp" name="addtionalinfo" onChange={getFormData}/>
+                        <input type="text" className="form-control d-flex w-75 borderPinkInput lastInput" aria-describedby="emailHelp" name="addtionalinfo" onChange={getFormData} />
                     </div>
 
                     <div className="w-75 form-check whiteText d-flex justify-content-center my-3 mt-3">
-                        <input type="checkbox" className="form-check-input mx-3" name="isdjbooked" id="djCheckbox" onClick={customise} onChange={getFormData} value="isdjbooked"/>
                         <label className="form-check-label" htmlFor="exampleCheck1">Do you want to book a Dj also? If yes then there will be pay extra charges for it. </label>
+                        <input type="checkbox" className="form-check-input mx-3" name="isdjbooked" id="djCheckbox" onClick={customise} onChange={getFormData} value="isdjbooked" />
                     </div>
 
 
                     <div className="w-75 form-check whiteText d-flex justify-content-center my-3 mt-3 lastCheckBox">
-                        <input type="checkbox" className="form-check-input mx-3 " id="djCheckbox" name="extralocationcharge" onClick={customise} onChange={getFormData} value="extralocationcharge"/>
                         <label className="form-check-label" htmlFor="exampleCheck1">If the location is out of city then you have to pay  for extra charges will be levied.</label>
+                        <input type="checkbox" className="form-check-input mx-3 " id="djCheckbox" name="extralocationcharge" onClick={customise} onChange={getFormData} value="extralocationcharge" />
                     </div>
 
 
