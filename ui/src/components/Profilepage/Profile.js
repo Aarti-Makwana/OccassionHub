@@ -47,6 +47,10 @@ function Profile() {
                 break;
         }
     };
+    const userLogout = () => {
+        jscookie.remove("user");
+        history('/');
+    }
 
     return (<>
         <div className='container p-2 w-75 text-white mb-3 profilemaincontainer'>
@@ -73,7 +77,7 @@ function Profile() {
                             </select>
                             <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }}>View Quotation</button>
                             <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }}>View Bill</button>
-                            <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }}>Layout</button>
+                            <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }} onClick={userLogout}>Log Out</button>
                         </div>
                     </div>
                     <div className='col-lg-8 p-4'>
@@ -118,7 +122,6 @@ function Profile() {
                 </div>
             </div>
         </div>
-
     </>)
 }
 export default Profile;

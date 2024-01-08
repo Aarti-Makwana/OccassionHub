@@ -116,9 +116,6 @@
   font-size: 20px;
   font-weight: 600;
 }
-.modal-header {
-  border: 0;
-}
 .closeButton {
   color: white;
 }
@@ -137,21 +134,17 @@
 
 .myform {
   text-align: center;
-  padding: .5em;
-  max-width: 100%;
+  padding-left: 50px;
 }
+
 .btn {
   color: #fff;
 }
 
 .myform .icon {
   position: absolute;
-  right: 50px;
-  font-size: 1.2em;
-  line-height: 40px;
-}
-
-.login-word {
+  right: 55px;
+  font-size: 1.2rem;
   color: #FF0057;
 }
 
@@ -168,7 +161,7 @@
 }
 
 .myform .btn {
-  width: 100%;
+  width: 80%;
   font-weight: 400;
   background-color: #FF0057;
   border-radius: 5;
@@ -195,7 +188,7 @@ p a:hover {
   border: 0px solid black;
   border-bottom: 2px solid #FF0057;
   background-color: transparent;
-  color: #fff;
+  color: grey;
 }
 .input-field:focus {
   background-color: transparent;
@@ -204,14 +197,24 @@ p a:hover {
   border-bottom: 2px solid #FF0057;
 }
 
-.icon{
-  color: #FF0057;
-}
-
 #otpfield {
   display: none;
 }
+#signupbutton{
+  visibility: hidden;
+}
+
 .registerformimage {
   margin-top: 30%;
+}
+ .btn-close{
+  color: white;
+  background-color: #FF0057;
+}
+.registrationimage {
+  margin-top: 20%;
+}
+.modal-header {
+  background-color: black;
 }
 /* =============>MODAL(REGISTRATION AND LOGIN FORM) CSS END */
