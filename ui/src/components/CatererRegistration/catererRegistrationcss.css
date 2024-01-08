@@ -1,14 +1,14 @@
 .reg{
    color: #FF0057;
 }
-#name1,#name2{
+/* #name1,#name2{
    background-color: black;
    border: none;
    border-bottom: 2px solid #FF0057;
-}
-.form-control::placeholder{
+} */
+/* .form-control::placeholder{
    color: whitesmoke;
-}
+} */
 #flex1,#flex2{
   color: whitesmoke;
 }
@@ -30,6 +30,21 @@
 .btn:hover{
   background-color: #FF0057;
 } */
+
+.input-field {
+   border: 0px solid black;
+   border-bottom: 2px solid #FF0057;
+   background-color: transparent;
+   color: grey;
+   width: 100%;
+ }
+ .input-field:focus {
+   background-color: transparent;
+   color: white;
+   box-shadow: none;
+   border: 0;
+   border-bottom: 2px solid #FF0057;
+ }
 #addgallery{
    color: white;
 }
