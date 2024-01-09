@@ -76,6 +76,7 @@ function Caterersreg() {
                       </select>
                     </div>
                   </div>
+                  
                   <div className="col-md-6 mb-4 mt-3">
                     <div className="form-outline mb-4">
                       <input type="text" onChange={getData} value={caterer.ServiceCharges} id="name2" className="form-control" name="ServiceCharges" placeholder="Enter your Service Charges" />
@@ -83,20 +84,20 @@ function Caterersreg() {
                   </div>
                 </div>
 
-                <div className="mb-3 mt-4" id='otpfeildecatrerr' style={{ display: 'none' }}>
+                {/* <div className="mb-3 mt-4" id='otpfeildecatrerr' style={{ display: 'none' }}>
                   <div className="form-outline mb-4">
                     <input type="address" name="address" onChange={handleOtpChange} id="exampleInputAddress" aria-describedby="addressHelp"
                       placeholder="Enter Otp" />
                   </div>
-                </div>
+                </div> */}
                 <div className="row">
-                  <div className="col-md-6">
+                  {/* <div className="col-md-6">
                     <div className="mb-4">
                       <button type="submit" onClick={(event) => { getOtp(event) }} className="ourbtn w-50">
                         Get Otp
                       </button>
                     </div>
-                  </div>
+                  </div> */}
                   <div className="col-md-6">
                     <div className="mb-4">
                       <button type="submit" className="ourbtn w-50">

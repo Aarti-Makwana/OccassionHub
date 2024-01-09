@@ -3,28 +3,34 @@ import '../../App.css';
 import userProfile from "../../images/anjali.jpg";
 import './profile.css';
 import jscookie from 'js-cookie';
-import { useState } from 'react';
-// import { useSelector } from 'react-redux';
+import { useState , useEffect} from 'react';
+import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { user_requestedUrl } from '../../urls';
 
 var userData = {};
 function Profile() {
     const [selectedValue, setSelectedValue] = useState('');
     const history = useNavigate();
-    // const profileData = useSelector((state) => state.userSlice.profileData);
-    // console.log("profileData : ",profileData)
-    // const userDataCookie = jscookie.get("userdata");
-    // console.log("userDataCookie in profile page: ", userDataCookie);
-    // if (userDataCookie) {
-    //     try {
-    //         userData = JSON.parse(userDataCookie);
-    //         console.log("userDataCookie in profile page : ",userDataCookie);
-    //         // return userData;
-    //     } catch (error) {
-    //         console.log("Error parsing user data from cookie", error);
-    //         // return null;
-    //     }
-    // }
+    const [userDetails, setuserDetails] = useState({});
+    var userEmail = jscookie.get("user");
+
+    console.log("userEmail on profile page ---------", userEmail);
+    useEffect(() => {
+        if (userEmail) {
+            try {
+              axios.post(user_requestedUrl + "/profile", { userEmail:userEmail })
+                .then(response => {
+                  setuserDetails(response.data.userDetails);
+                })
+                .catch(err => {
+                  console.log("Error in user profile data ", err);
+                });
+            } catch (err) {
+              console.log("Error in user profile data ", err);
+            }
+          }
+        }, [userEmail]);
     const handleChange = (event) => {
         const selectedOption = event.target.value;
         setSelectedValue(selectedOption);
@@ -82,7 +88,7 @@ function Profile() {
                     </div>
                     <div className='col-lg-8 p-4'>
                         <div className='mt-4'>
-                            <h2 className="usernameProfile">I am <span className='nameP'> Dheeraj singh chouhan</span></h2>
+                            <h2 className="usernameProfile">I am <span className='nameP'>{userDetails.name}</span></h2>
                             <button className="btn btn-danger">Edit Profile</button>
                             <hr style={{ height: '3px', backgroundColor: "#ff0057" }} />
                         </div>
@@ -92,7 +98,7 @@ function Profile() {
                                     <h4>Email</h4>
                                 </div>
                                 <div className='col-lg-8 text-start'>
-                                    <h4>Dheerajsinghchouhan@gmail.com</h4>
+                                    <h4>{userDetails.email}</h4>
                                 </div>
                             </div>
                             <div className='row mt-2'>
@@ -100,7 +106,7 @@ function Profile() {
                                     <h4>Address</h4>
                                 </div>
                                 <div className='col-lg-8 text-start'>
-                                    <h4>Mangliya Indore Mp</h4>
+                                    <h4>{userDetails.address}</h4>
                                 </div>
                             </div>
                             <div className='row mt-2'>
@@ -108,7 +114,7 @@ function Profile() {
                                     <h4>Phone Number</h4>
                                 </div>
                                 <div className='col-lg-8 text-start'>
-                                    <h4>6264037225</h4>
+                                    <h4>{userDetails.contect}</h4>
                                 </div>
                             </div>
                         </div>
@@ -122,6 +128,8 @@ function Profile() {
                 </div>
             </div>
         </div>
-    </>)
+
+    </>)
+
 }
 export default Profile;

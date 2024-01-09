@@ -1,6 +1,6 @@
 import { request, response } from "express";
-import mailer from "../mailer.js";
-import usermodel from "../../model/usermodel.js";
+import mailer from "./mailer.js";
+import usermodel from "../model/usermodel.js";
 import jwt from 'jsonwebtoken';
 import stripe from 'stripe';
 import bcrypt from 'bcrypt';
