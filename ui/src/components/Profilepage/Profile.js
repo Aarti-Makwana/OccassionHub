@@ -3,10 +3,15 @@ import '../../App.css';
 import userProfile from "../../images/anjali.jpg";
 import './profile.css';
 import jscookie from 'js-cookie';
-import { useState , useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { user_requestedUrl } from '../../urls';
+import DjForm from '../DjRegistration/DjForm.js';
+import Caterersreg from '../CatererRegistration/Caterersreg.js'
+import Decorationform from '../DecorationRegistration/Decorationform.js';
+import Venue from '../VenueRegistration/Venueform.js';
+import EditProfile from './EditProfileModal.js';
 
 var userData = {};
 function Profile() {
@@ -19,18 +24,18 @@ function Profile() {
     useEffect(() => {
         if (userEmail) {
             try {
-              axios.post(user_requestedUrl + "/profile", { userEmail:userEmail })
-                .then(response => {
-                  setuserDetails(response.data.userDetails);
-                })
-                .catch(err => {
-                  console.log("Error in user profile data ", err);
-                });
+                axios.post(user_requestedUrl + "/profile", { userEmail: userEmail })
+                    .then(response => {
+                        setuserDetails(response.data.userDetails);
+                    })
+                    .catch(err => {
+                        console.log("Error in user profile data ", err);
+                    });
             } catch (err) {
-              console.log("Error in user profile data ", err);
+                console.log("Error in user profile data ", err);
             }
-          }
-        }, [userEmail]);
+        }
+    }, [userEmail]);
     const handleChange = (event) => {
         const selectedOption = event.target.value;
         setSelectedValue(selectedOption);
@@ -63,7 +68,7 @@ function Profile() {
             <div className='bg-dark p-2'>
                 <div className='row'>
                     <div className='col-lg-12 d-flex justify-content-end'>
-                        <button className='ourbtn'>Search Services</button>
+                    <button className='ourbtn'><Link to="/searchServices" className='text-decoration-none text-white'>Search Services</Link></button>
                         <button className='ourbtn ms-1'><i className="fa fa-bell" aria-hidden="true"></i></button>
                     </div>
                 </div>
@@ -74,13 +79,27 @@ function Profile() {
                         </div>
                         <div className='profilebuttons d-flex flex-column justify-content-center'>
                             <button className="btn btn-danger w-75 mt-1 " >Buy Passes</button>
-                            <select className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }} value={selectedValue} onChange={handleChange}>
-                                <option>Become A Staff</option>
-                                <option className='text-start' value='dj'>Dj user</option>
-                                <option className='text-start' value='caterer'>Caterer Manager</option>
-                                <option className='text-start' value='venue'>Venue Manager</option>
-                                <option className='text-start' value='decoration'>Decoration Manager</option>
-                            </select>
+
+                            <div className="dropdown m-0">
+                                <a className="btn btn-danger w-75 mt-1 dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Become a Staff
+                                </a>
+                                <ul className="dropdown-menu bg-danger" aria-labelledby="dropdownMenuLink">
+                                    <li className="dropdown-item cursorpointer">
+                                        <DjForm />
+                                    </li>
+                                    <li className="dropdown-item cursorpointer">
+                                        <Caterersreg />
+                                    </li>
+                                    <li className="dropdown-item cursorpointer">
+                                        <Decorationform />
+                                    </li>
+                                    <li className="dropdown-item cursorpointer">
+                                        <Venue />
+                                    </li>
+                                </ul>
+                            </div>
+
                             <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }}>View Quotation</button>
                             <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }}>View Bill</button>
                             <button className="btn btn-danger w-75 mt-1 " style={{ width: "250px" }} onClick={userLogout}>Log Out</button>
@@ -89,7 +108,8 @@ function Profile() {
                     <div className='col-lg-8 p-4'>
                         <div className='mt-4'>
                             <h2 className="usernameProfile">I am <span className='nameP'>{userDetails.name}</span></h2>
-                            <button className="btn btn-danger">Edit Profile</button>
+                            {/* <button className="btn btn-danger">Edit Profile</button> */}
+                            <EditProfile userData={userDetails} />
                             <hr style={{ height: '3px', backgroundColor: "#ff0057" }} />
                         </div>
                         <div className='py-4'>
@@ -129,7 +149,7 @@ function Profile() {
             </div>
         </div>
 
-    </>)
+    </>)
 
 }
 export default Profile;

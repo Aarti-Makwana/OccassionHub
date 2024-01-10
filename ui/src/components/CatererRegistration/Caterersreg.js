@@ -1,8 +1,11 @@
 import caterer1 from '../../images/Caterer.jpg'
 import { useState } from 'react';
 import { addCaterer, RegisterCatererData } from '../../store/CatererSlice.js';
+import Modal from 'react-bootstrap/Modal';
+
 var result = "";
 function Caterersreg() {
+  const [isCatererManagerRegistrationModal, setCatererRegistrationModal] = useState(false)
   const [caterer, setCatererdata] = useState({});
   const [otp1, setOtp] = useState('');
   const getData = (event) => {
@@ -45,73 +48,58 @@ function Caterersreg() {
     });
   };
 
-  return (
-    <>
-      <form onSubmit={handleSubmitCaterer} className="form-group">
-        <section className="h-50" style={{ backgroundColor: 'black' }}>
-          <div className="container py-5 h-50">
-            <div className="row d-flex justify-content-center align-items-center h-50">
-              <img src={caterer1} style={{ height: '350px' }} alt="Sample photo" />
-              <div className="card-body p-4 p-md-5">
-                <h2 className="reg mb-4 pb-2 pb-md-0 mb-md-5 px-md-2">Caterers Form</h2>
+  const handleCatererManagerModalClose = () => {
+    setCatererRegistrationModal(false);
+  }
+
+  return (<>
+    <h6 onClick={() => { setCatererRegistrationModal(true) }}>Caterer Manager</h6>
+
+    <Modal size="lg" show={isCatererManagerRegistrationModal} onHide={handleCatererManagerModalClose} centered  >
+      <Modal.Body className='p-0'>
+        <div className="container bg-black">
+          <div className="row d-flex justify-content-center align-items-center h-50" >
+            <div className='col-lg-6'>
+              <img src={caterer1} width={'100%'} alt="Sample photo" />
+            </div>
+            <div className="col-lg-6 py-4">
+              <h2 className="text-center text-white">Caterer Manager Form</h2>
+              <form className="px-md-2">
                 <div className="row">
-                  <div className="col-md-6 mt-3">
+                  <div className="col-md-12">
+                    <div className="mt-4">
                       <input type="text" name="Businessname" onChange={getData} value={caterer.Businessname} className="form-control input-field" placeholder="Enter your Business name" />
-                  </div>
-                  <div className="col-md-6 mt-3">
-                    {/* <div className="form-outline mb-4"> */}
-                      <input type="text" name="Specialization" onChange={getData} value={caterer.Specialization} id="name2" className="form-control input-field" placeholder="Enter your Specialization"
-                      />
-                    {/* </div> */}
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6 mb-4">
-                    <div className="form-outline mb-4 mt-3">
-                      <select required onChange={getData} value={caterer.FoodType} style={{ background: 'black', color: 'white' }} className="form-control input-field" name="FoodType">
-                        <option>Select food type</option>
-                        <option value="Vegetarian">Vegetarian</option>
-                        <option value="Non-Vegetarian">Non-Vegetarian</option>
-                      </select>
                     </div>
                   </div>
-                  
-                  <div className="col-md-6 mb-4 mt-3">
-                    <div className="form-outline mb-4">
-                      <input type="text" onChange={getData} value={caterer.ServiceCharges} id="name2" className="form-control" name="ServiceCharges" placeholder="Enter your Service Charges" />
+                  <div className="col-md-12">
+                    <div className="mt-4">
+                      <input type="text" name="Specialization" onChange={getData} value={caterer.Specialization} id="name2" className="form-control input-field" placeholder="Enter your Specialization" />
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <select class="w-100 mt-4" id="select1" onChange={getData} value={caterer.FoodType} aria-label="Default select example">
+                      <option selected>Select Food Type</option>
+                      <option value="Vegetarian">Vegetarian</option>
+                      <option value="Non-Vegetarian">Non-Vegetarian</option>
+                    </select>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="mt-4">
+                      <input type="text" onChange={getData} value={caterer.ServiceCharges} id="name2" className="form-control input-field" name="ServiceCharges" placeholder="Enter your Service Charges" />
                     </div>
                   </div>
                 </div>
-
-                {/* <div className="mb-3 mt-4" id='otpfeildecatrerr' style={{ display: 'none' }}>
-                  <div className="form-outline mb-4">
-                    <input type="address" name="address" onChange={handleOtpChange} id="exampleInputAddress" aria-describedby="addressHelp"
-                      placeholder="Enter Otp" />
-                  </div>
-                </div> */}
-                <div className="row">
-                  {/* <div className="col-md-6">
-                    <div className="mb-4">
-                      <button type="submit" onClick={(event) => { getOtp(event) }} className="ourbtn w-50">
-                        Get Otp
-                      </button>
-                    </div>
-                  </div> */}
-                  <div className="col-md-6">
-                    <div className="mb-4">
-                      <button type="submit" className="ourbtn w-50">
-                        Submit
-                      </button>
-                    </div>
-                  </div>
+                <div className="d-flex justify-content-center mt-3">
+                  <button type="submit" className="ourbtn w-50">Submit</button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
-        </section>
-      </form>
-    </>
+        </div>
+      </Modal.Body>
+    </Modal>
+
+  </>
   );
 }
 

@@ -33,6 +33,7 @@
   width: 97%;
   align-self: center;
 }
+
 #offcanvasExample {
   background-color: rgba(0, 0, 0, 0.5);
   transition: 0.8s linear;
@@ -109,6 +110,7 @@
   padding: 5px;
   height: 5vh;
 }
+
 #loginbutton,
 #registrationbutton {
   height: 3rem;
@@ -116,21 +118,24 @@
   font-size: 20px;
   font-weight: 600;
 }
+
 .closeButton {
   color: white;
 }
+
 .modal {
   background-color: rgba(170, 167, 167, 0.2);
   backdrop-filter: blur(4px);
   --webkit-backdrop-filter: blur(4px);
 }
+
 /* ============> NAVBAR CSS START <=============== */
 
 /* =============>MODAL(REGISTRATION AND LOGIN FORM) CSS START */
-.modal-dialog {
-  max-width: 70%;
+/* .modal-dialog {
+  max-width: 80%;
   margin: 1.75rem auto;
-}
+} */
 
 .myform {
   text-align: center;
@@ -188,8 +193,9 @@ p a:hover {
   border: 0px solid black;
   border-bottom: 2px solid #FF0057;
   background-color: transparent;
-  color: grey;
+  color: white;
 }
+
 .input-field:focus {
   background-color: transparent;
   color: white;
@@ -200,21 +206,30 @@ p a:hover {
 #otpfield {
   display: none;
 }
-#signupbutton{
+
+#signupbutton {
   visibility: hidden;
 }
 
 .registerformimage {
   margin-top: 30%;
 }
- .btn-close{
+
+.btn-close {
   color: white;
   background-color: #FF0057;
 }
+
 .registrationimage {
   margin-top: 20%;
 }
-.modal-header {
-  background-color: black;
-}
+
 /* =============>MODAL(REGISTRATION AND LOGIN FORM) CSS END */
+.cursorpointer {
+  cursor: pointer;
+}
+
+.searchServicesBanner {
+  width: 100%;
+  height: 100vh;
+}

@@ -1,0 +1,39 @@
+body{
+    background-color: black;
+}
+.heading1{
+    color: red;
+}
+.bookserviceheading{
+    border-bottom: 2px solid #ff0057;
+}
+
+.leftSection{
+    background: url('../../images/stageSearchServices.jpg') center/cover;
+    height:70vh;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.rightSection{
+    text-align: justify;
+    padding: 2.5em;
+    /* line-height: 1.75; */
+}
+
+.secondSpan{
+    color: wheat;
+}
+
+.links{
+    color:wheat;
+}
+.links:hover{
+    text-decoration: none;
+    color:wheat;
+}
+
+.linksContainer{
+    height: 70vh;
+    overflow-y: scroll;
+}

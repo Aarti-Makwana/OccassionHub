@@ -1,17 +1,7 @@
 .reg{
    color: #FF0057;
 }
-/* #name1,#name2{
-   background-color: black;
-   border: none;
-   border-bottom: 2px solid #FF0057;
-} */
-/* .form-control::placeholder{
-   color: whitesmoke;
-} */
-#flex1,#flex2{
-  color: whitesmoke;
-}
+
 #formFile{
   /* background-color: #FF0057;
   border: none;
