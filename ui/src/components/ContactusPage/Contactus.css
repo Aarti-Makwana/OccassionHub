@@ -54,30 +54,30 @@
   border-bottom: 1px solid #FF0057;
   border-radius: 0;
   font-size: 14px;
-  font-weight: bold;
-  padding: 15px;
-  margin-bottom: 7px;
-  background-color: #1B1B1B;
+  /* font-weight: bold; */
+  /* padding: 15px; */
+  /* margin-bottom: 7px; */
+  background-color: transparent;
 }
 
 .login-wrapper .form-control::-webkit-input-placeholder {
-  color: #f7f4f4;
+  color: white;
 }
 
 .login-wrapper .form-control::-moz-placeholder {
-  color: #f7f4f4;
+  color: white;
 }
 
 .login-wrapper .form-control:-ms-input-placeholder {
-  color: #f7f4f4;
+  color: white;
 }
 
 .login-wrapper .form-control::-ms-input-placeholder {
-  color: #f7f4f4;
+  color: white;
 }
 
 .login-wrapper .form-control::placeholder {
-  color: #ACACAC;
+  color: white;
 }
 
 .login-title {

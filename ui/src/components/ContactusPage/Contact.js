@@ -8,25 +8,25 @@ function Contact() {
             <p className="text-center text-white mt-3">Pellentesque lorem quis in auctor bibendum ullamcorper non purus dui,<br /> ultricies sit eu sit pellentesque duis vitae non est eu, quis metus aliquet laoreet.</p>
             <div className="container bg-danger mt-5">
                <div className="row h-100">
-                  {/* <div className="col-lg-6 bg-dark"> */}
                   <div className="col-sm-6 col-md-6 form-section " style={{ backgroundColor: "#1B1B1B" }}>
                      <div className="login-wrapper">
-                        {/* <h2 class="login-title">Sign in</h2> */}
                         <form action="#!">
-                           <div className="form-group">
-                              <input type="text" name="name" id="name" className="form-control" placeholder="Enter Name" />
+                           <div className="form-group ">
+                              <input type="text" name="name" id="name" className="form-control input-field" placeholder="Enter Name" />
                            </div>
-                           <div className="form-group">
-                              <input type="email" name="email" id="email" className="form-control" placeholder="Enter Email" />
+                           <div className="form-group mt-4">
+                              <input type="email" name="email" id="email" className="form-control input-field" placeholder="Enter Email" />
                            </div>
-                           <div className="form-group">
-                              <input type="text" name="subject" id="subject" className="form-control" placeholder="Enter Subject" />
+                           <div className="form-group mt-4">
+                              <input type="text" name="subject" id="subject" className="form-control input-field" placeholder="Enter Subject" />
                            </div>
-                           <div className="mb-3">
-                              <label className="p-2" style={{ color: "#ACACAC", fontWeight: "bold", fontSize: "14px" }}>Enter a Message </label>
-                              <textarea className="form-control" id="exampleFormControlTextarea1" rows="2"></textarea>
+                           <div className="mb-3 mt-4">
+                              <label className="" style={{ color: "#fff", fontSize: "14px" }}>Enter a Message </label>
+                              <textarea className="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
                            </div>
-                           <button className="btn" type="submit">Send Message</button>
+                           <div className='d-flex justify-content-center mt-5'>
+                              <button className="ourbtn w-50" type="submit">Send Message</button>
+                           </div>
                         </form>
                      </div>
                   </div>

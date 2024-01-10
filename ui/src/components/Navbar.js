@@ -564,7 +564,7 @@ function Navbar() {
                         <div className="mt-3 fs-4 withouttransition"><Link to='/aboutpage' className='text-white fw-bold text-decoration-none'><span>About</span></Link></div>
                         <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>Gallery</span></Link></div>
                         <div className="mt-3 fs-4 withouttransition"><Link to='/servicepage' className='text-white fw-bold text-decoration-none'><span>Services</span></Link></div>
-                        <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>About Us</span></Link></div>
+                        <div className="mt-3 fs-4 withouttransition"><Link to='/contactus' className='text-white fw-bold text-decoration-none'><span>Contact</span></Link></div>
                         <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Dj Manager</span></div>
                         <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Oranise a Event</span></div>
                         <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Catering Manager</span></div>
