@@ -15,17 +15,11 @@
 // var result = "";
 // const modalCss = {
 //     content: {
-//         // right: 'auto',
-//         // bottom: 'auto',
-//         // marginRight: '-50%',
-//         // transform: 'translate(-50%, -50%)',
 //         backgroundColor: '',
 //         border: 'none',
 //         borderRadius: '8px',
 //         width: '100%',
 //         height: '700px'
-//         // zIndex :'5'
-
 //     }
 // }
 // function Navbar() {
@@ -579,29 +573,27 @@ function Navbar() {
                 </div>
             </div>
 
-            <Modal size="sm" show={isLoginmodal} onHide={handleLoginModalClose} centered  >
-                <Modal.Header closeButton className='bg-black text-white '>
-                    <Modal.Title id="contained-modal-title-vcenter ">
-                        User login
-                    </Modal.Title>
-                </Modal.Header >
-                <Modal.Body className='p-0'>
-                    <div className="login bg-black">
-                        <div className="container">
-                            <div className="row g-0 p-3">
-                                <div className="col-lg-6">
-                                    <img src={bday} className="img-fluid" alt="" />
-                                </div>
-                                <div className="myform col-lg-6" >
-                                    <div id='loginForm'>
-                                        <h5 className="modal-title" id="staticBackdropLabel" style={{ color: "white", fontSize: '2rem' }}>LOGIN FORM</h5>
-                                        <form onSubmit={loginHandleSubmit}>
-                                            <div className="mb-3 mt-4 d-flex flex-column">
-                                                <i className="fa fa-envelope icon" aria-hidden="true"></i>
-                                                <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
+            <Modal size="lg" show={isLoginmodal} onHide={handleLoginModalClose} centered   >
+                 <Modal.Body className='p-0'>
+                     <div className="login bg-black">
+                         <div className="container p-0">
+                             <div className="row g-0 p-2">
+                                 <div className="col-lg-5 bg-success p-0">
+                                     <img src={bday} className="w-100" height='100%' alt="" />
+                                 </div>
+                                 <div className="myform col-lg-7 p-3 " >
+                                     <div className='d-flex justify-content-end'>
+                                         <button className='btn-close' aria-label="Close" onClick={() => { setLoginmodal(false) }}></button>
+                                     </div>
+                                     <div id='loginForm'>
+                                         <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> LOGIN </span> FORM</h2>
+                                         <form onSubmit={loginHandleSubmit}>
+                                             <div className="mb-3 mt-4 d-flex flex-row align-items-center">
+                                                 <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
                                                     placeholder="Enter Email" onChange={loginGetData} />
+                                                <i className="fa fa-envelope icon" aria-hidden="true"></i>
                                             </div>
-                                            <div className="mb-3">
+                                            <div className="mb-3 mt-4 d-flex flex-row align-items-center">
                                                 <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="Password" onChange={loginGetData} />
                                                 <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                             </div>
@@ -616,22 +608,20 @@ function Navbar() {
                 </Modal.Body>
             </Modal>
 
-            <Modal size="lg" show={isRegistrationmodal} onHide={handleRegistrationModalClose} centered  >
-                <Modal.Header closeButton className='bg-black text-white '>
-                    <Modal.Title id="contained-modal-title-vcenter ">
-                        User
-                    </Modal.Title>
-                </Modal.Header >
+            <Modal size="xl" show={isRegistrationmodal} onHide={handleRegistrationModalClose} centered  >
                 <Modal.Body className='p-0'>
                     <div className="login bg-black">
                         <div className="container">
                             <div className="row g-0">
                                 <div className="col-lg-6 p-4">
-                                    <img src={bday} className="img-fluid registerformimage" alt="" />
+                                    <img src={bday} className="w-100 registrationimage" height='80%' alt="" />
                                 </div>
                                 <div className="myform col-lg-6" >
                                     <div className='mt-4' id='registrationForm'>
-                                        <h5 className="modal-title" id="staticBackdropLabel" style={{ color: "white", fontSize: '2rem' }}>REGISTRATION FROM</h5>
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn-close' aria-label="Close" onClick={() => { setRegistrationmodal(false) }}></button>
+                                    </div>
+                                        <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> REGISTRATION </span> FORM</h2>
                                         <form onSubmit={handleSubmit}>
                                             <div className="mb-3 mt-4">
                                                 <i className="fa fa-user icon" aria-hidden="true"></i>
@@ -657,13 +647,13 @@ function Navbar() {
                                                 <input type="text" name="address" className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                     placeholder="Address" onChange={getData} />
                                             </div>
-                                            <button className="btn btn-light mt-3" name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
+                                            <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
                                             <div className="mb-3 mt-4" id='otpfield'>
                                                 <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                 <input type="address" name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                     placeholder="Enter Otp" />
                                             </div>
-                                            <button type="submit" className="btn btn-light mt-3">Sign up</button>
+                                            <button type="submit" className="btn btn-light mt-3" id='signupbutton'>Sign up</button>
                                             <p className='fs-5 mt-2' >Already have an account ? <a className='webcolor' onClick={() => { setRegistrationmodal(false); setLoginmodal(true) }}>SignIn</a></p>
                                         </form>
                                     </div>

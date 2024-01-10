@@ -18,10 +18,11 @@
   color: #FF0057;
 }
 
-.container{
+/* .container{
    width: 80%;
    height:80vh;
-}
+} */
+
 .form-section {
   display: -webkit-box;
   display: flex;
@@ -100,7 +101,7 @@
     background-color: transparent;
     color: #000;
    } */
-.btn:hover {
+/* .btn:hover {
   border: none;
   background-color: #FF0057;
   color: #f7f4f4;
@@ -112,7 +113,7 @@
   color: #f7f4f4;
   margin-left: 150px;
   margin-top: 30px;
-}
+} */
 
 .getintouch {
   color: #FF0057;
