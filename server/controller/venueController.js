@@ -1,11 +1,11 @@
-import catererRegistrationModel from "../model/catererRegistrationModel.js";
+import venueModel from '../model/venueRegistration.js'
 import { fileURLToPath } from 'url';
 import path from 'path';
-export const caterrerRegistration = async (request, response) => {
+export const venueRegistration = async (request, response) => {
     var __filename = fileURLToPath(import.meta.url);
     var __dirname = path.dirname(__filename).replace("\\controller", "");
     console.log("request.body : ", request.body);
-    const { Businessname, Specialization, FoodType, ServiceCharges, userEmail } = request.body;
+    const { VenueName, venueLocation, venuePrice, VenueType, venueEmail } = request.body;
     console.log("request.files.docs-------------->", request.files.docs);
     var filename = request.files.docs;
     console.log("filename ++++++++>  : ", filename);
@@ -13,7 +13,6 @@ export const caterrerRegistration = async (request, response) => {
     console.log("fileName : ", fileName);
 
     var pathName = path.join(__dirname, "/public/assets/images/", fileName);
-
     filename.mv(pathName, async (error) => {
         if (error) {
             console.log(error);
@@ -22,12 +21,12 @@ export const caterrerRegistration = async (request, response) => {
         else {
             try {
                 console.log("request.body : ", request.body);
-                const newUser = await catererRegistrationModel.create({
-                    catererEmail: userEmail,
-                    Businessname: Businessname,
-                    Specialization: Specialization,
-                    FoodType: FoodType,
-                    ServiceCharges: ServiceCharges,
+                const newUser = await venueModel.create({
+                    venueEmail: venueEmail,
+                    VenueName: VenueName,
+                    venueLocation: venueLocation,
+                    VenueType: VenueType,
+                    venuePrice: venuePrice,
                     docs: fileName
                 });
                 console.log("newUser : ", newUser);

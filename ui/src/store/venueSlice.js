@@ -1,7 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
-import {caterre_requestUrl} from '../urls.js'
-import jscookie from 'js-cookie';
+import {venue_requestUrl} from '../urls.js'
 const initialState = {
    
 }
@@ -12,14 +11,10 @@ const catererSlice = createSlice({
         
     }
 });
-export const RegisterCatererData = async(formData)=>{
+export const RegistervenueData = async(formData)=>{
     try {
-        const userCookieEmail = jscookie.get("user");
-       console.log("userCookieEmail : ",userCookieEmail);
-    
         console.log("formData : ",formData);
-
-        var registaion = await axios.post(caterre_requestUrl+"/catererRegister",formData);        
+        var registaion = await axios.post(venue_requestUrl+"/VenueRegister",formData);        
         console.log("registration data : " , registaion);
         return registaion;
     } catch (error) {
