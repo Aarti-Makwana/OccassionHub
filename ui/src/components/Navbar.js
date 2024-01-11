@@ -437,11 +437,15 @@ function Navbar() {
 
     const getOtp = async (event) => {
         event.preventDefault();
+        console.log("user data in getotp ", userData);
         result = adduser(userData);
         console.log("result in registration controller ", result);
         document.getElementById("otpfield").style.display = "block";
+        document.getElementById("signupbutton").style.visibility = "visible";
+        document.getElementById("getotpbutton").style.display = "none";
 
     }
+    
     const handleSubmit = async (event) => {
         event.preventDefault();
         result.then((result) => {
@@ -494,6 +498,8 @@ function Navbar() {
     const handleRegistrationModalClose = () => {
         setRegistrationmodal(false);
     }
+
+    
 
     return (
         <>
@@ -574,22 +580,22 @@ function Navbar() {
             </div>
 
             <Modal size="lg" show={isLoginmodal} onHide={handleLoginModalClose} centered   >
-                 <Modal.Body className='p-0'>
-                     <div className="login bg-black">
-                         <div className="container p-0">
-                             <div className="row g-0 p-2">
-                                 <div className="col-lg-5 bg-success p-0">
-                                     <img src={bday} className="w-100" height='100%' alt="" />
-                                 </div>
-                                 <div className="myform col-lg-7 p-3 " >
-                                     <div className='d-flex justify-content-end'>
-                                         <button className='btn-close' aria-label="Close" onClick={() => { setLoginmodal(false) }}></button>
-                                     </div>
-                                     <div id='loginForm'>
-                                         <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> LOGIN </span> FORM</h2>
-                                         <form onSubmit={loginHandleSubmit}>
-                                             <div className="mb-3 mt-4 d-flex flex-row align-items-center">
-                                                 <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
+                <Modal.Body className='p-0'>
+                    <div className="login bg-black">
+                        <div className="container p-0">
+                            <div className="row g-0 p-2">
+                                <div className="col-lg-5 bg-success p-0">
+                                    <img src={bday} className="w-100" height='100%' alt="" />
+                                </div>
+                                <div className="myform col-lg-7 p-3 " >
+                                    <div className='d-flex justify-content-end'>
+                                        <button className='btn-close' aria-label="Close" onClick={() => { setLoginmodal(false) }}></button>
+                                    </div>
+                                    <div id='loginForm'>
+                                        <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> LOGIN </span> FORM</h2>
+                                        <form onSubmit={loginHandleSubmit}>
+                                            <div className="mb-3 mt-4 d-flex flex-row align-items-center">
+                                                <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
                                                     placeholder="Enter Email" onChange={loginGetData} />
                                                 <i className="fa fa-envelope icon" aria-hidden="true"></i>
                                             </div>
@@ -618,9 +624,9 @@ function Navbar() {
                                 </div>
                                 <div className="myform col-lg-6" >
                                     <div className='mt-4' id='registrationForm'>
-                                    <div className='d-flex justify-content-end'>
-                                        <button className='btn-close' aria-label="Close" onClick={() => { setRegistrationmodal(false) }}></button>
-                                    </div>
+                                        <div className='d-flex justify-content-end'>
+                                            <button className='btn-close' aria-label="Close" onClick={() => { setRegistrationmodal(false) }}></button>
+                                        </div>
                                         <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> REGISTRATION </span> FORM</h2>
                                         <form onSubmit={handleSubmit}>
                                             <div className="mb-3 mt-4">
@@ -647,12 +653,12 @@ function Navbar() {
                                                 <input type="text" name="address" className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                     placeholder="Address" onChange={getData} />
                                             </div>
-                                            <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
                                             <div className="mb-3 mt-4" id='otpfield'>
                                                 <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                 <input type="address" name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                     placeholder="Enter Otp" />
                                             </div>
+                                            <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
                                             <button type="submit" className="btn btn-light mt-3" id='signupbutton'>Sign up</button>
                                             <p className='fs-5 mt-2' >Already have an account ? <a className='webcolor' onClick={() => { setRegistrationmodal(false); setLoginmodal(true) }}>SignIn</a></p>
                                         </form>

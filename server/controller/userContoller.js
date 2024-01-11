@@ -95,3 +95,23 @@ export const userLoginController = async (request, response) => {
         response.status(203).json({ message: "Error while Login" });
     }
 }
+export const updateUserProfileController = async (request, response) => {
+    console.log("User Update Profile data -->", request.body);
+    const { Id, name, password, contect, address } = request.body;
+    console.log("iddd   : ", Id)
+
+    try {
+        const result = await usermodel.updateOne({ _id: Id }, { $set: { name, password, contect, address } });
+        console.log("result on controller : ", result);
+        if (result) {
+            console.log("User profile updated successfully");
+            response.status(201).json({ message: 'User profile updated successfully' });
+        } else {
+            console.log("User not found or no changes made");
+            response.status(404).json({ error: 'User not found or no changes made' });
+        }
+    } catch (error) {
+        console.log("Error while updating user profile on controller ", error);
+        response.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+};

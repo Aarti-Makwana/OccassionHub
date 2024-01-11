@@ -36,28 +36,7 @@ function Profile() {
             }
         }
     }, [userEmail]);
-    const handleChange = (event) => {
-        const selectedOption = event.target.value;
-        setSelectedValue(selectedOption);
-
-        switch (selectedOption) {
-            case 'dj':
-                history('/djregister');
-                break;
-            case 'caterer':
-                history('/catererregister');
-                break;
-            case 'venue':
-                history('/venueregister');
-                break;
-            case 'decoration':
-                history('/decorationregister');
-                break;
-            default:
-                history('/profile');
-                break;
-        }
-    };
+    
     const userLogout = () => {
         jscookie.remove("user");
         history('/');
