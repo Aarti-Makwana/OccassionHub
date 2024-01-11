@@ -2,49 +2,47 @@ import caterer1 from '../../images/Caterer.jpg'
 import { useState } from 'react';
 import { addCaterer, RegisterCatererData } from '../../store/CatererSlice.js';
 import Modal from 'react-bootstrap/Modal';
+import jscookie from 'js-cookie';
 
-var result = "";
 function Caterersreg() {
   const [isCatererManagerRegistrationModal, setCatererRegistrationModal] = useState(false)
   const [caterer, setCatererdata] = useState({});
-  const [otp1, setOtp] = useState('');
   const getData = (event) => {
-    const { name, value } = event.target;
-    setCatererdata({
-      ...caterer,
-      [name]: value,
-    });
+    let {name,value} = event.target;
+      if(event.target.type=='file'){
+          value = event.target.files[0];
+          setCatererdata({
+            ...caterer,
+            [name]:value
+        });            
+      }else{
+        setCatererdata({
+          ...caterer,
+          [name]:value
+      });
+    }
   };
-
-  const getOtp = async (event) => {
-    // event.preventDefault();
-    console.log("hiiiiiiiiiiii");
-    // document.getElementById("exampleInputAddress").style.color= "white";
-    document.getElementById("otpfeildecatrerr").style.display = "block";
-    console.log(document.getElementById("otpfeildecatrerr"));
-    console.log("caterer in getotp ", caterer);
-    result = addCaterer(caterer);
-    console.log("result in registration controller ", result);
-
-  }
-
-  const handleOtpChange = (event) => {
-    setOtp(event.target.value);
-  };
-
   const handleSubmitCaterer = (event) => {
     event.preventDefault();
     console.log('caterer ', caterer);
-    result.then((result) => {
-      console.log(result.data.Rotp);
-      if (result.data.Rotp == otp1) {
-        console.log("otp match");
-        var result = RegisterCatererData(caterer);
-        alert("registration sucesfully completed");
-      } else {
-        console.log("not match");
-
+    const userCookieEmail = jscookie.get("user");
+    caterer["userEmail"] = userCookieEmail;
+    const formData = new FormData();
+    for(var index in caterer){
+      console.log("caterer[index] : ",caterer[index])
+      if(caterer[index]){
+        formData.append(index,caterer[index])
       }
+    }
+    var result = RegisterCatererData(formData);
+    console.log("rsult in catrere controller : ",result);
+   result.then((result) => {
+      if(result.status==201){
+        alert("registration sucefully...!")
+      }
+    }).catch((err)=>{
+      alert("error in registration......!!");
+      console.log("error in catch.....!!"+err);
     });
   };
 
@@ -54,6 +52,7 @@ function Caterersreg() {
 
   return (<>
     <h6 onClick={() => { setCatererRegistrationModal(true) }}>Caterer Manager</h6>
+    <form onSubmit={handleSubmitCaterer} className="form-group" enctype="multipart/form-data">
 
     <Modal size="lg" show={isCatererManagerRegistrationModal} onHide={handleCatererManagerModalClose} centered  >
       <Modal.Body className='p-0'>
@@ -77,7 +76,7 @@ function Caterersreg() {
                     </div>
                   </div>
                   <div className="col-md-12">
-                    <select class="w-100 mt-4" id="select1" onChange={getData} value={caterer.FoodType} aria-label="Default select example">
+                    <select className="w-100 mt-4" id="select1" name="FoodType" onChange={getData} value={caterer.FoodType} aria-label="Default select example">
                       <option selected>Select Food Type</option>
                       <option value="Vegetarian">Vegetarian</option>
                       <option value="Non-Vegetarian">Non-Vegetarian</option>
@@ -86,6 +85,12 @@ function Caterersreg() {
                   <div className="col-md-12">
                     <div className="mt-4">
                       <input type="text" onChange={getData} value={caterer.ServiceCharges} id="name2" className="form-control input-field" name="ServiceCharges" placeholder="Enter your Service Charges" />
+                    </div>
+                  </div>
+                  <div className="col-md-12">
+                    <div className="mt-4">
+                      <label for="formFile" id="addgallery" className="form-label">Add Your Gallery</label>
+                      <input  onChange={getData}  type="file" id="docs" name="docs"/>
                     </div>
                   </div>
                 </div>
@@ -98,7 +103,7 @@ function Caterersreg() {
         </div>
       </Modal.Body>
     </Modal>
-
+   </form>
   </>
   );
 }

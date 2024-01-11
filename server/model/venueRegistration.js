@@ -1,30 +1,30 @@
 import mongoose from "../connection/dbConfig.js";
 
-var catererSchema = new mongoose.Schema({
-    catererEmail: {
+var venueSchema = new mongoose.Schema({
+    venueEmail: {
         type: String,
         required: true,
         unique: true
     },
-    Businessname: {
+    VenueName: {
         type: String,
         required: true
     },
-    Specialization: {
+    venueLocation: {
         type: String,
         required: true
     },
-    ServiceCharges: {
+    venuePrice: {
         type: Number,
         required: true
     },
-    FoodType: {
+    VenueType: {
         type: String,
         required: true
     },
     ServiceType: {
         type: String,
-        default: "caterer"
+        default: "venue"
     },
     docs:{
         type:String,
@@ -32,4 +32,4 @@ var catererSchema = new mongoose.Schema({
     }
 });
 
-export default mongoose.model('catererModel', catererSchema, "Caterer");
+export default mongoose.model('veneueModel', venueSchema, "Venue");
