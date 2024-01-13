@@ -78,10 +78,16 @@ export const userLoginController = async (request, response) => {
 
         if (!token)
             response.status(500).json({ message: "Error while generating token inside user login" });
+       
         var userObj = await usermodel.findOne({ email: email });
         var userPassword = userObj.password;
-        var status = await bcrypt.compare(password, userPassword);
+        console.log("userPassword : ",userPassword)
+        console.log("password : ",password)
+        var status = await bcrypt.compare( password,userPassword);
+        
         console.log(status);
+        
+        
         if (status) {
             console.log("scesfully password bcrypt");
             response.status(201).json({ email: email, token: token, message: "login sucefully" });
@@ -97,11 +103,11 @@ export const userLoginController = async (request, response) => {
 }
 export const updateUserProfileController = async (request, response) => {
     console.log("User Update Profile data -->", request.body);
-    const { Id, name, password, contect, address } = request.body;
+    const { Id, name, contect, address } = request.body;
     console.log("iddd   : ", Id)
 
     try {
-        const result = await usermodel.updateOne({ _id: Id }, { $set: { name, password, contect, address } });
+        const result = await usermodel.updateOne({ _id: Id }, { $set: { name, contect, address } });
         console.log("result on controller : ", result);
         if (result) {
             console.log("User profile updated successfully");

@@ -1,4 +1,4 @@
-import venueModel from '../model/venueRegistration.js'
+import venueModel from "../model/venueModal.js";
 import { fileURLToPath } from 'url';
 import path from 'path';
 export const venueRegistration = async (request, response) => {
@@ -40,3 +40,13 @@ export const venueRegistration = async (request, response) => {
     });
 }
 
+export const searchVenuController = async(request,response) =>{
+    try {
+      const venuDetails = await venueModel.find();
+      console.log("Venu Details on controller ---------->", venuDetails);
+      response.status(201).json({ venuDetails });
+    } catch (error) {
+      console.error("Error in  Venu Details search: ", error);
+      response.status(500).json({ error: "Error in  Venu search"});
+    }
+  }

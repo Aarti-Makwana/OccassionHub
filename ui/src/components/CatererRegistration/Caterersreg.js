@@ -64,6 +64,7 @@ function Caterersreg() {
               </div>
               <div className="col-lg-6 py-4">
                 <h2 className="text-center text-white">Caterer Manager Form</h2>
+                
                 <form className="px-md-2">
                   <div className="row">
                     <div className="col-md-12">
@@ -96,7 +97,7 @@ function Caterersreg() {
                     </div>
                   </div>
                   <div className="d-flex justify-content-center mt-3">
-                    <button type="submit" className="ourbtn w-50">Submit</button>
+                    <button type="submit" className="ourbtn w-50" >Submit</button>
                   </div>
                 </form>
               </div>

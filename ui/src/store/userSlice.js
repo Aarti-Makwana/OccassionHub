@@ -52,10 +52,10 @@ export const userLogin = async (userDataLogin) => {
     try {
         console.log("userDataLogin : ", userDataLogin);
         var result = await axios.post(user_requestedUrl + '/userLogin', userDataLogin);
-        console.log("userloginSlice : ", result);
+        console.log("userloginSlice : ", result.data);
         jscookiee.set('userToken', result.data.token, { expires: 1 });
         jscookiee.set("user", result.data.email, { expires: 1 })
-        
+
         return result;
 
     } catch (error) {

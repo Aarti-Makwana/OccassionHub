@@ -1,7 +1,8 @@
 import catererRegistrationModel from "../model/catererRegistrationModel.js";
+
 import { fileURLToPath } from 'url';
 import path from 'path';
-export const caterrerRegistration = async (request, response) => {
+export const caterrerRegistrationController = async (request, response) => {
     var __filename = fileURLToPath(import.meta.url);
     var __dirname = path.dirname(__filename).replace("\\controller", "");
     console.log("request.body : ", request.body);
@@ -41,3 +42,12 @@ export const caterrerRegistration = async (request, response) => {
     });
 }
 
+export const searchCatrerController = async(request,response) =>{
+  try {
+    const catererDetails = await catererRegistrationModel.find();
+    response.status(201).json({ catererDetails });
+  } catch (error) {
+    console.error("Error in cateres search: ", error);
+    response.status(500).json({ error: "Error in  cateres search"});
+  }
+}

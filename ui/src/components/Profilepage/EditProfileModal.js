@@ -45,11 +45,12 @@
 // }
 
 // export default EditProfileModal;
+
 import { useState } from "react";
 import Modal from 'react-bootstrap/Modal';
 import axios from "axios";
 import { user_requestedUrl } from "../../urls";
-
+import jscookie from 'js-cookie';
 
 function EditProfileModal(props) {
     const [isEditprofilemodal, setEditprofilemodal] = useState(false);
@@ -66,12 +67,15 @@ function EditProfileModal(props) {
         event.preventDefault();
         try {
             updatedProfileData.Id = props.userData._id;
+            console.log("props.userData.email is --",props.userData);
+            console.log("======================================",props);
             var result = axios.post(user_requestedUrl + "/updateUserProfile", updatedProfileData);
             console.log(result);
             result.then((data) => {
                 if (data.status == 201) {
                     alert("profile updated successfully");
                     setEditprofilemodal(false);
+                    jscookie.set("user", props.userData.email, { expires: 1 })
                 }
             }, (err) => {
                 console.log("error occur");
@@ -97,9 +101,9 @@ function EditProfileModal(props) {
                             <input type="name" className="form-control input-field" defaultValue={props.userData.name} id="exampleInputName" aria-describedby="nameHelp"
                                 placeholder="Name" name="name" onChange={getData} />
                         </div>
-                        <div className="mb-3">
+                        {/* <div className="mb-3">
                             <input type="password" name="password" className="form-control  input-field" defaultValue={props.userData.password} id="exampleInputPassword1" placeholder="Password" onChange={getData} />
-                        </div>
+                        </div> */}
                         <div className="mb-3 mt-4">
                             <input type="text" name="contect" className="form-control input-field" id="exampleInputContact" defaultValue={props.userData.contect} aria-describedby="contactHelp"
                                 placeholder="Contact Us" onChange={getData} />

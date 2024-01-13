@@ -1,161 +1,74 @@
 import './allservices.css';
 import { useState, useEffect } from 'react';
 import img from "../../images/Caterer.jpg"
+import jscookie from 'js-cookie';
+import { caterre_requestUrl, venue_requestUrl } from '../../urls';
+import axios from 'axios';
 
 function AllServices() {
     const [activeTab, setActiveTab] = useState('active');
+    const [catrersDetails, setcatrersDetails] = useState([]);
+    const [venuDetails, venuDetailsDetails] = useState([]);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
     };
 
+    const userEmail = jscookie.get("user");
+    useEffect(() => {
+        try {
+            var result = axios.post(caterre_requestUrl + "/searchServices")
+                .then(response => {
+                    setcatrersDetails(response.data.catererDetails);
+                })
+                .catch(err => {
+                    console.log("Error in catrers Details data ", err);
+                });
+
+            console.log("result on caters page ", result);
+        } catch (err) {
+            console.log("Error in  catrersDetails data ", err);
+        }
+
+        try {
+            var result = axios.post(venue_requestUrl + "/searchServices")
+                .then(response => {
+                    venuDetailsDetails(response.data.venuDetails);
+                })
+                .catch(err => {
+                    console.log("Error in venu Details data ", err);
+                });
+            console.log("result on venu ", result);
+        } catch (err) {
+            console.log("Error in  venu data ", err);
+        }
+    }, [])
+
     var catererList = () => {
         return (<>
             <div className="row">
-                <div className="col col-lg-3 col-md-6 col-12 my-3">
-                    <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                        <div className='carddiv1'>
-                            <img src={img} className="card-img-top" alt="..." />
-                            <div className='carinnerdiv text-center'>26 <br /> June</div>
-                        </div>
-                        <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                        <div className="card-body">
-                            <span className="card-text">Ticket Price $ 99.00</span><br />
-                            <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                            <span className="card-text">Mosaic , Spain</span><br />
-                        </div>
-                        {/* <div className=''> */}
-                        <button className='ourbtn mt-1'>Book Ticket</button>
-                        <button className='ourbtn1 mt-1'>Event Detail</button>
-                        {/* </div> */}
-                    </div>
-                </div>
-                <div className="col col-lg-3 col-md-6 col-12 my-3">
-                    <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                        <div className='carddiv1'>
-                            <img src={img} className="card-img-top" alt="..." />
-                            <div className='carinnerdiv text-center'>26 <br /> June</div>
-                        </div>
-                        <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                        <div className="card-body">
-                            <span className="card-text">Ticket Price $ 99.00</span><br />
-                            <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                            <span className="card-text">Mosaic , Spain</span><br />
-                        </div>
-                        {/* <div className=''> */}
-                        <button className='ourbtn mt-1'>Book Ticket</button>
-                        <button className='ourbtn1 mt-1'>Event Detail</button>
-                        {/* </div> */}
-                    </div>
-                </div>
-                <div className="col col-lg-3 col-md-6 col-12 my-3">
-                    <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                        <div className='carddiv1'>
-                            <img src={img} className="card-img-top" alt="..." />
-                            <div className='carinnerdiv text-center'>26 <br /> June</div>
-                        </div>
-                        <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                        <div className="card-body">
-                            <span className="card-text">Ticket Price $ 99.00</span><br />
-                            <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                            <span className="card-text">Mosaic , Spain</span><br />
-                        </div>
-                        {/* <div className=''> */}
-                        <button className='ourbtn mt-1'>Book Ticket</button>
-                        <button className='ourbtn1 mt-1'>Event Detail</button>
-                        {/* </div> */}
-                    </div>
-                </div>
-                <div className="col col-lg-3 col-md-6 col-12 my-3">
-                    <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                        <div className='carddiv1'>
-                            <img src={img} className="card-img-top" alt="..." />
-                            <div className='carinnerdiv text-center'>26 <br /> June</div>
-                        </div>
-                        <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                        <div className="card-body">
-                            <span className="card-text">Ticket Price $ 99.00</span><br />
-                            <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                            <span className="card-text">Mosaic , Spain</span><br />
-                        </div>
-                        {/* <div className=''> */}
-                        <button className='ourbtn mt-1'>Book Ticket</button>
-                        <button className='ourbtn1 mt-1'>Event Detail</button>
-                        {/* </div> */}
-                    </div>
-                </div>
-                <div className="col col-lg-3 col-md-6 col-12 my-3">
-                    <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                        <div className='carddiv1'>
-                            <img src={img} className="card-img-top" alt="..." />
-                            <div className='carinnerdiv text-center'>26 <br /> June</div>
-                        </div>
-                        <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                        <div className="card-body">
-                            <span className="card-text">Ticket Price $ 99.00</span><br />
-                            <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                            <span className="card-text">Mosaic , Spain</span><br />
-                        </div>
-                        {/* <div className=''> */}
-                        <button className='ourbtn mt-1'>Book Ticket</button>
-                        <button className='ourbtn1 mt-1'>Event Detail</button>
-                        {/* </div> */}
-                    </div>
-                </div>
-                <div className="col col-lg-3 col-md-6 col-12 my-3">
-                    <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                        <div className='carddiv1'>
-                            <img src={img} className="card-img-top" alt="..." />
-                            <div className='carinnerdiv text-center'>26 <br /> June</div>
-                        </div>
-                        <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                        <div className="card-body">
-                            <span className="card-text">Ticket Price $ 99.00</span><br />
-                            <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                            <span className="card-text">Mosaic , Spain</span><br />
-                        </div>
-                        {/* <div className=''> */}
-                        <button className='ourbtn mt-1'>Book Ticket</button>
-                        <button className='ourbtn1 mt-1'>Event Detail</button>
-                        {/* </div> */}
-                    </div>
-                </div>
-                <div className="col col-lg-3 col-md-6 col-12 my-3">
-                    <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                        <div className='carddiv1'>
-                            <img src={img} className="card-img-top" alt="..." />
-                            <div className='carinnerdiv text-center'>26 <br /> June</div>
-                        </div>
-                        <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                        <div className="card-body">
-                            <span className="card-text">Ticket Price $ 99.00</span><br />
-                            <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                            <span className="card-text">Mosaic , Spain</span><br />
-                        </div>
-                        {/* <div className=''> */}
-                        <button className='ourbtn mt-1'>Book Ticket</button>
-                        <button className='ourbtn1 mt-1'>Event Detail</button>
-                        {/* </div> */}
-                    </div>
-                </div>
-                <div className="col col-lg-3 col-md-6 col-12 my-3">
-                    <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                        <div className='carddiv1'>
-                            <img src={img} className="card-img-top" alt="..." />
-                            <div className='carinnerdiv text-center'>26 <br /> June</div>
-                        </div>
-                        <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                        <div className="card-body">
-                            <span className="card-text">Ticket Price $ 99.00</span><br />
-                            <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                            <span className="card-text">Mosaic , Spain</span><br />
-                        </div>
-                        {/* <div className=''> */}
-                        <button className='ourbtn mt-1'>Book Ticket</button>
-                        <button className='ourbtn1 mt-1'>Event Detail</button>
-                        {/* </div> */}
-                    </div>
-                </div>
+                {
+                    catrersDetails.map((data, index) => {
+                        return (<>
+                            <div className="col col-lg-3 col-md-6 col-12 my-3">
+                                <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
+                                    <div className='carddiv1'>
+                                    <img src={data.docs ? `http://localhost:4001/${data.docs}` : img} className="card-img-top allImages" alt="..." />
+                                        <div className='carinnerdiv text-center'>26 <br /> June</div>
+                                    </div>
+                                    <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>{data.Businessname}</span></h4>
+                                    <div className="card-body">
+                                        <span className="card-text">Service Charge : $ {data.ServiceCharges}</span><br />
+                                        <span className="card-text">Food Type  :  {data.FoodType}</span><br />
+                                        <span className="card-text">Specialization : {data.Specialization}</span><br />
+                                    </div>
+                                    <button className='ourbtn mt-1'>Book Now</button>
+                                    <button className='ourbtn1 mt-1'>Show Gallery</button>
+                                </div>
+                            </div>
+                        </>);
+                    })
+                }
             </div>
 
         </>);
@@ -187,96 +100,7 @@ function AllServices() {
                                 {/* </div> */}
                             </div>
                         </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Decoration</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start Time 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Decoration</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start Time 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start Time 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start Time 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start Time 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
+
                         <div className="col col-lg-3 col-md-6 col-12 my-3">
                             <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
                                 <div className='carddiv1'>
@@ -337,106 +161,7 @@ function AllServices() {
                                 {/* </div> */}
                             </div>
                         </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>DJ</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>DJ</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                            </div>
-                        </div>
+
                         <div className="col col-lg-3 col-md-6 col-12 my-3">
                             <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
                                 <div className='carddiv1'>
@@ -461,150 +186,29 @@ function AllServices() {
             case 'venue':
                 return (<>
                     <div className="row">
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Venu</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
-                        <div className="col col-lg-3 col-md-6 col-12 my-3">
-                            <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
-                                <div className='carddiv1'>
-                                    <img src={img} className="card-img-top" alt="..." />
-                                    <div className='carinnerdiv text-center'>26 <br /> June</div>
-                                </div>
-                                <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>Mosaic</span>  RJ Mahvesh Event</h4>
-                                <div className="card-body">
-                                    <span className="card-text">Ticket Price $ 99.00</span><br />
-                                    <span className="card-text">Start TIme 20:00 - 22:00</span><br />
-                                    <span className="card-text">Mosaic , Spain</span><br />
-                                </div>
-                                {/* <div className=''> */}
-                                <button className='ourbtn mt-1'>Book Ticket</button>
-                                <button className='ourbtn1 mt-1'>Event Detail</button>
-                                {/* </div> */}
-                            </div>
-                        </div>
+                        {
+                            venuDetails.map((data, index) => {
+                                return (<>
+                                    <div className="col col-lg-3 col-md-6 col-12 my-3">
+                                        <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
+                                            <div className='carddiv1'>
+                                                <img src={"http://localhost:4001/"+data.docs} className="card-img-top allImages" alt="..."/>
+                                                {/* <img src={img} className="card-img-top" alt="..." /> */}
+                                                <div className='carinnerdiv text-center'>26 <br /> June</div>
+                                            </div>
+                                            <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>{data.VenueName}</span></h4>
+                                            <div className="card-body">
+                                                <span className="card-text">Venu Price: $ {data.venuePrice}</span><br />
+                                                <span className="card-text">Venu Type :  {data.VenueType}</span><br />
+                                                <span className="card-text">Service Type : {data.ServiceType}</span><br />
+                                            </div>
+                                            <button className='ourbtn mt-1'>Book Now</button>
+                                            <button className='ourbtn1 mt-1'>Show Gallery</button>
+                                        </div>
+                                    </div>
+                                </>);
+                            })
+                        }
                     </div>
 
                 </>);

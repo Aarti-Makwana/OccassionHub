@@ -6,7 +6,15 @@ import VenueRouter from './Router/VenueRouter.js';
 import methodOverride from 'method-override';
 import expressFileUpload from 'express-fileupload';
 import cookieParser from 'cookie-parser';
+import path from "path";
+import { fileURLToPath } from 'url';
+const __filename = fileURLToPath(import.meta.url);
+const __dirname = path.dirname(__filename);
+
 var app = express();
+app.use(express.static(path.join(__dirname, 'public/assets/images')));
+
+app.use("public/assets/images",express.static("images"));
 
 app.use(cors());
 app.use(methodOverride("_method"));
