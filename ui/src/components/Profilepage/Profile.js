@@ -19,8 +19,6 @@ function Profile() {
     const history = useNavigate();
     const [userDetails, setuserDetails] = useState({});
     var userEmail = jscookie.get("user");
-
-    console.log("userEmail on profile page ---------", userEmail);
     useEffect(() => {
         if (userEmail) {
             try {
@@ -57,8 +55,10 @@ function Profile() {
                             <img src={userProfile} className="img-fluid w-75" alt="Profile Image" />
                         </div>
                         <div className='profilebuttons d-flex flex-column justify-content-center'>
-                            <button className="btn btn-danger w-75 mt-1 " >Buy Passes</button>
+                            <button className="btn btn-danger w-75 mt-1 " ><Link to="/passes" style={{color:"white",textDecoration:"none"}}>Buy Passes</Link></button>
+                            <button className="btn btn-danger w-75 mt-1 " ><Link to="/stafflogin" style={{color:"white",textDecoration:"none"}}>login staff</Link></button>
 
+                            {/* <Link to="/stafflogin">LOGIN</Link> */}
                             <div className="dropdown m-0">
                                 <a className="btn btn-danger w-75 mt-1 dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                                     Become a Staff

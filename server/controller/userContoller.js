@@ -1,11 +1,15 @@
-import { request, response } from "express";
 import mailer from "./mailer.js";
 import usermodel from "../model/usermodel.js";
+import venueRegistration from "../model/venueRegistration.js";
+import djRegistrationModel from "../model/djRegistrationModel.js";
+import catererRegistrationModel from "../model/catererRegistrationModel.js";
+import contactModel from "../model/contactModel.js";
 import jwt from 'jsonwebtoken';
 import stripe from 'stripe';
 import bcrypt from 'bcrypt';
 // import bcrypt from 'bcrypt';
 import dotenv from 'dotenv';
+import decorationRegistrationModel from "../model/decorationRegistrationModel.js";
 dotenv.config();
 const { USER_SECRET_KEY } = process.env;
 const stripeInstance = stripe(USER_SECRET_KEY);
@@ -115,3 +119,110 @@ export const updateUserProfileController = async (request, response) => {
         response.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
 };
+
+export const contactController = async (request, response) => {
+    const { name, userEmailcontect, subject, Massage } = request.body;
+    try {
+        console.log("request.body---------->", request.body);
+        var contact = await contactModel.create({
+            name: name,
+            email: userEmailcontect,
+            subject: subject,
+            Massage: Massage
+        });
+        await contact.save();
+        console.log(" contact Data <...............> : ", contact);
+        response.status(201).json({ contact: contact });
+    } catch (error) {
+        console.log("error in contact controller" + error);
+        response.status(500).json({ status: false });
+    }
+}
+
+export const staffLoginController = async (request, response) => {
+    console.log("request.body :=========>  ", request.body);
+    const { email, password, serviesType } = request.body;
+    try {
+        if (serviesType == "venue") {
+            var userObj = await usermodel.findOne({ email: email });
+            var vuserData = await venueRegistration.find({ venueEmail: userObj.email })
+            if (vuserData) {
+                var userPassword = userObj.password;
+                var status = await bcrypt.compare(password, userPassword);
+                console.log(status);
+                if (status) {
+                    // alert("password and email find...!!")
+                    console.log("scesfully password bcrypt");
+                    response.status(201).json({ vuserData: vuserData, message: "login sucefully" });
+                } else {
+                    // alert("password and email not find...!!")
+                    console.log("error in bcrypt controller");
+                    response.status(500).json({ message: "Error In venue Login " });
+                }
+            } else {
+                console.log("data not find controller");
+                response.status(500).json({ message: "Error In venue Login " });
+            }
+
+        }else if(serviesType =="caterer"){
+            var userObj = await usermodel.findOne({ email: email });
+            var catereruserData = await catererRegistrationModel.find({ catererEmail: userObj.email })
+            if (catereruserData) {
+                var userPassword = userObj.password;
+                var status = await bcrypt.compare(password, userPassword);
+                console.log(status);
+                if (status) {
+                    console.log("scesfully password bcrypt");
+                    response.status(201).json({ vuserData: vuserData, message: "login sucefully" });
+                } else {
+                    console.log("error in bcrypt controller");
+                    response.status(500).json({ message: "Error In caterer Login " });
+                }
+            } else {
+                console.log("data not find  caterer staff controller");
+                response.status(500).json({ message: "Error In caterer Login " });
+            }
+        }
+        else if(serviesType =="Decoration"){
+            var userObj = await usermodel.findOne({ email: email });
+            var DecorationuserData = await decorationRegistrationModel.find({ DecorationEmail: userObj.email })
+            if (DecorationuserData) {
+                var userPassword = userObj.password;
+                var status = await bcrypt.compare(password, userPassword);
+                console.log(status);
+                if (status) {
+                    console.log("scesfully password bcrypt");
+                    response.status(201).json({ vuserData: vuserData, message: "login sucefully" });
+                } else {
+                    console.log("error in bcrypt controller");
+                    response.status(500).json({ message: "Error In decration Login " });
+                }
+            } else {
+                console.log("data not find  decoration staff controller");
+                response.status(500).json({ message: "Error In decration Login " });
+            }
+        }
+        else if(serviesType =="Dj"){
+            var userObj = await usermodel.findOne({ email: email });
+            var DjuserData = await djRegistrationModel.find({ DjEmail: userObj.email })
+            if (DjuserData) {
+                var userPassword = userObj.password;
+                var status = await bcrypt.compare(password, userPassword);
+                console.log(status);
+                if (status) {
+                    console.log("scesfully password bcrypt");
+                    response.status(201).json({ vuserData: vuserData, message: "login sucefully" });
+                } else {
+                    console.log("error in bcrypt controller");
+                    response.status(500).json({ message: "Error In dj Login " });
+                }
+            } else {
+                console.log("data not find  dj staff controller");
+                response.status(500).json({ message: "Error In dj Login " });
+            }
+        }
+    } catch (error) {
+        console.log("staff controller error");
+        response.status(500).json({ status: false });
+    }
+}

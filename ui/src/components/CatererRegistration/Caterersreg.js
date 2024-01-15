@@ -1,5 +1,5 @@
 import caterer1 from '../../images/Caterer.jpg'
-import { useState } from 'react';
+import { useState,Link } from 'react';
 import { addCaterer, RegisterCatererData } from '../../store/CatererSlice.js';
 import Modal from 'react-bootstrap/Modal';
 import jscookie from 'js-cookie';
@@ -98,7 +98,9 @@ function Caterersreg() {
                   <div className="d-flex justify-content-center mt-3">
                     <button type="submit" className="ourbtn w-50">Submit</button>
                   </div>
+                 
                 </form>
+                
               </div>
             </div>
           </div>

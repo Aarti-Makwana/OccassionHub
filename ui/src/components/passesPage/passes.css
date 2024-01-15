@@ -1,0 +1,39 @@
+#outdiv{
+    border: 5px solid #FF0057; 
+    background-color: black;
+  
+}
+
+#outersection{
+    height: 60vh;
+    width: 200%;
+     overflow: hidden;
+   /* -colo margin-top: -34rem;
+    backgroundr: ; */
+}
+#innersection{
+    background-color: #FF0057;
+    height: 100vh;
+    width: 50%;
+    rotate: 40deg;
+    margin-left: 32vw;
+}
+#inner{
+    height: 30rem;
+    width: 40%;
+   position: absolute;
+   background-color: #FF0057;
+   rotate: 50deg;
+}
+#heading{
+    margin-top: 5rem;
+    margin-left: 7rem;
+    color: white;
+    font-weight: 2px;
+}
+#heading2{
+    margin-top: -9rem;
+    margin-left: 7.5rem;
+    color: white;
+    
+}

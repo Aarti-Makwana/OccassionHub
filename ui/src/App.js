@@ -14,6 +14,8 @@ import Decorationform from './components/DecorationRegistration/Decorationform.j
 import AllServices from './components/Allservices/AllServices.js';
 import ContactUs from './components/ContactusPage/Contact.js';
 import { Route, Routes } from 'react-router-dom';
+import Passes from './components/passesPage/pass.js';
+import StaffLogin from './components/staffLogin/stafflogin.js';
 function App() {
   return (
     <>
@@ -32,6 +34,8 @@ function App() {
         <Route path='/decorationregister' element={<><Decorationform /></>}></Route>
         <Route path='/searchServices' element={<><AllServices /></>}></Route>
         <Route path='/contactus' element={<><ContactUs /></>}></Route>
+        <Route path='/passes' element={<><Passes/></>}></Route>
+        <Route path='/stafflogin' element={<><StaffLogin/></>}></Route>
       </Routes >
       <Footer />
 

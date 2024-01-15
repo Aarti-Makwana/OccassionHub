@@ -55,7 +55,7 @@ export const userLogin = async (userDataLogin) => {
         console.log("userloginSlice : ", result);
         jscookiee.set('userToken', result.data.token, { expires: 1 });
         jscookiee.set("user", result.data.email, { expires: 1 })
-        
+
         return result;
 
     } catch (error) {
@@ -63,5 +63,25 @@ export const userLogin = async (userDataLogin) => {
     }
 }
 
+export const ContectDataUserSlice = async (ContectData) => {
+    try {
+        console.log("ContectData ---------> ",ContectData);
+        var result = await axios.post(user_requestedUrl + "/contactData", ContectData);
+        return result;
+    } catch (error) {
+        console.log("error in contact catch error");
+        
+    }
+}
+export const staffLoginSlice = async(staffdata)=>{
+    try {
+        console.log("staffdata ---------> ",staffdata);
+        var result = await axios.post(user_requestedUrl + "/staffLogin",staffdata);
+        console.log("Result in staff after going to cntroller....!!");
+        return result;
+    } catch (error) {
+      console.log("staff(user)Slice error "); 
+    }
+}
 export const { setNavbar } = userSlice.actions;
 export default userSlice.reducer;

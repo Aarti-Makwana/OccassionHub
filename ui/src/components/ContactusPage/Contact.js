@@ -1,6 +1,31 @@
 // import img from '../images/6.jpg';
+import { useState } from 'react';
+import { ContectDataUserSlice } from '../../store/userSlice.js';
+import jscookie from 'js-cookie';
 import './Contactus.css';
+var userEmail = jscookie.get("user");
 function Contact() {
+   const [contact,contectData] = useState({});
+   function getData(event){
+      let{name,value} = event.target;
+      contectData({
+         ...contact,
+         [name] : value
+      });
+   }
+   function handleContactSubmit(event){
+      event.preventDefault();
+      contact["userEmailcontect"] = userEmail;
+      console.log(contact," : contact data");
+      var result = ContectDataUserSlice(contact);
+      result.then((data)=>{
+         if(data.status==201){
+            alert("contact data sucefully save")
+         }
+      }).catch((error)=>{
+         alert("contact data unsuceful");
+      })
+   }
    return (<>
       <div className="containerfluid" >
          <div className='' id="curvediv">
@@ -10,19 +35,19 @@ function Contact() {
                <div className="row h-100">
                   <div className="col-sm-6 col-md-6 form-section " style={{ backgroundColor: "#1B1B1B" }}>
                      <div className="login-wrapper">
-                        <form action="#!">
+                        <form action="#!" onSubmit={handleContactSubmit}>
                            <div className="form-group ">
-                              <input type="text" name="name" id="name" className="form-control input-field" placeholder="Enter Name" />
+                              <input type="text" name="name" onChange={getData} id="name" className="form-control input-field" placeholder="Enter Name" />
                            </div>
                            <div className="form-group mt-4">
-                              <input type="email" name="email" id="email" className="form-control input-field" placeholder="Enter Email" />
+                              <input type="email" name="email" value={userEmail} readOnly id="email" onChange={getData}  className="form-control input-field" placeholder="Enter Email" />
                            </div>
                            <div className="form-group mt-4">
-                              <input type="text" name="subject" id="subject" className="form-control input-field" placeholder="Enter Subject" />
+                              <input type="text" name="subject" id="subject" onChange={getData}  className="form-control input-field" placeholder="Enter Subject" />
                            </div>
                            <div className="mb-3 mt-4">
-                              <label className="" style={{ color: "#fff", fontSize: "14px" }}>Enter a Message </label>
-                              <textarea className="form-control" id="exampleFormControlTextarea1" rows="1"></textarea>
+                              <label className=""  style={{ color: "#fff", fontSize: "14px" }}>Enter a Message </label>
+                              <textarea onChange={getData} name='Massage'  className="form-control input-field" id="exampleFormControlTextarea1" rows="1"></textarea>
                            </div>
                            <div className='d-flex justify-content-center mt-5'>
                               <button className="ourbtn w-50" type="submit">Send Message</button>
