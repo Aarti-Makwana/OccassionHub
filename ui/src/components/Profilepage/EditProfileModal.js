@@ -97,9 +97,6 @@ function EditProfileModal(props) {
                             <input type="name" className="form-control input-field" defaultValue={props.userData.name} id="exampleInputName" aria-describedby="nameHelp"
                                 placeholder="Name" name="name" onChange={getData} />
                         </div>
-                        <div className="mb-3">
-                            <input type="password" name="password" className="form-control  input-field" defaultValue={props.userData.password} id="exampleInputPassword1" placeholder="Password" onChange={getData} />
-                        </div>
                         <div className="mb-3 mt-4">
                             <input type="text" name="contect" className="form-control input-field" id="exampleInputContact" defaultValue={props.userData.contect} aria-describedby="contactHelp"
                                 placeholder="Contact Us" onChange={getData} />

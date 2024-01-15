@@ -339,7 +339,7 @@ import { useEffect, useState } from 'react';
 import { adduser, setNavbar, RegisterUserData, userLogin } from '../store/userSlice';
 import jscookie from 'js-cookie';
 import Modal from 'react-bootstrap/Modal';
-import '../App.css';
+import './Navbar.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import bannerSearchServices from "../images/bannerSearchServices.jpg";
@@ -445,7 +445,7 @@ function Navbar() {
         document.getElementById("getotpbutton").style.display = "none";
 
     }
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         result.then((result) => {
@@ -498,8 +498,6 @@ function Navbar() {
     const handleRegistrationModalClose = () => {
         setRegistrationmodal(false);
     }
-
-    
 
     return (
         <>
@@ -571,10 +569,11 @@ function Navbar() {
                         <div className="mt-3 fs-4 withouttransition"><Link to='/' className='text-white fw-bold text-decoration-none'><span>Gallery</span></Link></div>
                         <div className="mt-3 fs-4 withouttransition"><Link to='/servicepage' className='text-white fw-bold text-decoration-none'><span>Services</span></Link></div>
                         <div className="mt-3 fs-4 withouttransition"><Link to='/contactus' className='text-white fw-bold text-decoration-none'><span>Contact</span></Link></div>
-                        <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Dj Manager</span></div>
+                        <div className="mt-3 fs-4 withouttransition"><Link to='/eventRequest' className='text-white fw-bold text-decoration-none'><span>Organise Event</span></Link></div>
+                        {/* <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Dj Manager</span></div>
                         <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Oranise a Event</span></div>
                         <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Catering Manager</span></div>
-                        <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Decoration Manager</span></div>
+                        <div className="mt-3 fs-4 text-white fw-bold withouttransition"><span>Decoration Manager</span></div> */}
                     </div>
                 </div>
             </div>
@@ -631,31 +630,31 @@ function Navbar() {
                                         <form onSubmit={handleSubmit}>
                                             <div className="mb-3 mt-4">
                                                 <i className="fa fa-user icon" aria-hidden="true"></i>
-                                                <input type="name" className="form-control input-field" id="exampleInputName" aria-describedby="nameHelp"
+                                                <input type="name" required className="form-control input-field" id="exampleInputName" aria-describedby="nameHelp"
                                                     placeholder="Name" name="name" onChange={getData} />
                                             </div>
                                             <div className="mb-3 mt-4">
                                                 <i className="fa fa-envelope icon" aria-hidden="true"></i>
-                                                <input type="email" name="email" className="form-control  input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                <input type="email" required name="email" className="form-control  input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
                                                     placeholder="Enter Email" onChange={getData} />
                                             </div>
                                             <div className="mb-3">
                                                 <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
-                                                <input type="password" name="password" className="form-control  input-field" id="exampleInputPassword1" placeholder="Password" onChange={getData} />
+                                                <input type="password" required name="password" className="form-control  input-field" id="exampleInputPassword1" placeholder="Password" onChange={getData} />
                                             </div>
                                             <div className="mb-3 mt-4">
                                                 <i className="fa fa-phone icon" aria-hidden="true"></i>
-                                                <input type="number" name="contect" className="form-control input-field" id="exampleInputContact" aria-describedby="contactHelp"
+                                                <input type="text" required name="contect" className="form-control input-field" id="exampleInputContact" aria-describedby="contactHelp"
                                                     placeholder="Contact Us" onChange={getData} />
                                             </div>
                                             <div className="mb-3 mt-4">
                                                 <i className="fa fa-map-marker icon" aria-hidden="true"></i>
-                                                <input type="text" name="address" className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
+                                                <input type="text" required name="address" className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                     placeholder="Address" onChange={getData} />
                                             </div>
                                             <div className="mb-3 mt-4" id='otpfield'>
                                                 <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
-                                                <input type="address" name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
+                                                <input type="address" required name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                     placeholder="Enter Otp" />
                                             </div>
                                             <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
@@ -673,4 +672,3 @@ function Navbar() {
 }
 
 export default Navbar;
-

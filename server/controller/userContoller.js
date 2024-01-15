@@ -97,11 +97,11 @@ export const userLoginController = async (request, response) => {
 }
 export const updateUserProfileController = async (request, response) => {
     console.log("User Update Profile data -->", request.body);
-    const { Id, name, password, contect, address } = request.body;
+    const { Id, name, contect, address } = request.body;
     console.log("iddd   : ", Id)
 
     try {
-        const result = await usermodel.updateOne({ _id: Id }, { $set: { name, password, contect, address } });
+        const result = await usermodel.updateOne({ _id: Id }, { $set: { name, contect, address } });
         console.log("result on controller : ", result);
         if (result) {
             console.log("User profile updated successfully");

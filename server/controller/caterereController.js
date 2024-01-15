@@ -21,7 +21,7 @@ export const caterrerRegistration = async (request, response) => {
         }
         else {
             try {
-                console.log("request.body : ", request.body);
+                console.log("request.body in registration  : " , request.body);
                 const newUser = await catererRegistrationModel.create({
                     catererEmail: userEmail,
                     Businessname: Businessname,
@@ -41,3 +41,12 @@ export const caterrerRegistration = async (request, response) => {
     });
 }
 
+export const searchCatrerController = async (request, response) => {
+    try {
+        const catererDetails = await catererRegistrationModel.find();
+        response.status(201).json({ catererDetails });
+    } catch (error) {
+        console.error("Error in cateres search: ", error);
+        response.status(500).json({ error: "Error in  cateres search" });
+    }
+}

@@ -1,4 +1,3 @@
-import './App.css';
 import Navbar from './components/Navbar.js';
 import Home from './components/Homepage/Home.js';
 import About from './components/Aboutpage/About.js';
@@ -14,7 +13,6 @@ import Venue from './components/VenueRegistration/Venueform.js';
 import Decorationform from './components/DecorationRegistration/Decorationform.js';
 import AllServices from './components/Allservices/AllServices.js';
 import ContactUs from './components/ContactusPage/Contact.js';
-
 import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
