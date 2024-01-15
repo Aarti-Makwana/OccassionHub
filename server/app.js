@@ -1,23 +1,47 @@
+// import express from 'express';
+// import cors from 'cors';
+// import userRouter from './Router/userRouter.js';
+// var app = express();
+
+// app.use(cors());
+
+// app.use(express.urlencoded({extended:true}));
+// app.use(express.json());
+// app.use('/user',userRouter);
+
+// app.listen("4000",()=>{
+//     console.log("Server connection successful");
+// });
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+// server-app.js
 import express from 'express';
 import cors from 'cors';
 import userRouter from './Router/userRouter.js';
-import catrererRouter from './Router/catererRouter.js';
-import VenueRouter from './Router/VenueRouter.js';
-import methodOverride from 'method-override';
-import expressFileUpload from 'express-fileupload';
-import cookieParser from 'cookie-parser';
+import djRouter from './Router/djRouter.js'; // Import the new DJ router
+import mongoose from './connection/dbConfig.js';
+
 var app = express();
 
 app.use(cors());
-app.use(methodOverride("_method"));
-app.use(expressFileUpload());
-app.use(cookieParser());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use('/user',userRouter);
-app.use("/caterer",catrererRouter);
-app.use("/venue",VenueRouter);
-app.listen("4001",()=>{
-    console.log("Server connection successful");
-});
 
+app.use('/user', userRouter);
+app.use('/Dj', djRouter); // Use the DJ router for DJ-related routes
+
+app.listen("4001", () => {
+  console.log("Server connection successful");
+});

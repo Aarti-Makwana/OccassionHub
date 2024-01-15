@@ -7,7 +7,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import { user_requestedUrl } from '../../urls';
-import DjForm from '../DjRegistration/DjForm.js';
+import DjForm from '../DjRegistration/DJ.js';
 import Caterersreg from '../CatererRegistration/Caterersreg.js'
 import Decorationform from '../DecorationRegistration/Decorationform.js';
 import Venue from '../VenueRegistration/Venueform.js';

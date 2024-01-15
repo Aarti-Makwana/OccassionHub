@@ -8,7 +8,7 @@ import EventsDetails from './components/Eventdetailpage/EventsDetails.js';
 import Servicepage from './components/Servicepage/Servicepage.js';
 import Profile from './components/Profilepage/Profile.js';
 import RequirmentForm from './components/Requirmentform/RequirmentForm.js';
-import Dj from './components/DjRegistration/DjForm.js';
+import Dj from './components/DjRegistration/DJ.js';
 import Caterersreg from './components/CatererRegistration/Caterersreg.js';
 import Venue from './components/VenueRegistration/Venueform.js';
 import Decorationform from './components/DecorationRegistration/Decorationform.js';
@@ -42,3 +42,33 @@ function App() {
 }
 
 export default App;
+
+
+
+
+
+
+
+
+
+// (OccassionHub)
+// server->
+//    connection-
+//    dbConflig.js
+//    controller-
+//    userController.js
+//    model-
+//    usermodel.js
+//    router-
+//    userRouter.js
+// app.js
+// ui->
+//    components-
+//      DecorationRegistration-
+//         Decorationform.js
+//    Navbar.js
+//    store-
+//      userSlice.js
+//    App.js
+//    url.js
+
