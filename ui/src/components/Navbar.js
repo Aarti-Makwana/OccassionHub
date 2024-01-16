@@ -366,14 +366,19 @@ function Navbar() {
     useEffect(() => {
         const token = jscookie.get('user');
         setToken(token);
+    
         const pathname = window.location.pathname;
-        if (pathname === "/searchServices") {
-            setBannerPath(pathname);
+        console.log(pathname)
+        if (pathname == "/searchServices") {
+            setBannerPath(bannerSearchServices);
+            console.log("searchServices",bannerPath)
+        } else if (pathname == "/catrerDashBoard") {
+            setBannerPath("");
+            console.log("catrerDashBoard",bannerPath)
+        } else {
+            setBannerPath(video);
         }
-        else {
-            setBannerPath(pathname);
-        }
-    });
+    }, []);
 
     window.addEventListener('scroll', function () {
         if (window.scrollY) {
@@ -443,7 +448,6 @@ function Navbar() {
         document.getElementById("otpfield").style.display = "block";
         document.getElementById("signupbutton").style.visibility = "visible";
         document.getElementById("getotpbutton").style.display = "none";
-
     }
     
     const handleSubmit = async (event) => {
@@ -504,12 +508,18 @@ function Navbar() {
     return (
         <>
             <div className="maindiv">
-                {bannerPath == "/searchServices" ? (
+                {(bannerPath == "/searchServices") ? (
                     <img src={bannerSearchServices} alt="loaded..." className="searchServicesBanner" />)
-                    : (<video autoPlay loop muted plays-inline="true" className="video" width="100%">
+                    : (bannerPath == "/catrerDashBoard")?(<></>):
+                    (
+                    <video autoPlay loop muted plays-inline="true" className="video" width="100%">
                         <source src={video} />
                     </video>
-                    )}
+                    // console.log("bannerPath ",bannerPath)
+                    ) 
+                                       
+                    }
+
                 <div id="overlay">
                     <nav className="navbar navbar-expand-lg w-100" id="navbar">
                         <div className="container-fluid row">
@@ -547,13 +557,15 @@ function Navbar() {
                                     <h2 className='fs-1  navbarpara1'> With Us</h2>
                                     <h1 className='mt-3 fs-1 navbarpara2' style={{ color: "green" }}>NewsLetters</h1>
                                 </div>
-                            </>)
-                            : (
+                            </>):
+                            (bannerPath == "/catrerDashboard")?"":
+                             (
                                 <>
                                     <p className='navbarpara1'>Unleash the Extraordinary</p>
                                     <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
                                 </>
-                            )}
+                            )
+                        }
                     </div>
                 </div>
             </div>

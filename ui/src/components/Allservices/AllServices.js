@@ -53,7 +53,7 @@ function AllServices() {
                             <div className="col col-lg-3 col-md-6 col-12 my-3">
                                 <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
                                     <div className='carddiv1'>
-                                    <img src={data.docs ? `http://localhost:4001/${data.docs}` : img} className="card-img-top allImages" alt="..." />
+                                    <img src={data.docs ? `http://localhost:4001/${data.docs}` : img} className="card-img-top" height={"200px"} alt="..." />
                                         <div className='carinnerdiv text-center'>26 <br /> June</div>
                                     </div>
                                     <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>{data.Businessname}</span></h4>
@@ -192,7 +192,7 @@ function AllServices() {
                                     <div className="col col-lg-3 col-md-6 col-12 my-3">
                                         <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
                                             <div className='carddiv1'>
-                                                <img src={"http://localhost:4001/"+data.docs} className="card-img-top allImages" alt="..."/>
+                                                <img src={"http://localhost:4001/"+data.docs} className="card-img-top" height={'200px'} alt="..."/>
                                                 {/* <img src={img} className="card-img-top" alt="..." /> */}
                                                 <div className='carinnerdiv text-center'>26 <br /> June</div>
                                             </div>

@@ -1,0 +1,13 @@
+
+.firstImageBanner{
+    background: url('../../images/catrersIcon.png') center/cover;
+    height:22vh;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+.SecondImageBanner{
+    background: url('../../images/klipartz.png') center/cover;
+    height:50vh;
+    background-repeat: no-repeat;
+    background-position: center;
+}

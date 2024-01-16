@@ -14,13 +14,13 @@ import Venue from './components/VenueRegistration/Venueform.js';
 import Decorationform from './components/DecorationRegistration/Decorationform.js';
 import AllServices from './components/Allservices/AllServices.js';
 import ContactUs from './components/ContactusPage/Contact.js';
-
+import CatresDashBoard from './components/serviceProviderDashbords/cateresDashbord';
 import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <>
-      <Navbar />
-      <Routes>
+      <Navbar/>
+      {/* <Routes>
         <Route path='/' element={<><Home /></>}></Route>
         <Route path='/upcomingevent' element={<><UpComingEvents /></>}></Route>
         <Route path='/bookticket' element={<><EventsDetails /></>}></Route>
@@ -34,8 +34,11 @@ function App() {
         <Route path='/decorationregister' element={<><Decorationform /></>}></Route>
         <Route path='/searchServices' element={<><AllServices /></>}></Route>
         <Route path='/contactus' element={<><ContactUs /></>}></Route>
-      </Routes >
-      <Footer />
+      </Routes > */}
+
+       <CatresDashBoard/>
+
+      {/* <Footer /> */}
 
     </>
   );
