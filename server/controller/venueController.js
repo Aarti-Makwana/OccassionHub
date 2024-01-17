@@ -40,3 +40,12 @@ export const venueRegistration = async (request, response) => {
     });
 }
 
+export const searchVenuController = async (request, response) => {
+    try {
+        const venuDetails = await venueModel.find();
+        response.status(201).json({ venuDetails });
+    } catch (error) {
+        console.error("Error in  Venu Details search: ", error);
+        response.status(500).json({ error: "Error in  Venu search" });
+    }
+}

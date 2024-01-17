@@ -1,39 +1,53 @@
-body{
+body {
     background-color: black;
 }
-.heading1{
-    color: red;
-}
-.bookserviceheading{
-    border-bottom: 2px solid #ff0057;
+
+.heading1 {
+    color: #ff0057;
+    font-weight: 600;
 }
 
-.leftSection{
+.bookserviceheading {
+    border-bottom: 3px solid #ff0057;
+}
+
+.leftSection {
     background: url('../../images/stageSearchServices.jpg') center/cover;
-    height:70vh;
+    height: 50vh;
     background-repeat: no-repeat;
     background-position: center;
 }
 
-.rightSection{
+.rightSection {
     text-align: justify;
     padding: 2.5em;
-    /* line-height: 1.75; */
 }
 
-.secondSpan{
-    color: wheat;
+.secondSpan {
+    color: white;
+    font-weight: 600;
 }
 
-.links{
-    color:wheat;
+.links {
+    color: white;
+    font-weight: 600;
 }
-.links:hover{
+
+.links:hover {
     text-decoration: none;
-    color:wheat;
+    color: #ff0057;
 }
 
-.linksContainer{
+.linksContainer {
     height: 70vh;
     overflow-y: scroll;
+}
+
+.allImages {
+    height: "200px";
+    object-fit: cover;
+}
+
+.nav-link:focus {
+    color: #ff0057;
 }
