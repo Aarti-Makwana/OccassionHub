@@ -10,6 +10,7 @@ import RequirmentForm from './components/Requirmentform/RequirmentForm.js';
 import AdmindashBoard from './components/Admin/AdminDashboard.js';
 import AllServices from './components/Allservices/AllServices.js';
 import ContactUs from './components/ContactusPage/Contact.js';
+import CaterersDashboard from './components/ServiceProviderDashboard/CaterersDashboard.js';
 import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
@@ -26,6 +27,7 @@ function App() {
         <Route path='/searchServices' element={<><AllServices /></>}></Route>
         <Route path='/contactus' element={<><ContactUs /></>}></Route>
         <Route path='/admin' element={<><AdmindashBoard /></>}></Route>
+        <Route path='/catererprofile' element={<><CaterersDashboard /></>}></Route>
       </Routes >
       <Footer />
     </>

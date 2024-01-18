@@ -374,7 +374,7 @@ function Navbar(props) {
         else {
             setBannerPath(pathname);
         }
-        if (pathname == '/admin') {
+        if (pathname == '/admin' || pathname == '/catererprofile') {
             setAdminPath(true)
         }
         else {
@@ -478,7 +478,7 @@ function Navbar(props) {
             event.target.reset();
         });
     }
-    
+
     if (!isAdmin) {
         window.addEventListener('scroll', function () {
             if (window.scrollY) {
@@ -577,7 +577,7 @@ function Navbar(props) {
                     </div>
                 </div>
 
-                <Modal size="lg" show={isLoginmodal} onHide={() => { setLoginmodal(false)}} centered   >
+                <Modal size="lg" show={isLoginmodal} onHide={() => { setLoginmodal(false) }} centered   >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -612,7 +612,7 @@ function Navbar(props) {
                     </Modal.Body>
                 </Modal>
 
-                <Modal size="xl" show={isRegistrationmodal} onHide={() => { setRegistrationmodal(false);}} centered  >
+                <Modal size="xl" show={isRegistrationmodal} onHide={() => { setRegistrationmodal(false); }} centered  >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container">

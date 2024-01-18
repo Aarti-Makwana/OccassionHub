@@ -48,10 +48,30 @@ function AdmindashBoard() {
                                 <i className="bi bi-person-circle text-center"></i>
                                 &nbsp;All Users
                             </p>
-                            <p className="nav-item nav-link">
-                                <i className="fa bi-person-circle text-center"></i>
-                                &nbsp;View All Staff
-                            </p>
+                            <div className="nav-item dropdown">
+                                <p className="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <i className="fa bi-person-circle text-center"></i>
+                                    &nbsp;View All Staff
+                                </p>
+                                <div className="dropdown-menu bg-dark border-0 p-1">
+                                    <p className="dropdown-item text-white">
+                                        <i className="fa bi-person-circle text-center"></i>
+                                        &nbsp;Caterers Manager
+                                    </p>
+                                    <p className="dropdown-item text-white">
+                                        <i className="fa bi-person-circle text-center"></i>
+                                        &nbsp;Decoration Manager
+                                    </p>
+                                    <p className="dropdown-item text-white">
+                                        <i className="fa bi-person-circle text-center"></i>
+                                        &nbsp;Venue Manager
+                                    </p>
+                                    <p className="dropdown-item text-white">
+                                        <i className="fa bi-person-circle text-center"></i>
+                                        &nbsp;Dj Manager
+                                    </p>
+                                </div>
+                            </div>
                             <p className="nav-item nav-link">
                                 <i className="fa bi-person-circle text-center"></i>
                                 &nbsp;View All event Request
@@ -87,15 +107,15 @@ function AdmindashBoard() {
                             <table className="table table-bordered table-hover table-dark">
                                 <thead>
                                     <tr>
-                                        <th>Name</th>
-                                        <th>Email</th>
-                                        <th>Contact</th>
-                                        <th>Address</th>
+                                        <th className="nowrap">Name</th>
+                                        <th className="nowrap">Email</th>
+                                        <th className="nowrap">Contact</th>
+                                        <th className="nowrap">Address</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Dheeraj singh chouhan</td>
+                                        <td className="text-nowrap">Dheeraj singh chouhan</td>
                                         <td>dheerajsinghchouhan94@gmail.com</td>
                                         <td>6264037225</td>
                                         <td>Indore</td>

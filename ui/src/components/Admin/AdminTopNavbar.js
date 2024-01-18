@@ -18,8 +18,8 @@ function AdminTopNavbar() {
     }
 
     return (<>
-        <nav class="navbar navbar-expand-lg bg-black  px-4 py-0 mySideBar">
-            <div class="container-fluid mySideBar">
+        <nav class="navbar navbar-expand-lg bg-black  px-4 py-0">
+            <div class="container-fluid">
                 <button class="navbar-toggler" type="button" onClick={silderBarToggle}>
                     <i class="fa fa-solid fa-bars fs-3 text-white"></i>
                 </button>
