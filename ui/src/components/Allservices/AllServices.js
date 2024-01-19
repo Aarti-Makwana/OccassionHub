@@ -4,11 +4,13 @@ import img from "../../images/Caterer.jpg"
 import jscookie from 'js-cookie';
 import { caterre_requestUrl, venue_requestUrl } from '../../urls';
 import axios from 'axios';
+import ChooseServicesModal from './chooseServicesModal';
 
 function AllServices() {
     const [activeTab, setActiveTab] = useState('active');
     const [catrersDetails, setcatrersDetails] = useState([]);
     const [venuDetails, venuDetailsDetails] = useState([]);
+    const [isBookNowModalOpen, setBookNowModalOpen] = useState(false);
 
     const handleTabClick = (tab) => {
         setActiveTab(tab);
@@ -62,7 +64,8 @@ function AllServices() {
                                         <span className="card-text">Food Type  :  {data.FoodType}</span><br />
                                         <span className="card-text">Specialization : {data.Specialization}</span><br />
                                     </div>
-                                    <button className='ourbtn mt-1'>Book Now</button>
+                                    {/* <button className='ourbtn mt-1'>Book Now</button> */}
+                                    <ChooseServicesModal isOpen={isBookNowModalOpen} closeModal={() => setBookNowModalOpen(false)} />
                                     <button className='ourbtn1 mt-1'>Show Gallery</button>
                                 </div>
                             </div>

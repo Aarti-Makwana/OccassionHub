@@ -3,10 +3,13 @@ import { useState } from 'react';
 import { addCaterer, RegisterCatererData } from '../../store/CatererSlice.js';
 import Modal from 'react-bootstrap/Modal';
 import jscookie from 'js-cookie';
+import { useNavigate } from "react-router-dom";
 
 function Caterersreg() {
   const [isCatererManagerRegistrationModal, setCatererRegistrationModal] = useState(false)
   const [caterer, setCatererdata] = useState({});
+  var navigate = useNavigate();
+
   const getData = (event) => {
     let { name, value } = event.target;
     if (event.target.type == 'file') {
@@ -40,6 +43,7 @@ function Caterersreg() {
       if (result.status == 201) {
         alert("registration sucefully...!")
         setCatererRegistrationModal(false);
+        navigate("/");
       }
     }).catch((err) => {
       alert("error in registration......!!");
@@ -97,6 +101,7 @@ function Caterersreg() {
                     </div>
                   </div>
                   <div className="d-flex justify-content-center mt-3">
+                    {/* <button type="submit" className="ourbtn w-50" ><Link to ="/">Submit</Link></button> */}
                     <button type="submit" className="ourbtn w-50" >Submit</button>
                   </div>
                 </form>

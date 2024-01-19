@@ -2,9 +2,12 @@ import './requirmentform.css';
 import { useState } from 'react';
 import axios from 'axios';
 import {user_requestedUrl} from '../../urls.js';
+import jscookie from 'js-cookie';
 
 function RequirmentForm() {
     var cateringCheckbox, venuCheckbox, decorationCheckboxnuCheckbox, djCheckbox;
+    var email = jscookie.get('user');
+    console.log("email on requirment form-------> ",jscookie);
     const [requestFormData, setRequestFormData] = useState({
         serviceschoose: {
             caterer: false,

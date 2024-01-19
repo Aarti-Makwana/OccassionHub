@@ -22,6 +22,11 @@ var userSchema =  new mongoose.Schema({
     address : {
         type :String,
         require : true
+    },
+    role:{
+        type :String,
+        require : false,
+        default:"user"
     }
 });
 

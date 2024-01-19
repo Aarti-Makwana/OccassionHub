@@ -19,8 +19,8 @@ import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
     <>
-      <Navbar/>
-      {/* <Routes>
+      <Navbar />
+      <Routes>
         <Route path='/' element={<><Home /></>}></Route>
         <Route path='/upcomingevent' element={<><UpComingEvents /></>}></Route>
         <Route path='/bookticket' element={<><EventsDetails /></>}></Route>
@@ -34,11 +34,11 @@ function App() {
         <Route path='/decorationregister' element={<><Decorationform /></>}></Route>
         <Route path='/searchServices' element={<><AllServices /></>}></Route>
         <Route path='/contactus' element={<><ContactUs /></>}></Route>
-      </Routes > */}
+        <Route path='/catrerProfile' element={<><CatresDashBoard /></>}></Route>
+      </Routes >
+      {/* <CatresDashBoard /> */}
 
-       <CatresDashBoard/>
-
-      {/* <Footer /> */}
+      <Footer />
 
     </>
   );

@@ -121,3 +121,23 @@ export const updateUserProfileController = async (request, response) => {
         response.status(500).json({ error: 'Internal Server Error', message: error.message });
     }
 };
+
+export const userCatrerDashboardContoller = async (request,response) =>{
+    const {email} = request.body;
+    console.log("user Email for catrer dashboard ", request.body);
+
+    try{
+        if(email){
+             var role = await usermodel.findOne({email:email});
+             if (role) {
+                console.log("user Catrer Dashboard Contoller successfully");
+                response.status(201).json(role);
+            } else {
+                console.log("User not found or no changes made");
+                response.status(404).json({ error: 'User not found or no changes made' });
+            }
+        }
+    }catch(error){
+    console.log("error on catrer profile controller ",error);
+    }
+}

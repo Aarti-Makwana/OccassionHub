@@ -26,12 +26,12 @@
 
 //     const [isLoginmodal, setLoginmodal] = useState(false);
 //     const [isRegistrationmodal, setRegistrationmodal] = useState(false);
-//     const [token, setToken] = useState('');
+//     const [token, setEmail] = useState('');
 //     const dispatch = useDispatch();
 //     const navbar = useSelector(state => state.user);
 //     useEffect(() => {
 //         const token = jscookie.get('user');
-//         setToken(token);
+//         setEmail(token);
 //     });
 
 //     window.addEventListener('scroll', function () {
@@ -343,7 +343,8 @@ import '../App.css';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import bannerSearchServices from "../images/bannerSearchServices.jpg";
-// import url from "url";
+import { caterre_requestUrl, user_requestedUrl } from '../urls';
+import axios from 'axios';
 
 var result = "";
 const modalCss = {
@@ -359,26 +360,46 @@ function Navbar() {
 
     const [isLoginmodal, setLoginmodal] = useState(false);
     const [isRegistrationmodal, setRegistrationmodal] = useState(false);
-    const [token, setToken] = useState('');
+    const [email, setEmail] = useState('');
     const [bannerPath, setBannerPath] = useState(video);
+    const [role, setRole] = useState('login');
     const navbar = useSelector(state => state.user);
 
     useEffect(() => {
-        const token = jscookie.get('user');
-        setToken(token);
-    
+        const email = jscookie.get('user');
+        setEmail(email);
+
         const pathname = window.location.pathname;
         console.log(pathname)
         if (pathname == "/searchServices") {
-            setBannerPath(bannerSearchServices);
-            console.log("searchServices",bannerPath)
-        } else if (pathname == "/catrerDashBoard") {
-            setBannerPath("");
-            console.log("catrerDashBoard",bannerPath)
+            setBannerPath(pathname);
+            console.log("searchServices", bannerPath)
+        } else if (pathname == "/catrerProfile") {
+            setBannerPath(pathname);
+            console.log("catrerDashBoard", pathname)
         } else {
             setBannerPath(video);
         }
+    }, [email]);
+
+    useEffect(() => {
+        console.log("check role : **==================")
+        var email = jscookie.get('user');
+        var result = axios.post(user_requestedUrl + "/checkRole", {email})
+        console.log("result ++++++++++++++++ ",result);
+        result.then((response) => {
+            console.log("response ++++++++++++++++ ",response.status);
+            var userrole = response.data.role;
+            console.log("dhdhdhdhdh ",userrole)
+            setRole(response.data.role);
+        })
+            .catch(error => {
+                console.error('Error:', error.message);
+            });
+            
+
     }, []);
+    console.log("role is : ",role)
 
     window.addEventListener('scroll', function () {
         if (window.scrollY) {
@@ -449,7 +470,7 @@ function Navbar() {
         document.getElementById("signupbutton").style.visibility = "visible";
         document.getElementById("getotpbutton").style.display = "none";
     }
-    
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         result.then((result) => {
@@ -503,22 +524,18 @@ function Navbar() {
         setRegistrationmodal(false);
     }
 
-    
-
     return (
         <>
             <div className="maindiv">
                 {(bannerPath == "/searchServices") ? (
                     <img src={bannerSearchServices} alt="loaded..." className="searchServicesBanner" />)
-                    : (bannerPath == "/catrerDashBoard")?(<></>):
-                    (
-                    <video autoPlay loop muted plays-inline="true" className="video" width="100%">
-                        <source src={video} />
-                    </video>
-                    // console.log("bannerPath ",bannerPath)
-                    ) 
-                                       
-                    }
+                    : (bannerPath == "/catrerProfile") ? (<></>) :
+                        (
+                            <video autoPlay loop muted plays-inline="true" className="video" width="100%">
+                                <source src={video} />
+                            </video>
+                        )
+                }
 
                 <div id="overlay">
                     <nav className="navbar navbar-expand-lg w-100" id="navbar">
@@ -533,13 +550,35 @@ function Navbar() {
                             </div>
                             <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-end">
                                 {
-                                    (token) ? (<>
-                                        <span role='button'>
-                                            <Link to='/profile' className='text-decoration-none text-white'>
-                                                <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5">Profile</span>
-                                            </Link>
-                                        </span>
-                                    </>) : (<>
+                                    // (email) ? (<>
+                                    //     <span role='button'>
+                                    //         <Link to='/profile' className='text-decoration-none text-white'>
+                                    //             <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5">Profile</span>
+                                    //         </Link>
+                                    //     </span>
+                                    // </>) : (<>
+                                    //     <span role='button' onClick={handleLoginButtonClick} >
+                                    //         <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
+                                    //     </span>
+                                    // </>)
+
+                                    ( role == "user") ? (
+                                        <>
+                                            <span role='button'>
+                                                <Link to='/profile' className='text-decoration-none text-white'>
+                                                    <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5">Profile</span>
+                                                </Link>
+                                            </span>
+                                        </>
+                                    ) : (role == "catrer") ? (
+                                        <>
+                                            <span role='button'>
+                                                <Link to='/catrerProfile' className='text-decoration-none text-white'>
+                                                    <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5">Profile</span>
+                                                </Link>
+                                            </span>
+                                        </>
+                                    ) : (<>
                                         <span role='button' onClick={handleLoginButtonClick} >
                                             <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
                                         </span>
@@ -557,14 +596,14 @@ function Navbar() {
                                     <h2 className='fs-1  navbarpara1'> With Us</h2>
                                     <h1 className='mt-3 fs-1 navbarpara2' style={{ color: "green" }}>NewsLetters</h1>
                                 </div>
-                            </>):
-                            (bannerPath == "/catrerDashboard")?"":
-                             (
-                                <>
-                                    <p className='navbarpara1'>Unleash the Extraordinary</p>
-                                    <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
-                                </>
-                            )
+                            </>) :
+                            (bannerPath == "/catrerProfile") ? "" :
+                                (
+                                    <>
+                                        <p className='navbarpara1'>Unleash the Extraordinary</p>
+                                        <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
+                                    </>
+                                )
                         }
                     </div>
                 </div>
@@ -685,4 +724,3 @@ function Navbar() {
 }
 
 export default Navbar;
-
