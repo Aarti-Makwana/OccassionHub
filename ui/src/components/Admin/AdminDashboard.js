@@ -1,9 +1,21 @@
 import "./AdminDashboard.css";
 import AdminTopNavbar from "./AdminTopNavbar";
+import AlluserSection from './AlluserSection.js';
+import CatererSection from "./CatererSection.js";
+import DecorationSection from "./DecorationSection.js";
+import VenueSection from "./VenueSection.js";
+import DjSection from "./DjSection.js";
+import PassDetailSection from "./PassDetailSection.js";
+import EventRequirementDetailSection from "./EventRequirementDetailSection.js";
+
+import { useEffect, useState } from 'react'
 
 <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 var show = false;
 function AdmindashBoard() {
+    const [section, setSection] = useState('profile');
+    console.log("section ... : ", section);
+
     function silderBarToggle() {
         var sliderBar = document.getElementById("siderBar");
         var content = document.getElementById("content")
@@ -24,13 +36,11 @@ function AdmindashBoard() {
                 <div className="sidebar" id="siderBar">
                     <nav className="navbar navbar-light pe-2">
                         <div className="d-flex justify-content-between ps-3 pe-3  w-100">
-                            <p href="" className="navbar-brand ">
-                                <h3 className="text-end webcolor fw-bolder">
-                                    OCCASSION HUB
-                                </h3>
-                            </p>
+                            <h3 href="" className="navbar-brand text-end webcolor fw-bolder">
+                                OCCASSION HUB
+                            </h3>
                             <h2 className="text-white sidebar-toggler m-2 text-decoration-none flex-shrink-0" id="sidebar-toggler" onClick={silderBarToggle}>
-                                <i class="bi bi-x-circle-fill"></i>
+                                <i className="bi bi-x-circle-fill"></i>
                             </h2>
                         </div>
                         <div className="d-flex align-items-center ms-4 mb-1">
@@ -40,11 +50,11 @@ function AdmindashBoard() {
                             </div>
                         </div>
                         <div className="navbar-nav w-100 ">
-                            <p className="nav-item nav-link">
+                            <p role="button" className="nav-item nav-link" onClick={() => { setSection('profile') }}>
                                 <i className="bi bi-person-circle text-center"></i>
                                 &nbsp;Profile
                             </p>
-                            <p className="nav-item nav-link active">
+                            <p className="nav-item nav-link" onClick={() => { setSection('alluser') }}>
                                 <i className="bi bi-person-circle text-center"></i>
                                 &nbsp;All Users
                             </p>
@@ -54,25 +64,25 @@ function AdmindashBoard() {
                                     &nbsp;View All Staff
                                 </p>
                                 <div className="dropdown-menu bg-dark border-0 p-1">
-                                    <p className="dropdown-item text-white">
-                                        <i className="fa bi-person-circle text-center"></i>
+                                    <p className="dropdown-item text-white" onClick={() => { setSection('caterer') }}>
+                                        <i className="fa bi-person-circle text-center" ></i>
                                         &nbsp;Caterers Manager
                                     </p>
-                                    <p className="dropdown-item text-white">
-                                        <i className="fa bi-person-circle text-center"></i>
+                                    <p className="dropdown-item text-white" onClick={() => { setSection('decoration') }}>
+                                        <i className="fa bi-person-circle text-center" ></i>
                                         &nbsp;Decoration Manager
                                     </p>
-                                    <p className="dropdown-item text-white">
-                                        <i className="fa bi-person-circle text-center"></i>
+                                    <p className="dropdown-item text-white" onClick={() => { setSection('venue') }}>
+                                        <i className="fa bi-person-circle text-center" ></i>
                                         &nbsp;Venue Manager
                                     </p>
-                                    <p className="dropdown-item text-white">
-                                        <i className="fa bi-person-circle text-center"></i>
+                                    <p className="dropdown-item text-white" onClick={() => { setSection('dj') }}>
+                                        <i className="fa bi-person-circle text-center" ></i>
                                         &nbsp;Dj Manager
                                     </p>
                                 </div>
                             </div>
-                            <p className="nav-item nav-link">
+                            <p className="nav-item nav-link" onClick={() => { setSection('alleventreq') }}>
                                 <i className="fa bi-person-circle text-center"></i>
                                 &nbsp;View All event Request
                             </p>
@@ -88,7 +98,7 @@ function AdmindashBoard() {
                                 <i className="fa bi-person-circle text-center"></i>
                                 &nbsp;View Particular user Staff
                             </p>
-                            <p className="nav-item nav-link">
+                            <p className="nav-item nav-link" onClick={() => { setSection('passdetail') }}>
                                 <i className="fa bi-person-circle text-center"></i>
                                 &nbsp;View pass Detail
                             </p>
@@ -103,7 +113,19 @@ function AdmindashBoard() {
                 <div className="content" id="content" style={{ display: "flex", flexDirection: "column" }}>
                     <AdminTopNavbar />
                     <div className="container-fluid p-0 bg-dark" style={{ flexGrow: 1, }}>
-                        <div className="w-100 table-responsive p-2 pt-4 ">
+                        {
+                            {
+                                'profile': <h1 className="text-white">Profile</h1>,
+                                'alluser': <AlluserSection />,
+                                'caterer': <CatererSection />,
+                                'decoration': <DecorationSection />,
+                                'venue': <VenueSection />,
+                                'dj': <DjSection />,
+                                'passdetail': <PassDetailSection />,
+                                'alleventreq': <EventRequirementDetailSection />
+                            }[section]
+                        }
+                        {/* <div className="w-100 table-responsive p-2 pt-4 ">
                             <table className="table table-bordered table-hover table-dark">
                                 <thead>
                                     <tr>
@@ -140,7 +162,7 @@ function AdmindashBoard() {
                                     </tr>
                                 </tbody>
                             </table>
-                        </div>
+                        </div> */}
                     </div>
                 </div>
             </div>

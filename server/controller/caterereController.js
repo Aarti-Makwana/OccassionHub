@@ -21,7 +21,7 @@ export const caterrerRegistration = async (request, response) => {
         }
         else {
             try {
-                console.log("request.body in registration  : " , request.body);
+                console.log("request.body in registration  : ", request.body);
                 const newUser = await catererRegistrationModel.create({
                     catererEmail: userEmail,
                     Businessname: Businessname,

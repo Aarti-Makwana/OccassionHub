@@ -1,7 +1,9 @@
 import './requirmentform.css';
 import { useState } from 'react';
 import axios from 'axios';
-import {user_requestedUrl} from '../../urls.js';
+import { user_requestedUrl } from '../../urls.js';
+import jscookie from 'js-cookie';
+
 
 function RequirmentForm() {
     var cateringCheckbox, venuCheckbox, decorationCheckboxnuCheckbox, djCheckbox;
@@ -83,7 +85,9 @@ function RequirmentForm() {
     const eventRequestFormSubmit = async (event) => {
         event.preventDefault();
         try {
-            console.log("requestFormData ", requestFormData)
+            const userEmail = jscookie.get('user');
+
+            console.log("requestFormData ", requestFormData.userEmail = userEmail)
             const result = await axios.post(`${user_requestedUrl}/eventRequest`, requestFormData);
             if (result.status == 201) {
                 console.log(result);

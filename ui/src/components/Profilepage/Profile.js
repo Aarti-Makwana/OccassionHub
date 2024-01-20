@@ -57,7 +57,7 @@ function Profile() {
                             <img src={userProfile} className="img-fluid w-75" alt="Profile Image" />
                         </div>
                         <div className='profilebuttons d-flex flex-column justify-content-center'>
-                            <button className="btn btn-danger w-75 mt-1 " >Buy Passes</button>
+                            <button className="btn btn-danger w-75 mt-1 " ><Link to="/passes" style={{color:"white",textDecoration:"none"}}>Buy Passes</Link></button>
 
                             <div className="dropdown m-0">
                                 <a className="btn btn-danger w-75 mt-1 dropdown-toggle" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">

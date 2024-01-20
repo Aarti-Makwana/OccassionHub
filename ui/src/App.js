@@ -11,6 +11,8 @@ import AdmindashBoard from './components/Admin/AdminDashboard.js';
 import AllServices from './components/Allservices/AllServices.js';
 import ContactUs from './components/ContactusPage/Contact.js';
 import CaterersDashboard from './components/ServiceProviderDashboard/CaterersDashboard.js';
+import Passes from './components/passesPage/pass.js';
+
 import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
@@ -28,6 +30,8 @@ function App() {
         <Route path='/contactus' element={<><ContactUs /></>}></Route>
         <Route path='/admin' element={<><AdmindashBoard /></>}></Route>
         <Route path='/catererprofile' element={<><CaterersDashboard /></>}></Route>
+        <Route path='/passes' element={<><Passes/></>}></Route>
+
       </Routes >
       <Footer />
     </>
