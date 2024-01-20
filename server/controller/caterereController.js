@@ -1,6 +1,9 @@
 import catererRegistrationModel from "../model/catererRegistrationModel.js";
 import { fileURLToPath } from 'url';
+import usermodel from "../model/usermodel.js";
 import path from 'path';
+import customiseThaliModel from "../model/customiseThaliModel.js";
+
 export const caterrerRegistration = async (request, response) => {
     var __filename = fileURLToPath(import.meta.url);
     var __dirname = path.dirname(__filename).replace("\\controller", "");
@@ -48,5 +51,41 @@ export const searchCatrerController = async (request, response) => {
     } catch (error) {
         console.error("Error in cateres search: ", error);
         response.status(500).json({ error: "Error in  cateres search" });
+    }
+}
+
+export const seeNormalUserToCatereRequestController = async (request, response) => {
+    try {
+        const { location, date, time, additionalInfo, Roti, Sabji, Dessert, Starter } = request.body.selectedDish;
+        const userData = await usermodel.findOne({ email: request.body.catererEmail });
+        const detailsOfNormalUserRequestForCateres = await customiseThaliModel.create({
+            normaluserid: userData._id,
+            location: location,
+            date: date,
+            time: time,
+            requirments: [{
+                Roti: Roti,
+                Sabji: Sabji,
+                Dessert: Dessert,
+                Starter: Starter,
+            }],
+            addtionalmenu: additionalInfo,
+        });
+
+        await detailsOfNormalUserRequestForCateres.save();
+        response.status(201).json({ detailsOfNormalUserRequestForCateres });
+    } catch (err) {
+        console.error("Error in see Normal User To Catere RequestController: ", err);
+        response.status(500).json({ status: false });
+    }
+}
+
+export const catereSeeRequestedDataController = async (request, response) => {
+    try {
+        var allUserRequestedDataForCateres = await customiseThaliModel.find();
+        response.status(201).json({ allUserRequestedDataForCateres });
+    } catch (error) {
+        console.log("Error in catere See Requested Data Controller", error);
+        response.status(500).json({ status: false });
     }
 }

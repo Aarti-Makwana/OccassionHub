@@ -1,26 +1,50 @@
 import mongoose from "../connection/dbConfig.js";
 
 var customiseThaliSchema = new mongoose.Schema({
-    eventrequirment: {
+    eventrequirmentid: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'requestSchema'
+        ref: 'requestSchema',
+        required:false
     },
-    starter: [{
+    normaluserid:{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'userModal',
+        required:false
+    },
+    location: {
         type:String,
         required:false
-    }],
-    sweets: [{
+    },
+    date: {
         type:String,
         required:false
-    }],
-    drinks: [{
+    },
+    time: {
         type:String,
         required:false
+    },
+    requirments :[{
+        Roti: [{
+            type:String,
+            required:false
+        }],
+        Sabji: [{
+            type:String,
+            required:false
+        }],
+        Starter: [{
+            type:String,
+            required:false
+        }],
+        Dessert: [{
+            type:String,
+            required:false
+        }],
     }],
-    addtionalmenu: [{
+    addtionalmenu: {
         type:String,
         required:false
-    }],
+    },
 });
 
-export default mongoose.Model('customiseThaliSchema', customiseThaliSchema, 'customiseThaliSchema');
+export default mongoose.model('customiseThaliSchema', customiseThaliSchema, 'customiseThaliSchema');

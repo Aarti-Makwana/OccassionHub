@@ -1,28 +1,33 @@
 import mongoose from "../connection/dbConfig.js";
 
-var userSchema =  new mongoose.Schema({
-    name : {
-        type:String,
-        required:true
+var userSchema = new mongoose.Schema({
+    name: {
+        type: String,
+        required: true
     },
-    email : {
-        type :String,
+    email: {
+        type: String,
         require: true,
-        unique: true 
-        
+        unique: true
+
     },
-    password:{
-        type:String,
-        required:true
+    password: {
+        type: String,
+        required: true
     },
-    contect :{
-        type :Number,
-        require : true
+    contect: {
+        type: Number,
+        require: true
     },
-    address : {
-        type :String,
-        require : true
+    address: {
+        type: String,
+        require: true
+    },
+    role: {
+        type: String,
+        require: false,
+        default: "user"
     }
 });
 
-export default mongoose.model('userModel',userSchema,'user');
+export default mongoose.model('userModel', userSchema, 'user');
