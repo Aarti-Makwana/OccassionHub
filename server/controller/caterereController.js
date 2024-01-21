@@ -1,6 +1,6 @@
 import catererRegistrationModel from "../model/catererRegistrationModel.js";
-import { fileURLToPath } from 'url';
 import usermodel from "../model/usermodel.js";
+import { fileURLToPath } from 'url';
 import path from 'path';
 import customiseThaliModel from "../model/customiseThaliModel.js";
 
@@ -34,7 +34,17 @@ export const caterrerRegistration = async (request, response) => {
                     docs: fileName
                 });
                 console.log("newUser : ", newUser);
+                
+                const role = await usermodel.updateOne({ email: userEmail }, [
+                    {
+                        $set: {
+                            role: "catrer"
+                        }
+                    }
+                ])
+                console.log("newUser : ", newUser);
                 await newUser.save();
+
                 response.status(201).json({ newUser: "newUser" });
             } catch (err) {
                 console.error("Error in caterer registration controller: ", error);
