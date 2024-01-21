@@ -1,75 +1,71 @@
 import './serviceprovidercss.css';
 import userImage from "../../images/user.jpg";
 import secondBannerImage from '../../images/klipartz.png';
-import { useState } from 'react';
+import { useState,useEffect } from 'react';
+import { caterre_requestUrl } from '../../urls.js';
+import axios from 'axios';
 
 function CatresDashBoard() {
     const [activeLink, setActiveLink] = useState('seeRequest');
+    const [allRequestedUserData, setAllRequestedUserData] = useState([]);
+    const [userInfo, setUserInfo] = useState({});
 
     var openSideBar = () => {
         document.getElementById("sideNavBar").style.display = "block";
     }
-    const handleLinkClick = (link) => {
-        setActiveLink(link);
+    const fetchData = async () => {
+        try {
+            const response = await axios.get(caterre_requestUrl + '/catereSeeRequestedData');
+            setAllRequestedUserData(response.data.allUserRequestedDataForCateres);
+            setUserInfo(response.data.normalUserInfo);
+        } catch (err) {
+            console.log("Error in catrers dashboard while showing data ", err);
+        }
+    };
+    useEffect(() => {
+        fetchData();
+    }, []);
+
+    const handleLinkClick = async (link) => {
+        if (link !== activeLink) {
+            setActiveLink(link);
+            if (link === 'seeRequest') {
+                fetchData();
+            }
+        }
     }
-
-
     const renderContent = () => {
         if (activeLink === 'seeRequest') {
             return (
                 <>
-                    <div className="col-lg-9 mb-1 mySideBar w-100 bg-dark">
-                        <div className="row p-2 w-100 mb-3">
-                            <div className="col col-lg-3 col-md-4 col-12 my-2 my-lg-4 text-center cloudy-text">
-                                <span className="imagesSideSecion">26</span><br />
-                                <span className="imagesSideSecion">June 2024</span>
-                            </div>
-                            <div className="col col-lg-5 col-md-4 col-12  my-2">
-                                <h5 className="text-light">Andrew Anderson</h5>
-                                <span>Lorem ipsum, dolor sit consectetur maxime?</span><br />
-                                <span className="card-text"><i className="bi bi-clock text-danger me-3"></i><small
-                                    className="text-light">07:00 pm - 01:00 am </small></span><br />
-                                <span className="card-text"><i className="bi bi-geo-alt text-danger me-3"></i><small
-                                    className="text-light">Address </small></span>
-                            </div>
-                            <div className="col col-lg-4 col-md-4 col-12">
-                                <button className="btn btn-danger my-5">View Requirments</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="col-lg-9 mb-1 mySideBar w-100 bg-dark">
-                        <div className="row p-2 w-100 mb-3">
-                            <div className="col col-lg-3 col-md-4 col-12 my-2 my-lg-4 text-center cloudy-text">
-                                <span className="imagesSideSecion">26</span><br />
-                                <span className="imagesSideSecion">June 2024</span>
-                            </div>
-                            <div className="col col-lg-5 col-md-4 col-12  my-2">
-                                <h5 className="text-light">Andrew Anderson</h5>
-                                <span>Lorem ipsum, dolor sit consectetur maxime?</span><br />
-                                <span className="card-text"><i className="bi bi-clock text-danger me-3"></i><small
-                                    className="text-light">07:00 pm - 01:00 am </small></span><br />
-                                <span className="card-text"><i className="bi bi-geo-alt text-danger me-3"></i><small
-                                    className="text-light">Address </small></span>
-                            </div>
-                            <div className="col col-lg-4 col-md-4 col-12">
-                                <button className="btn btn-danger my-5">View Requirments</button>
+                    {console.log("allRequestedUserData-----> ",allRequestedUserData)}
+                    {allRequestedUserData.map((data, index) => (
+                        <div className="col-lg-9 mb-1 mySideBar w-100 bg-dark" key={index}>
+                            <div className="row p-2 w-100 mb-3">
+                                <div className="col col-lg-3 col-md-4 col-12 my-2 my-lg-4 text-center cloudy-text">
+                                    <span className="imagesSideSecion">{new Date(data.date).getDate()}</span><br />
+                                    <span className="imagesSideSecion">{new Date(data.date).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}</span>
+                                </div>
+                                <div className="col col-lg-5 col-md-4 col-12  my-2">
+                                    <h5 className="text-light">Andrew Anderson</h5>
+                                    <span>{data.addtionalmenu}</span><br />
+                                    <span className="card-text"><i className="bi bi-clock text-danger me-3"></i><small
+                                        className="text-light">{data.time} </small></span><br />
+                                    <span className="card-text"><i className="bi bi-geo-alt text-danger me-3"></i><small
+                                        className="text-light">{data.location} </small></span>
+                                </div>
+                                <div className="col col-lg-4 col-md-4 col-12">
+                                    <button className="btn btn-danger my-5">View Requirments</button>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                    ))}
                 </>
             );
         } else if (activeLink === 'dashboard') {
-            return (
-                <>
-                    <p className='bg-dark text-danger'>dashboard here</p>
-                </>
-            );
+            return <p className='bg-dark text-danger'>dashboard here</p>;
         } else if (activeLink === 'customerOrder') {
-            return (
-                <>
-                    <p className='bg-dark text-danger'>customer Order here</p>
-                </>
-            );
+            return <p className='bg-dark text-danger'>customer Order here</p>;
         } else if (activeLink === 'bankDetails') {
             return (
                 <>
@@ -217,3 +213,26 @@ function CatresDashBoard() {
 }
 
 export default CatresDashBoard;
+
+/*
+ <div className="col-lg-9 mb-1 mySideBar w-100 bg-dark">
+                        <div className="row p-2 w-100 mb-3">
+                            <div className="col col-lg-3 col-md-4 col-12 my-2 my-lg-4 text-center cloudy-text">
+                                <span className="imagesSideSecion">26</span><br />
+                                <span className="imagesSideSecion">June 2024</span>
+                            </div>
+                            <div className="col col-lg-5 col-md-4 col-12  my-2">
+                                <h5 className="text-light">Andrew Anderson</h5>
+                                <span>Lorem ipsum, dolor sit consectetur maxime?</span><br />
+                                <span className="card-text"><i className="bi bi-clock text-danger me-3"></i><small
+                                    className="text-light">07:00 pm - 01:00 am </small></span><br />
+                                <span className="card-text"><i className="bi bi-geo-alt text-danger me-3"></i><small
+                                    className="text-light">Address </small></span>
+                            </div>
+                            <div className="col col-lg-4 col-md-4 col-12">
+                                <button className="btn btn-danger my-5">View Requirments</button>
+                            </div>
+                        </div>
+                    </div>
+
+*/

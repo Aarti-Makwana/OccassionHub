@@ -8,8 +8,8 @@ function ChooseServicesModal(props) {
     const [isModalOpen, setModalOpen] = useState(false);
     const [selectedDish, setSelectedDish] = useState({
         location: "",
-        eventDate: "",
-        eventTime: "",
+        date: "",
+        time: "",
         Dessert: [],
         Roti: [],
         Sabji: [],
@@ -32,7 +32,9 @@ function ChooseServicesModal(props) {
                 ? selectedDish.Roti.filter((item) => item !== value)
                 : [...selectedDish.Roti, value],
         }));
-    };
+        console.log("setselecteddish : ", selectedDish);
+
+    };   
 
     const handleSabjiChange = (value) => {
         setSelectedDish((selectedDish) => ({
@@ -41,6 +43,7 @@ function ChooseServicesModal(props) {
                 ? selectedDish.Sabji.filter((item) => item !== value)
                 : [...selectedDish.Sabji, value],
         }));
+        console.log("setselecteddish : ", selectedDish);
     };
 
     const handleDessertChange = (value) => {
@@ -50,6 +53,7 @@ function ChooseServicesModal(props) {
                 ? selectedDish.Dessert.filter((item) => item !== value)
                 : [...selectedDish.Dessert, value],
         }));
+        console.log("setselecteddish : ", selectedDish);
     };
     const handleStarterChange = (value) => {
         setSelectedDish((selectedDish) => ({
@@ -58,6 +62,7 @@ function ChooseServicesModal(props) {
                 ? selectedDish.Starter.filter((item) => item !== value)
                 : [...selectedDish.Starter, value],
         }));
+        console.log("setselecteddish : ", selectedDish);
     };
 
     const handleSubmit = (event) => {
@@ -65,7 +70,10 @@ function ChooseServicesModal(props) {
         console.log("Selected Services:", selectedDish);
         setModalOpen(false);
         try{
-            var result = axios.post(caterre_requestUrl+"/seeNormalUserToCatereRequest", {selectedDish});
+            var result = axios.post(caterre_requestUrl + "/seeNormalUserToCatereRequest", {
+                selectedDish,
+                catererEmail: props.catererEmail,
+            });
             result.then(response => {
                 // console.log("data on cateres request modal",response.data.detailsOfNormalUserRequestForCateres);
                 // Sweet alert lagega yaha....
@@ -83,6 +91,7 @@ function ChooseServicesModal(props) {
         <>
             <button className="btn btn-danger" onClick={() => setModalOpen(true)}>Choose Services</button>
             <Modal size="md-down" show={isModalOpen} centered>
+                {console.log("props.catererEmail---",props.catererEmail)}
                 <Modal.Body className='bg-black' style={{ padding: '0 10%' }}>
                     <div className='mt-4'>
                         <div className='d-flex justify-content-end'>

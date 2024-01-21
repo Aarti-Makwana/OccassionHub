@@ -62,27 +62,38 @@ export const searchCatrerController = async(request,response) =>{
   }
 }
 
-export const seeNormalUserToCatereRequestController = async (request,response) =>{
+export const seeNormalUserToCatereRequestController = async (request, response) => {
     try {
-        console.log("seeNormalUserToCatereRequestController data",request.body);
-        const {location,date,time,Roti,Sabji,Dessert,Starter,additionalInfo} = request.body;
-        const detailsOfNormalUserRequestForCateres = await customiseThaliModel.create({
-            location:location,
-            date: date,
-            time: time,
-            requirments:[{
-                Roti:Roti,
-                Sabji:Sabji,
-                Dessert:Dessert,
-                Starter:Starter,
-            }],
-            addtionalmenu:additionalInfo,
-        });
-        await detailsOfNormalUserRequestForCateres.save();
-        response.status(201).json({detailsOfNormalUserRequestForCateres});
+      const { location, date, time, additionalInfo, Roti, Sabji, Dessert, Starter } = request.body.selectedDish;
+      const userData = await usermodel.findOne({ email: request.body.catererEmail });
+      const detailsOfNormalUserRequestForCateres = await customiseThaliModel.create({
+        normaluserid: userData._id,
+        location: location,
+        date: date,
+        time: time,
+        requirments: [{
+          Roti: Roti,
+          Sabji: Sabji,
+          Dessert: Dessert,
+          Starter: Starter,
+        }],
+        addtionalmenu: additionalInfo,
+      });
+  
+      await detailsOfNormalUserRequestForCateres.save();
+      response.status(201).json({ detailsOfNormalUserRequestForCateres });
     } catch (err) {
-        console.error("Error in see Normal User To Catere RequestController: ", error);
+      console.error("Error in see Normal User To Catere RequestController: ", err);
+      response.status(500).json({ status: false });
+    }
+  }
+  
+export const catereSeeRequestedDataController = async(request,response)=>{
+    try{
+        var allUserRequestedDataForCateres  = await customiseThaliModel.find();
+        response.status(201).json({allUserRequestedDataForCateres});
+    }catch(error){
+        console.log("Error in catere See Requested Data Controller",error);
         response.status(500).json({ status: false });
     }
-
 }

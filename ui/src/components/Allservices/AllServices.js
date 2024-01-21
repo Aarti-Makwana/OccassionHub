@@ -65,7 +65,7 @@ function AllServices() {
                                         <span className="card-text">Specialization : {data.Specialization}</span><br />
                                     </div>
                                     {/* <button className='ourbtn mt-1'>Book Now</button> */}
-                                    <ChooseServicesModal isOpen={isBookNowModalOpen} closeModal={() => setBookNowModalOpen(false)} />
+                                    <ChooseServicesModal isOpen={isBookNowModalOpen} closeModal={() => setBookNowModalOpen(false)} catererEmail={data.catererEmail}/>
                                     <button className='ourbtn1 mt-1'>Show Gallery</button>
                                 </div>
                             </div>

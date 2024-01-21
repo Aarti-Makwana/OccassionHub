@@ -11,10 +11,10 @@ var customiseThaliSchema = new mongoose.Schema({
         ref: 'userModal',
         required:false
     },
-    // eventrequirment: {
-    //     type:String,
-    //     required:false
-    // },
+    location: {
+        type:String,
+        required:false
+    },
     date: {
         type:String,
         required:false
