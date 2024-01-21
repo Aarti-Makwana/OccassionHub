@@ -109,5 +109,31 @@ export const userLogin = async (userDataLogin) => {
     }
 }
 
+export const forgotPassuser = async (email) => {
+    try {
+        console.log("adduser slice call....!!" + email);
+        // console.log("userData in adduserSlice  : ", userData);
+        // console.log("userData in adduserSlice  : ", userData.email);
+        var result = await axios.post(user_requestedUrl + "/genrateForgotPassOtp", { email: email });
+        console.log("result : ", result);
+        return result;
+    } catch (error) {
+        console.log("erro in opt send", error);
+    }
+}
+export const confirmResetPassword = async (data) => {
+    try {
+        console.log(data);
+        const { forgetemail, resetPass } = data;
+        console.log("data in slice cp : " + forgetemail);
+        console.log("data in slice cp : " + resetPass);
+        var result = await axios.post(user_requestedUrl + "/forgotPassword", data);
+        return result;
+    } catch (error) {
+        console.log("Error:", error);
+        alert("Confirm reset password error in Slice");
+    }
+};
+
 export const { setNavbar } = userSlice.actions;
 export default userSlice.reducer;

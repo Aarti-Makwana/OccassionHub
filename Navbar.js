@@ -4,7 +4,7 @@ import video from '../images/main_video.mp4'
 import logo from '../images/occassionHub-logo.webp'
 import bday from '../images/Caterer.jpg';
 import { useEffect, useState } from 'react';
-import { adduser, setNavbar, RegisterUserData, userLogin, confirmResetPassword, forgotPassuser } from '../store/userSlice';
+import { adduser, setNavbar, RegisterUserData, userLogin,confirmResetPassword, forgotPassuser} from '../store/userSlice';
 import jscookie from 'js-cookie';
 import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
@@ -28,22 +28,13 @@ function Navbar(props) {
 
     const [isLoginmodal, setLoginmodal] = useState(false);
     const [isRegistrationmodal, setRegistrationmodal] = useState(false);
+    const [isForgoPassmodal, setForgotPassmodal] = useState(false);
+    const [isResetPassmodal, setResetPassmodal] = useState(false);
     const [email, setEmail] = useState('');
     const [bannerPath, setBannerPath] = useState(video);
     const navbar = useSelector(state => state.user);
     const [isAdmin, setAdminPath] = useState(true);
     const [role, setRole] = useState('login');
-    const [isForgoPassmodal, setForgotPassmodal] = useState(false);
-    const [isResetPassmodal, setResetPassmodal] = useState(false);
-
-    //Validation Form States....!
-
-    const [nameError, setNameError] = useState('');
-    const [emailError, setEmailError] = useState('');
-    const [passwordError, setPasswordError] = useState('');
-    const [contactError, setContactError] = useState('');
-    const [addressError, setAddressError] = useState('');
-    const [otpError, setOtpError] = useState('');
 
     useEffect(() => {
         const email = jscookie.get('user');
@@ -137,28 +128,6 @@ function Navbar(props) {
     const navigate = useNavigate();
     const getData = (event) => {
         const { name, value } = event.target;
-
-        // Validation logic for each field
-        switch (name) {
-            case 'name':
-                setNameError(value.length > 0 ? 'Valid Name' : 'Name is required');
-                break;
-            case 'email':
-                setEmailError(/^[a-zA-Z][\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value) ? 'Valid Email' : 'Invalid email format');
-                break;
-            case 'password':
-                setPasswordError(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(value) ? 'Valid Password' : 'Unique password ');
-                break;
-            case 'contect':
-                setContactError(/^[6-9]\d{9}$/.test(value) ? 'Valid Number' : 'please enter 10 digits contact');
-                break;
-            case 'address':
-                setAddressError(value.length > 0 ? 'Valid' : 'Address is required');
-                break;
-            default:
-                break;
-        }
-
         setUserData({
             ...userData,
             [name]: value
@@ -168,6 +137,7 @@ function Navbar(props) {
     const handleOtpChange = (event) => {
         setOtp(event.target.value);
     };
+
 
     // const getOtp = async (event) => {
     //     event.preventDefault();
@@ -182,13 +152,6 @@ function Navbar(props) {
 
     const getOtp = async (event) => {
         event.preventDefault();
-
-        // Check for errors before proceeding
-        if (nameError || emailError || passwordError || contactError || addressError) {
-            alert('Please fix errors before submitting.');
-            return;
-        }
-
         console.log("user data in getotp ", userData);
         result = adduser(userData);
         result.then((result) => {
@@ -208,40 +171,115 @@ function Navbar(props) {
                 // alert("email is already exists Login......!!")
             }
         })
-
-
     }
-
-
-    // const handleSubmit = async (event) => {
+    const [forgetemail,setforgetEmail] = useState("");
+    // ================================
+    // const getForgotOtp = async (event) => {
     //     event.preventDefault();
-    //     result.then((result) => {
-    //         if (result.data.Rotp == otp1) {
-    //             console.log("otp match");
-    //             var result = RegisterUserData(userData);
-    //             result.then((result) => {
-    //                 if (result.status == 201) {
-    //                     alert("Registration Successfull");
-    //                     setRegistrationmodal(false);
-    //                     event.target.reset();
-    //                 }
-    //             });
-    //         } else {
-    //             console.log("not match");
-
-    //         }
-    //     });
+    //     console.log("user data in getotp ", forgetemail);
+    //     result = forgotPassuser(forgetemail);
+    //     result.then((result)=>{
+    //         if(result.status==201){
+    //         console.log("result in forgot password controller ", result);
+    //         document.getElementById("otpfield1").style.display = "block";
+    //         document.getElementById("signupbutton1").style.visibility = "visible";
+    //         document.getElementById("getotpbutton1").style.display = "none";
+    //        }else{
+    //         Swal.fire({
+    //             background: "black",
+    //             icon: "error",
+    //             text: "email is not exist......!!",
+    //             showCloseButton: true,
+    //             focusConfirm: false,
+    //         });
+    //        }
+    //     })
     // }
+    const getForgotOtp = async (event) => {
+        event.preventDefault();
+        console.log("user data in getotp ", forgetemail);
+        
+        try {
+            const result = await forgotPassuser(forgetemail);
+    
+            if (result && result.status === 201) {
+                console.log("result in forgot password controller ", result);
+                document.getElementById("otpfield1").style.display = "block";
+                document.getElementById("signupbutton1").style.visibility = "visible";
+                document.getElementById("getotpbutton1").style.display = "none";
+            } else {
+                Swal.fire({
+                    background: "black",
+                    icon: "error",
+                    text: "Email does not exist...!!",
+                    showCloseButton: true,
+                    focusConfirm: false,
+
+                });
+                setForgotPassmodal(false);
+            }
+        } catch (error) {
+            console.error("Error in getForgotOtp function: ", error);
+        }
+    }
+    
+// ===============================
+    const [resetPass,setResetPass] = useState(""); 
+    const forgotPassHandleSubmit = (e) => {
+        e.preventDefault()
+        result.then((result)=>{
+            if(result.data.Rotp==otp1){
+                setForgotPassmodal(false);
+                setResetPassmodal(true);
+                if(resetPass){
+                    console.log("forget email : "+forgetemail);
+                    console.log("password reset : "+resetPass);
+                    // const obj =  {resetPass,forgetemail} 
+                    const result = confirmResetPassword({forgetemail,resetPass});
+                    result.then((res)=>{
+                        if(res.status==201){
+                            // alert("password update successfully")
+                            Swal.fire({
+                                background: "black",
+                                icon: "success",
+                                text: "Password Update Successfully....!!",
+                                showCloseButton: true,
+                                focusConfirm: false,
+                            });
+                            setResetPassmodal(false);
+                            e.target.reset();
+                        }
+                        else{
+                            // alert("error in update password");
+                            Swal.fire({
+                                background: "black",
+                                icon: "error",
+                                text: "Error in Update Passsword",
+                                showCloseButton: true,
+                                focusConfirm: false,
+                            });
+                        }
+                    })
+                }else{
+
+                }
+               
+                // alert("otp match")
+                // axios.post(user_requestedUrl + "/forgotPassword", forgetemail)
+                // .then(result => {
+                //     if(result.data.Status === "true") {
+                //         navigate('/login')
+                       
+                //     }
+                // }).catch(err => console.log(err)) 
+            }else{
+                alert("otp not match");
+            }
+        });
+    }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-
-        // Check for errors before proceeding
-        if (nameError || emailError || passwordError || contactError || addressError || otpError) {
-            alert('Please fix errors before submitting.');
-            return;
-        }
-
         result.then((result) => {
             if (result.data.Rotp == otp1) {
                 console.log("otp match");
@@ -326,7 +364,7 @@ function Navbar(props) {
             } else {
                 Swal.fire({
                     background: "black",
-                    icon: "success",
+                    icon: "error",
                     text: "Invalide email and password plzz",
                     showCloseButton: true,
                     focusConfirm: false,
@@ -334,91 +372,6 @@ function Navbar(props) {
                 // alert("Invalide email and password plzz")
             }
         });
-    }
-
-    const [resetPass, setResetPass] = useState("");
-    const [forgetemail, setforgetEmail] = useState("");
-
-
-    const forgotPassHandleSubmit = (e) => {
-        e.preventDefault()
-        result.then((result) => {
-            if (result.data.Rotp == otp1) {
-                setForgotPassmodal(false);
-                setResetPassmodal(true);
-                if (resetPass) {
-                    console.log("forget email : " + forgetemail);
-                    console.log("password reset : " + resetPass);
-                    // const obj =  {resetPass,forgetemail} 
-                    const result = confirmResetPassword({ forgetemail, resetPass });
-                    result.then((res) => {
-                        if (res.status == 201) {
-                            // alert("password update successfully")
-                            Swal.fire({
-                                background: "black",
-                                icon: "success",
-                                text: "Password Update Successfully....!!",
-                                showCloseButton: true,
-                                focusConfirm: false,
-                            });
-                            setResetPassmodal(false);
-                            e.target.reset();
-                        }
-                        else {
-                            // alert("error in update password");
-                            Swal.fire({
-                                background: "black",
-                                icon: "error",
-                                text: "Error in Update Passsword",
-                                showCloseButton: true,
-                                focusConfirm: false,
-                            });
-                        }
-                    })
-                } else {
-
-                }
-
-                // alert("otp match")
-                // axios.post(user_requestedUrl + "/forgotPassword", forgetemail)
-                // .then(result => {
-                //     if(result.data.Status === "true") {
-                //         navigate('/login')
-
-                //     }
-                // }).catch(err => console.log(err)) 
-            } else {
-                alert("otp not match");
-            }
-        });
-    }
-
-    const getForgotOtp = async (event) => {
-        event.preventDefault();
-        console.log("user data in getotp ", forgetemail);
-
-        try {
-            const result = await forgotPassuser(forgetemail);
-
-            if (result && result.status === 201) {
-                console.log("result in forgot password controller ", result);
-                document.getElementById("otpfield1").style.display = "block";
-                document.getElementById("signupbutton1").style.visibility = "visible";
-                document.getElementById("getotpbutton1").style.display = "none";
-            } else {
-                Swal.fire({
-                    background: "black",
-                    icon: "error",
-                    text: "Email does not exist...!!",
-                    showCloseButton: true,
-                    focusConfirm: false,
-
-                });
-                setForgotPassmodal(false);
-            }
-        } catch (error) {
-            console.error("Error in getForgotOtp function: ", error);
-        }
     }
 
     if (isAdmin) {
@@ -667,38 +620,30 @@ function Navbar(props) {
                                                     <i className="fa fa-user icon" aria-hidden="true"></i>
                                                     <input type="name" required className="form-control input-field" id="exampleInputName" aria-describedby="nameHelp"
                                                         placeholder="Name" name="name" onChange={getData} />
-                                                    <label className="text-white err">{nameError}</label>
                                                 </div>
                                                 <div className="mb-3 mt-4">
                                                     <i className="fa fa-envelope icon" aria-hidden="true"></i>
                                                     <input type="email" required name="email" className="form-control  input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
                                                         placeholder="Enter Email" onChange={getData} />
-                                                    <label className="text-white err">{emailError}</label>
-
                                                 </div>
                                                 <div className="mb-3">
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                     <input type="password" required name="password" className="form-control  input-field" id="exampleInputPassword1" placeholder="Password" onChange={getData} />
-                                                    <label className="text-white err1">{passwordError}</label>
                                                 </div>
                                                 <div className="mb-3 mt-4">
                                                     <i className="fa fa-phone icon" aria-hidden="true"></i>
                                                     <input type="text" required name="contect" className="form-control input-field" id="exampleInputContact" aria-describedby="contactHelp"
                                                         placeholder="Contact Us" onChange={getData} />
-                                                    <label className="text-white err2">{contactError}</label>
                                                 </div>
                                                 <div className="mb-3 mt-4">
                                                     <i className="fa fa-map-marker icon" aria-hidden="true"></i>
                                                     <input type="text" required name="address" className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                         placeholder="Address" onChange={getData} />
-                                                    <label className="text-white err3">{addressError}</label>
                                                 </div>
                                                 <div className="mb-3 mt-4" id='otpfield'>
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                     <input type="address" required name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                         placeholder="Enter Otp" />
-                                                    <label className="text-white err4">{otpError}</label>
-
                                                 </div>
                                                 <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
                                                 <button type="submit" className="btn btn-light mt-3" id='signupbutton'>Sign up</button>
@@ -711,7 +656,7 @@ function Navbar(props) {
                         </div>
                     </Modal.Body>
                 </Modal>
-                <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false) }} centered   >
+                <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false)}} centered   >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -728,7 +673,44 @@ function Navbar(props) {
                                             <form onSubmit={forgotPassHandleSubmit}>
                                                 <div className="mb-3 mt-4 d-flex flex-row align-items-center">
                                                     <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                        placeholder="Enter Email" onChange={(event) => { setforgetEmail(event.target.value) }} />
+                                                        placeholder="Enter Email" onChange={(event)=>{setforgetEmail(event.target.value)}} />
+                                                    <i className="fa fa-envelope icon" aria-hidden="true"></i>
+                                                </div>
+                                                <div className="mb-3 mt-4" id='otpfield'>
+                                                    <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
+                                                    <input type="address" required name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
+                                                        placeholder="Enter Otp" />
+                                                </div>
+                                                <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
+                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton' onclick={()=>{setResetPassmodal(true);setForgotPassmodal(false)}}>Sign up</button>
+                                                {/* <p className='fs-5 mt-2'>Don't have an account? <a className='webcolor' onClick={() => { setLoginmodal(false); setRegistrationmodal(true) }}>SignUp</a></p>
+                                                <a className='webcolor' onClick={() => { setForgotPassmodal(false); setForgotPassmodal(true) }}>Forgot Password</a> */}
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Modal.Body>
+                </Modal>
+                <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false)}} centered   >
+                    <Modal.Body className='p-0'>
+                        <div className="login bg-black">
+                            <div className="container p-0">
+                                <div className="row g-0 p-2">
+                                    <div className="col-lg-5 bg-success p-0">
+                                        <img src={bday} className="w-100" height='100%' alt="" />
+                                    </div>
+                                    <div className="myform col-lg-7 p-3 " >
+                                        <div className='d-flex justify-content-end'>
+                                            <button className='btn-close' aria-label="Close" onClick={() => { setForgotPassmodal(false) }}></button>
+                                        </div>
+                                        <div id='loginForm'>
+                                            <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> Forgot Password </span> FORM</h2>
+                                            <form onSubmit={forgotPassHandleSubmit}>
+                                                <div className="mb-3 mt-4 d-flex flex-row align-items-center">
+                                                    <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
+                                                        placeholder="Enter Email" onChange={(event)=>{setforgetEmail(event.target.value)}} />
                                                     <i className="fa fa-envelope icon" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="mb-3 mt-4" id='otpfield1'>
@@ -737,7 +719,7 @@ function Navbar(props) {
                                                         placeholder="Enter Otp" />
                                                 </div>
                                                 <button className="btn btn-light mt-3" id='getotpbutton1' name="otp" onClick={(event) => { getForgotOtp(event) }}>get OTP</button>
-                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton1' onclick={() => { setResetPassmodal(true); setForgotPassmodal(false) }}>Sign up</button>
+                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton1' onclick={()=>{setResetPassmodal(true);setForgotPassmodal(false)}}>Sign up</button>
                                                 {/* <p className='fs-5 mt-2'>Don't have an account? <a className='webcolor' onClick={() => { setLoginmodal(false); setRegistrationmodal(true) }}>SignUp</a></p>
                                                 <a className='webcolor' onClick={() => { setForgotPassmodal(false); setForgotPassmodal(true) }}>Forgot Password</a> */}
                                             </form>
@@ -749,7 +731,7 @@ function Navbar(props) {
                     </Modal.Body>
                 </Modal>
 
-                <Modal size="lg" show={isResetPassmodal} onHide={() => { setResetPassmodal(false) }} centered   >
+                <Modal size="lg" show={isResetPassmodal} onHide={() => {setResetPassmodal(false)}} centered   >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -764,8 +746,8 @@ function Navbar(props) {
                                         <div id='loginForm'>
                                             <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> Reset Password</span> FORM</h2>
                                             <form onSubmit={forgotPassHandleSubmit}>
-                                                <div className="mb-3 mt-4 d-flex flex-row align-items-center">
-                                                    <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="New Password" onChange={(event) => { setResetPass(event.target.value) }} />
+                                            <div className="mb-3 mt-4 d-flex flex-row align-items-center">
+                                                    <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="New Password" onChange={(event)=>{setResetPass(event.target.value)}}/>
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="mb-3 mt-4 d-flex flex-row align-items-center">

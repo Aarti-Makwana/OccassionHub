@@ -11,6 +11,7 @@ const { USER_SECRET_KEY } = process.env;
 const stripeInstance = stripe(USER_SECRET_KEY);
 const maxAge = 10 * 24 * 60 * 60;
 var SECRET_KEY = "thisisusersecretkey";
+import passesModel from "../model/passesModel.js";
 // export const userotpContoller = async (request, response) => {
 //     try {
 //         const { email } = request.body;
@@ -228,4 +229,61 @@ export const userCatrerDashboardContoller = async (request, response) => {
     } catch (error) {
         console.log("error on catrer profile controller ", error);
     }
+}
+
+export const userShowUpcomingEventContoller = async (request, response) => {
+    try {
+        var passes = await passesModel.find();
+        console.log("passes Data :---------------> ", passes);
+
+        response.status(201).json({ passes: passes });
+    } catch (error) {
+        console.error("Error in user Show upcoming event controller: ", error);
+        response.status(500).json({ status: false });
+    }
+}
+
+export const forgotPassOtpContoller = async (request, response) => {
+    try {
+        const { email } = request.body;
+        var data = await usermodel.findOne({ email: email });
+
+        if (data) {
+            mailer(email, (status, Rotp) => {
+                if (status) {
+                    console.log("status" + status)
+                    console.log("email send")
+                    console.log("otp : " + Rotp);
+                    response.status(201).json({ status: true, Rotp: Rotp });
+                } else {
+                    console.log("Error in user OTP generation : ")
+                    response.status(500).json({ status: false });
+                }
+            });
+        }
+        else {
+            console.log("email does not exist......!! ")
+            response.status(404).json({ status: false, message: "Email not found" });
+        }
+    } catch (error) {
+        console.error("Error in user OTP generation controller: ", error);
+        response.status(500).json({ status: false });
+    }
+}
+
+export const forgotPasswordController = async (request, response) => {
+    console.log("request.body : ", request.body);
+    try {
+        const { forgetemail, resetPass } = request.body;
+        var data = await usermodel.updateOne({ email: forgetemail }, {
+            $set: {
+                password: await bcrypt.hash(resetPass, 10)
+                //  password: resetPass                
+            }
+        });
+        response.status(201).json({ message: "password update successfully", data: data })
+    } catch (error) {
+        response.status(500).json({ message: "password not update successfully" })
+    }
+
 }
