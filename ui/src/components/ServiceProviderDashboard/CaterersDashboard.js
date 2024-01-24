@@ -21,6 +21,7 @@ function CaterersDashboard() {
             console.log("Error in catrers dashboard while showing data ", err);
         }
     };
+
     useEffect(() => {
         fetchData();
     }, []);

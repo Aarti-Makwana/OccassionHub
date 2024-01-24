@@ -135,6 +135,7 @@ function Navbar(props) {
     const [userLoginData, setUserDataLogin] = useState();
     const [otp1, setOtp] = useState('');
     const navigate = useNavigate();
+
     const getData = (event) => {
         const { name, value } = event.target;
 
@@ -153,7 +154,7 @@ function Navbar(props) {
                 setContactError(/^[6-9]\d{9}$/.test(value) ? 'Valid Number' : 'please enter 10 digits contact');
                 break;
             case 'address':
-                setAddressError(value.length > 0 ? 'Valid' : 'Address is required');
+                setAddressError(value.length > 0 ? 'Valid Address' : 'Address is required');
                 break;
             default:
                 break;
@@ -184,8 +185,20 @@ function Navbar(props) {
         event.preventDefault();
 
         // Check for errors before proceeding
+        console.log("Name Error : " , nameError);
+        console.log("emailError : " , emailError);
+        console.log("passwordError : " , passwordError);
+        console.log("contactError : " , contactError);
+        console.log("addressError : " , addressError);
+
+
         if (nameError || emailError || passwordError || contactError || addressError) {
-            alert('Please fix errors before submitting.');
+        // if (nameError != "Valid Name" && emailError != "Valid Email" && passwordError != "Valid Password" && contactError != "Valid Number" && addressError != "Valid Address" ) {
+        // if (nameError != "Valid Name") {
+        //     alert('Please fix ');
+        //     return;
+        // }else if(emailError != "Valid Email"){
+            alert('Please fix email is invalid ');
             return;
         }
 
@@ -237,10 +250,10 @@ function Navbar(props) {
         event.preventDefault();
 
         // Check for errors before proceeding
-        if (nameError || emailError || passwordError || contactError || addressError || otpError) {
-            alert('Please fix errors before submitting.');
-            return;
-        }
+        // if (nameError || emailError || passwordError || contactError || addressError || otpError) {
+        //     alert('Please fix errors before submitting.');
+        //     return;
+        // }
 
         result.then((result) => {
             if (result.data.Rotp == otp1) {
