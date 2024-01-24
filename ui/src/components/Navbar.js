@@ -55,14 +55,14 @@ function Navbar(props) {
             console.log("searchServices", bannerPath)
         } else if (pathname == "/catererprofile") {
             setBannerPath(pathname);
-            console.log("catrerDashBoard", pathname)    
+            console.log("catrerDashBoard", pathname)
         } else {
             setBannerPath(video);
         }
 
         if (pathname == '/admin') {
             setAdminPath(true)
-        } else if(pathname=='/adminHome'){
+        } else if (pathname == '/adminHome') {
             setAdminPath(true);
         }
         else {
@@ -136,32 +136,10 @@ function Navbar(props) {
     const [userLoginData, setUserDataLogin] = useState();
     const [otp1, setOtp] = useState('');
     const navigate = useNavigate();
-
     const getData = (event) => {
         const { name, value } = event.target;
 
         // Validation logic for each field
-<<<<<<< HEAD
-        switch (name) {
-            case 'name':
-                setNameError(value.length > 0 ? 'Valid Name' : 'Name is required');
-                break;
-            case 'email':
-                setEmailError(/^[a-zA-Z][\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value) ? 'Valid Email' : 'Invalid email format');
-                break;
-            case 'password':
-                setPasswordError(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(value) ? 'Valid Password' : 'Unique password ');
-                break;
-            case 'contect':
-                setContactError(/^[6-9]\d{9}$/.test(value) ? 'Valid Number' : 'please enter 10 digits contact');
-                break;
-            case 'address':
-                setAddressError(value.length > 0 ? 'Valid Address' : 'Address is required');
-                break;
-            default:
-                break;
-        }
-=======
         // switch (name) {
         //     case 'name':
         //         setNameError(value.length > 0 ? 'Valid Name' : 'Name is required');
@@ -170,7 +148,7 @@ function Navbar(props) {
         //         setEmailError(/^[a-zA-Z][\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value) ? 'Valid Email' : 'Invalid email format');
         //         break;
         //     case 'password':
-        //         setPasswordError(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(value) ? 'Valid Password' : 'Unique password ');
+        //         setPasswordError(/^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/.test(value) ? 'Valid Password' : 'Unique password ');
         //         break;
         //     case 'contect':
         //         setContactError(/^[6-9]\d{9}$/.test(value) ? 'Valid Number' : 'please enter 10 digits contact');
@@ -181,7 +159,6 @@ function Navbar(props) {
         //     default:
         //         break;
         // }
->>>>>>> b5d456201fe67f5c15155478f36dc2f15f0387ca
 
         setUserData({
             ...userData,
@@ -208,29 +185,10 @@ function Navbar(props) {
         event.preventDefault();
 
         // Check for errors before proceeding
-<<<<<<< HEAD
-        console.log("Name Error : " , nameError);
-        console.log("emailError : " , emailError);
-        console.log("passwordError : " , passwordError);
-        console.log("contactError : " , contactError);
-        console.log("addressError : " , addressError);
-
-
-        if (nameError || emailError || passwordError || contactError || addressError) {
-        // if (nameError != "Valid Name" && emailError != "Valid Email" && passwordError != "Valid Password" && contactError != "Valid Number" && addressError != "Valid Address" ) {
-        // if (nameError != "Valid Name") {
-        //     alert('Please fix ');
-        //     return;
-        // }else if(emailError != "Valid Email"){
-            alert('Please fix email is invalid ');
-            return;
-        }
-=======
         // if (nameError || emailError || passwordError || contactError || addressError) {
         //     alert('Please fix errors before submitting.');
         //     return;
         // }
->>>>>>> b5d456201fe67f5c15155478f36dc2f15f0387ca
 
         console.log("user data in getotp ", userData);
         result = adduser(userData);
@@ -386,18 +344,18 @@ function Navbar(props) {
     const forgetPassOtp = async (event) => {
         event.preventDefault();
         console.log("user data in getotp ", forgetemail);
-        
+
         try {
             const result = await forgetPassUser(forgetemail);
             setRotp(result.data.Rotp);
-            console.log("rotp : ",typeof Rotp);
-            console.log("result ===== 5555555555555 ",result.data.status);
+            console.log("rotp : ", typeof Rotp);
+            console.log("result ===== 5555555555555 ", result.data.status);
             if (result.data.status) {
                 console.log("result in forgot password controller ", result);
                 document.getElementById("otpfield").style.display = "block";
                 document.getElementById("signupbutton").style.visibility = "visible";
                 document.getElementById("getotpbutton").style.display = "none";
-            } 
+            }
             else {
                 alert("email does not exist");
                 Swal.fire({
@@ -419,48 +377,48 @@ function Navbar(props) {
 
     const forgotPassHandleSubmit = (e) => {
         e.preventDefault()
-        console.log("otp1 ",typeof otp1)
-            if(Rotp===otp1){
-                setForgotPassmodal(false);
-                setResetPassmodal(true);
-                if(resetPass){
-                    console.log("forget email : "+forgetemail);
-                    console.log("password reset : "+resetPass);
-                    // const obj =  {resetPass,forgetemail} 
-                    const result = confirmResetPassword({forgetemail,resetPass});
-                    result.then((res)=>{
-                        if(res.status==201){
-                            Swal.fire({
-                                background: "black",
-                                icon: "success",
-                                text: "password update successfully",
-                                showCloseButton: true,
-                                focusConfirm: false,
-                            });
-                            setResetPassmodal(false);
-                        }
-                        else{
-                            Swal.fire({
-                                background: "black",
-                                icon: "error",
-                                text: "Error in password updated",
-                                showCloseButton: true,
-                                focusConfirm: false,
-                            });
-                        }
-                    })
-                }else{
-                   
-                }
-            }
-            else{
-                alert("otp not match");
-            }
-    }
-    
-    
+        console.log("otp1 ", typeof otp1)
+        if (Rotp === otp1) {
+            setForgotPassmodal(false);
+            setResetPassmodal(true);
+            if (resetPass) {
+                console.log("forget email : " + forgetemail);
+                console.log("password reset : " + resetPass);
+                // const obj =  {resetPass,forgetemail} 
+                const result = confirmResetPassword({ forgetemail, resetPass });
+                result.then((res) => {
+                    if (res.status == 201) {
+                        Swal.fire({
+                            background: "black",
+                            icon: "success",
+                            text: "password update successfully",
+                            showCloseButton: true,
+                            focusConfirm: false,
+                        });
+                        setResetPassmodal(false);
+                    }
+                    else {
+                        Swal.fire({
+                            background: "black",
+                            icon: "error",
+                            text: "Error in password updated",
+                            showCloseButton: true,
+                            focusConfirm: false,
+                        });
+                    }
+                })
+            } else {
 
-    
+            }
+        }
+        else {
+            alert("otp not match");
+        }
+    }
+
+
+
+
     if (isAdmin) {
         return (<>
         </>);
@@ -755,7 +713,7 @@ function Navbar(props) {
 
 
 
-               <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false)}} centered   >
+                <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false) }} centered   >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -772,7 +730,7 @@ function Navbar(props) {
                                             <form onSubmit={forgotPassHandleSubmit}>
                                                 <div className="mb-3 mt-4 d-flex flex-row align-items-center">
                                                     <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                        placeholder="Enter Email" onChange={(event)=>{setforgetEmail(event.target.value)}} />
+                                                        placeholder="Enter Email" onChange={(event) => { setforgetEmail(event.target.value) }} />
                                                     <i className="fa fa-envelope icon" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="mb-3 mt-4" id='otpfield'>
@@ -781,7 +739,7 @@ function Navbar(props) {
                                                         placeholder="Enter Otp" />
                                                 </div>
                                                 <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { forgetPassOtp(event) }}>get OTP</button>
-                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton' onclick={()=>{setResetPassmodal(true);setForgotPassmodal(false)}}>Submit</button>
+                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton' onclick={() => { setResetPassmodal(true); setForgotPassmodal(false) }}>Submit</button>
                                                 {/* <p className='fs-5 mt-2'>Don't have an account? <a className='webcolor' onClick={() => { setLoginmodal(false); setRegistrationmodal(true) }}>SignUp</a></p>
                                                 <a className='webcolor' onClick={() => { setForgotPassmodal(false); setForgotPassmodal(true) }}>Forgot Password</a> */}
                                             </form>
@@ -793,7 +751,7 @@ function Navbar(props) {
                     </Modal.Body>
                 </Modal>
 
-                <Modal size="lg" show={isResetPassmodal} onHide={() => {setResetPassmodal(false)}} centered   >
+                <Modal size="lg" show={isResetPassmodal} onHide={() => { setResetPassmodal(false) }} centered   >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -808,8 +766,8 @@ function Navbar(props) {
                                         <div id='loginForm'>
                                             <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> Reset Password</span> FORM</h2>
                                             <form onSubmit={forgotPassHandleSubmit}>
-                                            <div className="mb-3 mt-4 d-flex flex-row align-items-center">
-                                                    <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="New Password" onChange={(event)=>{setResetPass(event.target.value)}}/>
+                                                <div className="mb-3 mt-4 d-flex flex-row align-items-center">
+                                                    <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="New Password" onChange={(event) => { setResetPass(event.target.value) }} />
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="mb-3 mt-4 d-flex flex-row align-items-center">
@@ -830,5 +788,4 @@ function Navbar(props) {
             </>);
     }
 }
-
 export default Navbar;
