@@ -169,6 +169,8 @@ export const userLoginController = async (request, response) => {
     try {
         var userObj = await usermodel.findOne({ email: email });
         var userPassword = userObj.password;
+        console.log("password byrt +++ ",userPassword)
+        console.log("userObj +++ ",userObj)
         var status = await bcrypt.compare(password, userPassword);
         console.log(status);
         if (status) {
@@ -189,6 +191,37 @@ export const userLoginController = async (request, response) => {
         response.status(203).json({ message: "Error while Login" });
     }
 }
+// export const userLoginController = async (request, response) => {
+//     const { email, password } = request.body;
+//     console.log("email : ", email);
+//     console.log("password : ", password)
+//     try {
+//         var userObj = await usermodel.findOne({ email: email });
+//         console.log(userObj);
+//         var userPassword = await bcrypt.hash(userObj.password, 10)
+//         // var userPassword = userObj.password;
+//         console.log("5555555555555555555555555555",userPassword);
+//         console.log("999999999999999999",password);
+//         var status = await bcrypt.compare(password, userPassword);
+//         console.log(status);
+//         if (status) {
+//             var expireTime = { expiresIn: '1d' };
+//             var token = jwt.sign({ _id: email }, USER_SECRET_KEY, expireTime);
+
+//             if (!token)
+//                 response.status(500).json({ message: "Error while generating token inside user login" });
+//             console.log("scesfully password bcrypt");
+//             response.status(201).json({ email: email, token: token, message: "login sucefully" });
+//         }
+//         else {
+//             console.log("error in bcrypt controller");
+//             response.status(203).json({ message: "Error In User Login " });
+//         }
+//     } catch (error) {
+//         console.log("Error in user login controller : " + error);
+//         response.status(203).json({ message: "Error while Login" });
+//     }
+// }
 
 export const updateUserProfileController = async (request, response) => {
     console.log("User Update Profile data -->", request.body);
@@ -243,34 +276,32 @@ export const userShowUpcomingEventContoller = async (request, response) => {
     }
 }
 
-export const forgotPassOtpContoller = async (request, response) => {
+export const forgetPassOtpController = async (request, response) => {
     try {
         const { email } = request.body;
-        var data = await usermodel.findOne({ email: email });
-
-        if (data) {
+        var data = await usermodel.findOne({ email: email });       
+        if(data){
             mailer(email, (status, Rotp) => {
                 if (status) {
-                    console.log("status" + status)
+                    console.log("status"+status)
                     console.log("email send")
                     console.log("otp : " + Rotp);
                     response.status(201).json({ status: true, Rotp: Rotp });
-                } else {
+                }else {
                     console.log("Error in user OTP generation : ")
                     response.status(500).json({ status: false });
                 }
             });
         }
-        else {
+        else{
             console.log("email does not exist......!! ")
-            response.status(404).json({ status: false, message: "Email not found" });
+            response.status(201).json({ status: false});
         }
     } catch (error) {
         console.error("Error in user OTP generation controller: ", error);
         response.status(500).json({ status: false });
     }
 }
-
 export const forgotPasswordController = async (request, response) => {
     console.log("request.body : ", request.body);
     try {
@@ -278,12 +309,43 @@ export const forgotPasswordController = async (request, response) => {
         var data = await usermodel.updateOne({ email: forgetemail }, {
             $set: {
                 password: await bcrypt.hash(resetPass, 10)
-                //  password: resetPass                
             }
         });
-        response.status(201).json({ message: "password update successfully", data: data })
+        response.status(201).json({message:"password update successfully",data:data})
     } catch (error) {
-        response.status(500).json({ message: "password not update successfully" })
+        response.status(500).json({message:"password not update successfully"})
     }
-
 }
+export const updateUserPasswordController = async (request, response) => {
+    console.log("polkijuhytdrsd",request.body);
+    const { Id,newPasword,confirmPassword,oldPassword} = request.body;
+    console.log("iddd   : ", Id)
+    console.log("newPasword   : ", newPasword)
+    console.log("confirmPassword   : ", confirmPassword)
+    console.log("oldPassword   : ", oldPassword)
+    try {
+        const data = await usermodel.findOne({_id:Id});
+          var oldpassword1 =data.password;
+          console.log("===============>",oldpassword1);
+        var status = await bcrypt.compare(oldPassword, oldpassword1);
+        console.log(status);
+        if(status){
+        const result = await usermodel.updateOne({ _id: Id }, { $set: { password: await bcrypt.hash(newPasword, 10)}});
+        console.log("result on controller : ", result);
+        if (result) {
+            console.log("User profile updated successfully");
+            response.status(201).json({ message: 'User profile updated successfully' });
+        } else {
+            console.log("User not found or no changes made");
+            response.status(404).json({ error: 'User not found or no changes made' });
+        }
+    }else{
+        console.log("old password does not match");
+        response.status(404).json({ error: 'User not found or no changes made' });
+    }
+    } catch (error) {
+        console.log("Error while updating user profile on controller ", error);
+        response.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+};
+

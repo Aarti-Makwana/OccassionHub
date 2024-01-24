@@ -172,7 +172,7 @@ function Navbar(props) {
             }
         })
     }
-    const [forgetemail,setforgetEmail] = useState("");
+   
     // ================================
     // const getForgotOtp = async (event) => {
     //     event.preventDefault();
@@ -223,61 +223,6 @@ function Navbar(props) {
         }
     }
     
-// ===============================
-    const [resetPass,setResetPass] = useState(""); 
-    const forgotPassHandleSubmit = (e) => {
-        e.preventDefault()
-        result.then((result)=>{
-            if(result.data.Rotp==otp1){
-                setForgotPassmodal(false);
-                setResetPassmodal(true);
-                if(resetPass){
-                    console.log("forget email : "+forgetemail);
-                    console.log("password reset : "+resetPass);
-                    // const obj =  {resetPass,forgetemail} 
-                    const result = confirmResetPassword({forgetemail,resetPass});
-                    result.then((res)=>{
-                        if(res.status==201){
-                            // alert("password update successfully")
-                            Swal.fire({
-                                background: "black",
-                                icon: "success",
-                                text: "Password Update Successfully....!!",
-                                showCloseButton: true,
-                                focusConfirm: false,
-                            });
-                            setResetPassmodal(false);
-                            e.target.reset();
-                        }
-                        else{
-                            // alert("error in update password");
-                            Swal.fire({
-                                background: "black",
-                                icon: "error",
-                                text: "Error in Update Passsword",
-                                showCloseButton: true,
-                                focusConfirm: false,
-                            });
-                        }
-                    })
-                }else{
-
-                }
-               
-                // alert("otp match")
-                // axios.post(user_requestedUrl + "/forgotPassword", forgetemail)
-                // .then(result => {
-                //     if(result.data.Status === "true") {
-                //         navigate('/login')
-                       
-                //     }
-                // }).catch(err => console.log(err)) 
-            }else{
-                alert("otp not match");
-            }
-        });
-    }
-
     const handleSubmit = async (event) => {
         event.preventDefault();
         result.then((result) => {
@@ -373,6 +318,86 @@ function Navbar(props) {
             }
         });
     }
+
+    const [resetPass, setResetPass] = useState("");
+    const [forgetemail, setforgetEmail] = useState("");
+
+    const [Rotp, setRotp] = useState(null);
+    const forgetPassOtp = async (event) => {
+        event.preventDefault();
+        console.log("user data in getotp ", forgetemail);
+        
+        try {
+            const result = await forgetPassUser(forgetemail);
+            setRotp(result.data.Rotp);
+            console.log("rotp : ",typeof Rotp);
+            console.log("result ===== 5555555555555 ",result.data.status);
+            if (result.data.status) {
+                console.log("result in forgot password controller ", result);
+                document.getElementById("otpfield").style.display = "block";
+                document.getElementById("signupbutton").style.visibility = "visible";
+                document.getElementById("getotpbutton").style.display = "none";
+            } 
+            else {
+                alert("email does not exist");
+                Swal.fire({
+                    background: "black",
+                    icon: "error",
+                    text: "Email does not exist...!!",
+                    showCloseButton: true,
+                    focusConfirm: false,
+                });
+                setForgotPassmodal(false);
+            }
+        } catch (error) {
+            console.error("Error in getForgotOtp function: ", error);
+        }
+    }
+
+
+
+
+    const forgotPassHandleSubmit = (e) => {
+        e.preventDefault()
+        console.log("otp1 ",typeof otp1)
+            if(Rotp===otp1){
+                setForgotPassmodal(false);
+                setResetPassmodal(true);
+                if(resetPass){
+                    console.log("forget email : "+forgetemail);
+                    console.log("password reset : "+resetPass);
+                    // const obj =  {resetPass,forgetemail} 
+                    const result = confirmResetPassword({forgetemail,resetPass});
+                    result.then((res)=>{
+                        if(res.status==201){
+                            Swal.fire({
+                                background: "black",
+                                icon: "success",
+                                text: "password update successfully",
+                                showCloseButton: true,
+                                focusConfirm: false,
+                            });
+                            setResetPassmodal(false);
+                        }
+                        else{
+                            Swal.fire({
+                                background: "black",
+                                icon: "error",
+                                text: "Error in password updated",
+                                showCloseButton: true,
+                                focusConfirm: false,
+                            });
+                        }
+                    })
+                }else{
+                   
+                }
+            }
+            else{
+                alert("otp not match");
+            }
+    }
+
 
     if (isAdmin) {
         return (<>
@@ -656,7 +681,10 @@ function Navbar(props) {
                         </div>
                     </Modal.Body>
                 </Modal>
-                <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false)}} centered   >
+
+
+
+             <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false)}} centered   >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -681,45 +709,8 @@ function Navbar(props) {
                                                     <input type="address" required name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                         placeholder="Enter Otp" />
                                                 </div>
-                                                <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>
-                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton' onclick={()=>{setResetPassmodal(true);setForgotPassmodal(false)}}>Sign up</button>
-                                                {/* <p className='fs-5 mt-2'>Don't have an account? <a className='webcolor' onClick={() => { setLoginmodal(false); setRegistrationmodal(true) }}>SignUp</a></p>
-                                                <a className='webcolor' onClick={() => { setForgotPassmodal(false); setForgotPassmodal(true) }}>Forgot Password</a> */}
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </Modal.Body>
-                </Modal>
-                <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false)}} centered   >
-                    <Modal.Body className='p-0'>
-                        <div className="login bg-black">
-                            <div className="container p-0">
-                                <div className="row g-0 p-2">
-                                    <div className="col-lg-5 bg-success p-0">
-                                        <img src={bday} className="w-100" height='100%' alt="" />
-                                    </div>
-                                    <div className="myform col-lg-7 p-3 " >
-                                        <div className='d-flex justify-content-end'>
-                                            <button className='btn-close' aria-label="Close" onClick={() => { setForgotPassmodal(false) }}></button>
-                                        </div>
-                                        <div id='loginForm'>
-                                            <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> Forgot Password </span> FORM</h2>
-                                            <form onSubmit={forgotPassHandleSubmit}>
-                                                <div className="mb-3 mt-4 d-flex flex-row align-items-center">
-                                                    <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                        placeholder="Enter Email" onChange={(event)=>{setforgetEmail(event.target.value)}} />
-                                                    <i className="fa fa-envelope icon" aria-hidden="true"></i>
-                                                </div>
-                                                <div className="mb-3 mt-4" id='otpfield1'>
-                                                    <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
-                                                    <input type="address" required name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
-                                                        placeholder="Enter Otp" />
-                                                </div>
-                                                <button className="btn btn-light mt-3" id='getotpbutton1' name="otp" onClick={(event) => { getForgotOtp(event) }}>get OTP</button>
-                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton1' onclick={()=>{setResetPassmodal(true);setForgotPassmodal(false)}}>Sign up</button>
+                                                <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { forgetPassOtp(event) }}>get OTP</button>
+                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton' onclick={()=>{setResetPassmodal(true);setForgotPassmodal(false)}}>Submit</button>
                                                 {/* <p className='fs-5 mt-2'>Don't have an account? <a className='webcolor' onClick={() => { setLoginmodal(false); setRegistrationmodal(true) }}>SignUp</a></p>
                                                 <a className='webcolor' onClick={() => { setForgotPassmodal(false); setForgotPassmodal(true) }}>Forgot Password</a> */}
                                             </form>
@@ -731,7 +722,7 @@ function Navbar(props) {
                     </Modal.Body>
                 </Modal>
 
-                <Modal size="lg" show={isResetPassmodal} onHide={() => {setResetPassmodal(false)}} centered   >
+                <Modal size="lg" show={isResetPassmodal} onHide={() => {setResetPassmodal(false)}} centered  >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -754,7 +745,7 @@ function Navbar(props) {
                                                     <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="Confirm Password" />
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                 </div>
-                                                <button type="submit" className="btn btn-light mt-3 fs-6">Sign In</button>
+                                                <button type="submit" className="btn btn-light mt-3 fs-6">Submit</button>
                                                 {/* <p className='fs-5 mt-2'>Don't have an account? <a className='webcolor' onClick={() => { setLoginmodal(false); setRegistrationmodal(true) }}>SignUp</a></p>
                                                 <a className='webcolor' onClick={() => { setForgotPassmodal(false); setForgotPassmodal(true) }}>Forgot Password</a> */}
                                             </form>

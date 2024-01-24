@@ -1,5 +1,6 @@
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
+import jscookie from 'js-cookie'
 import { admin_requestedUrl } from "../urls.js";
 const initialState = {
 
@@ -11,6 +12,21 @@ const adminSlice = createSlice({
 
     }
 });
+export const adminLogin =async (adminCredential)=>{  
+    try{
+        console.log(adminCredential);
+        var result = await axios.post(admin_requestedUrl+'/adminLogin',adminCredential); 
+        console.log("adminSlice : ",result);
+        console.log("token : ",result.data.token);
+        if(result.status==201)
+            jscookie.set("admin_email",adminCredential.email);
+
+        jscookie.set('admin_jwt_token',result.data.token,{expires:1});
+        return result;
+    }catch(err){
+        console.log("error in adminSlice : ",err);
+    }
+}
 export const adminShowUserData = async () => {
     alert("adminshowUser Slice calll")
     try {

@@ -9,8 +9,9 @@ body {
 }
 #upcomingSection{
     /* background: url('../../images/cardMain1.jpg') center/cover; */
-    background: url('../../images/cardMain1.jpg') center/cover;
-    height:50vh;
+    /* background: url('../../images/cardMain1.jpg') center/cover; */
+    height:55vh;
+    width: 430px;
     background-repeat: no-repeat;
     background-position: center;
     
@@ -26,7 +27,8 @@ body {
 #overlayImage{
     background: url('../../images/card1.jpg') center/cover;
     background-size: cover;
-    margin: 20% 0 0% -15%;
+    margin: 35% 0 0% -15%;
+    height: 200px;
 }
 
 .text_justify{

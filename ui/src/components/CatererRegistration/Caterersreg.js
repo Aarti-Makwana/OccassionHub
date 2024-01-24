@@ -6,7 +6,7 @@ import jscookie from 'js-cookie';
 import { useNavigate } from "react-router-dom";
 
 function Caterersreg() {
-  const [isCatererManagerRegistrationModal, setCatererRegistrationModal] = useState(false)
+  const [isCatererManagerRegistrationModal, setCatererRegistrationModal] = useState(false);
   const [caterer, setCatererdata] = useState({});
   var navigate = useNavigate();
   const getData = (event) => {
@@ -39,11 +39,13 @@ function Caterersreg() {
     var result = RegisterCatererData(formData);
     console.log("rsult in catrere controller : ", result);
     result.then((result) => {
-      if (result.status == 201) {
+
+      if(result.status == 201) {
         alert("registration sucefully...!")
         setCatererRegistrationModal(false);
         navigate("/");
       }
+
     }).catch((err) => {
       alert("error in registration......!!");
       console.log("error in catch.....!!" + err);

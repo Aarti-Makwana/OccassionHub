@@ -3,20 +3,32 @@ import userImage from "../../images/user.jpg";
 import { useState, useEffect } from 'react';
 import { caterre_requestUrl } from '../../urls.js';
 import axios from 'axios';
+import jscookie from 'js-cookie';
+import { useNavigate } from 'react-router-dom';
+import EditCatereProfileModal from './CatereProfileUpdate';
 
 function CaterersDashboard() {
     const [activeLink, setActiveLink] = useState('seeRequest');
     const [allRequestedUserData, setAllRequestedUserData] = useState([]);
-    const [userInfo, setUserInfo] = useState({});
+    const [isDropdownOpen, setDropdownOpen] = useState(false);
+    const[userInfo,setUserInfo] = useState([]);
+    const[catereRegistrationInfo,setcatereRegistrationInfo] = useState([]);
+    var catereEmail = jscookie.get('user');
+    var navigate = useNavigate();
 
     var openSideBar = () => {
         document.getElementById("sideNavBar").style.display = "block";
     }
     const fetchData = async () => {
         try {
-            const response = await axios.get(caterre_requestUrl + '/catereSeeRequestedData');
+            console.log("suerInfo on frontend side is----> ",catereRegistrationInfo);
+            const response = await axios.post(caterre_requestUrl + '/catereSeeRequestedData', { catereEmail });
+            
             setAllRequestedUserData(response.data.allUserRequestedDataForCateres);
-            setUserInfo(response.data.normalUserInfo);
+            setUserInfo(response.data.userData);
+            catereRegistrationInfo.ID = catereRegistrationInfo._id;
+            setcatereRegistrationInfo(response.data.catereRegistrationInfo);
+            console.log("suerInfo on frontend side is 2222222222       ----> ",catereRegistrationInfo);
         } catch (err) {
             console.log("Error in catrers dashboard while showing data ", err);
         }
@@ -34,11 +46,33 @@ function CaterersDashboard() {
             }
         }
     }
+
+    const showLists = (index) => {
+        const listShowsElement = document.getElementById(`listShows${index}`);
+        if (listShowsElement) {
+            const isVisible = !listShowsElement.classList.contains("d-none");
+
+            if (isVisible) {
+                listShowsElement.classList.add("d-none");
+            } else {
+                listShowsElement.classList.remove("d-none");
+            }
+        }
+    }
+
+    const handleDropdownToggle = () => {
+        setDropdownOpen(!isDropdownOpen);
+    };
+
+    const catereLogOut =() =>{
+        jscookie.remove("user");
+        navigate('/', { replace: true });
+    }
+
     const renderContent = () => {
         if (activeLink === 'seeRequest') {
             return (
                 <>
-                    {console.log("allRequestedUserData-----> ", allRequestedUserData)}
                     {allRequestedUserData.map((data, index) => (
                         <div className="col-lg-9 mb-1 mySideBar w-100 bg-dark" key={index}>
                             <div className="row p-2 w-100 mb-3">
@@ -55,9 +89,46 @@ function CaterersDashboard() {
                                         className="text-light">{data.location} </small></span>
                                 </div>
                                 <div className="col col-lg-4 col-md-4 col-12">
-                                    <button className="btn btn-danger my-5">View Requirments</button>
+                                    <button className="btn btn-danger my-5" onClick={() => showLists(index)}>View Requirments</button>
                                 </div>
                             </div>
+                            {/* See Requirment List start */}
+                            <div className="row p-2 w-100 mb-3 d-none" id={`listShows${index}`}>
+                                <div className="col col-lg-3 col-md-4 col-12 text-center">
+                                    <h6 className="text-danger">Selected Roti</h6>
+                                    <ul id="uls">
+                                        {data.requirments[0].Roti.map((item, itemIndex) => (
+                                            <li key={itemIndex}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="col col-lg-3 col-md-4 col-12 text-center">
+                                    <h6 className="text-danger">Selected Sabji</h6>
+                                    <ul id="uls">
+                                        {data.requirments[0].Sabji.map((item, itemIndex) => (
+                                            <li key={itemIndex}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="col col-lg-3 col-md-4 col-12 text-center">
+                                    <h6 className="text-danger">Selected Desserts</h6>
+                                    <ul id="uls">
+                                        {data.requirments[0].Dessert.map((item, itemIndex) => (
+                                            <li key={itemIndex}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                <div className="col col-lg-3 col-md-4 col-12 text-center">
+                                    <h6 className="text-danger">Selected Starter</h6>
+                                    <ul id="uls">
+                                        {data.requirments[0].Starter.map((item, itemIndex) => (
+                                            <li key={itemIndex}>{item}</li>
+                                        ))}
+                                    </ul>
+                                </div>
+                                   <button className="btn btn-danger w-25 offset-lg-4 offset-1">Accept Request</button>
+                            </div>
+                            {/* See Requirment List end */}
                         </div>
                     ))}
                 </>
@@ -78,10 +149,19 @@ function CaterersDashboard() {
                     <p className='bg-dark text-danger'>description here</p>
                 </>
             );
-        } else if (activeLink === 'updatePassword') {
+        } else if (activeLink === 'updatePassword'){
             return (
                 <>
                     <p className='bg-dark text-danger'>update Password here</p>
+                </>
+            );
+        }else if (activeLink === 'profile') {
+            return (
+                <>
+                    {/* <p className='bg-dark text-danger'>update profile here</p> */}
+                    <div className="container">
+                        <label className="" htmlFor="Name">Name : </label><span> Andrew</span>
+                    </div>
                 </>
             );
         }
@@ -140,18 +220,29 @@ function CaterersDashboard() {
                                         <span className="d-none d-lg-inline-flex text-light">Message</span>
                                     </a>
                                 </li>
-                                <li className="nav-item ">
-                                    <a href="#" className="nav-link" >
+                                <li className="nav-item">
+                                    <a href="#" className="nav-link  bg-dark">
                                         <i className="fa fa-bell me-lg-2 text-danger"></i>
                                         <span className="d-none d-lg-inline-flex text-light">Notification</span>
                                     </a>
                                 </li>
-                                <li className="nav-item dropdown">
-                                    <a href="#" className="nav-link dropdown-toggle" data-bs-toggle="dropdown">
-                                        <img className="rounded-circle me-lg-2" src={userImage} alt=""
-                                            style={{ width: " 40px", height: "40px" }} />
-                                        <span className="d-none d-lg-inline-flex text-light">John Doe</span>
+                                <li className={`nav-item dropdown ${isDropdownOpen ? 'show' : ''}`}>
+                                    <a
+                                        href="#"
+                                        className="nav-link dropdown-toggle"
+                                        id="userDropdown"
+                                        role="button"
+                                        onClick={handleDropdownToggle}
+                                    >
+                                        <img className="rounded-circle me-lg-2" src={userImage} alt="" style={{ width: "40px", height: "40px" }} />
+                                        <span className="d-none d-lg-inline-flex text-light">{userInfo.name}</span>
                                     </a>
+                                    {isDropdownOpen && (
+                                        <ul className="dropdown-menu show" aria-labelledby="userDropdown">
+                                            <EditCatereProfileModal CatereRegistrationInfo={catereRegistrationInfo} UserInfo={userInfo}/>
+                                            <li className="dropdown-item" onClick={catereLogOut}>Logout</li>
+                                        </ul>
+                                    )}
                                 </li>
                             </ul>
                         </div>
@@ -160,9 +251,9 @@ function CaterersDashboard() {
             </div>
 
             <div className='container-fluid row'>
-                <div className="col-md-4 col-4 col-lg-4 siderbar pe-4 pb-3 mySideBar" style={{ width: "25vw", marginLeft: "1vw" }} id="sideNavBar">
+                <div className="col-md-4 col-4 col-lg-4 siderbar pe-4 pb-3 mySideBar" style={{ width: "25vw", marginLeft: "1vw" , height:'75vh' }} id="sideNavBar">
                     <nav className="navbar bg-light navbar-light bg-dark border-radius m-0  ">
-                        <div className="d-flex align-items-center ms-4 mb-4">
+                        <div className="d-flex align-items-center ms-4 mb-4" onClick={() => handleLinkClick('profile')}>
                             <div className="position-relative">
                                 <img className="rounded-circle" src={userImage} alt="" style={{ width: "40px", height: "40px" }} />
                                 <div
@@ -170,8 +261,8 @@ function CaterersDashboard() {
                                 </div>
                             </div>
                             <div className="ms-3 pt-4">
-                                <h6 className="mb-0">Jhon Doe</h6>
-                                <span>Admin</span>
+                                <h6 className="mb-0">{userInfo.name}</h6>
+                                <span>{userInfo.role}</span>
                             </div>
                         </div>
                         <div className="navbar-nav w-100 mySideBar">
@@ -208,7 +299,7 @@ function CaterersDashboard() {
                     </div>
                 </div>
             </div>
-        </div>
+        </div><br/>
 
     </>);
 }

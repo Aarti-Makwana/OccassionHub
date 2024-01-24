@@ -9,7 +9,7 @@ import rating from '../../images/rating.png'
 function Testimonial() {
     return (<>
         <div>
-            <div className="row">
+            <div className="row mt-5">
                 <div className="col-lg-12">
                     <div className="section-title text-center">
                         <span className="subtitle ">What Clients Says</span>

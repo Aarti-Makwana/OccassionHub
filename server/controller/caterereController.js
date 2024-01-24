@@ -91,11 +91,43 @@ export const seeNormalUserToCatereRequestController = async (request, response) 
 }
 
 export const catereSeeRequestedDataController = async (request, response) => {
+    console.log("hellooooo   catereSeeRequestedDataController==========", request.body)
     try {
-        var allUserRequestedDataForCateres = await customiseThaliModel.find();
-        response.status(201).json({ allUserRequestedDataForCateres });
+        const { catereEmail } = request.body;
+        const userData = await usermodel.findOne({ email: catereEmail });
+        const catereRegistrationInfo = await catererRegistrationModel.findOne({ catererEmail: catereEmail });
+        console.log("cater ------------------------ ",catereRegistrationInfo)
+        var allUserRequestedDataForCateres = await customiseThaliModel.find({ normaluserid: userData._id });
+        response.status(201).json({
+            userData,
+            catereRegistrationInfo,
+            allUserRequestedDataForCateres});
     } catch (error) {
         console.log("Error in catere See Requested Data Controller", error);
         response.status(500).json({ status: false });
-    }
+    }  
 }
+
+export const updateCatereProfileController = async(request,response) =>{
+    console.log("update Catere Profile Controller",request.body);
+    const {Id,email,name, contect, address ,Businessname ,Specialization ,ServiceCharges ,FoodType ,ServiceType} = request.body;
+    console.log("req . body ",request.body)
+    try {
+        const cateData = await catererRegistrationModel.updateOne({ _id: Id }, { $set: { Businessname ,Specialization ,ServiceCharges ,FoodType ,ServiceType} });
+        const userData = await catererRegistrationModel.findOne({ catererEmail:email});
+        console.log("userEmail on controller : ", userData.catererEmail);
+        const userData1 = await usermodel.updateOne({ email: userData.catererEmail }, { $set: { name, contect, address } });
+        if (cateData && userData) {
+            console.log("catere profile updated successfully");
+            response.status(201).json({ message: 'User profile updated successfully' });
+        } else {
+            console.log("User not found or no changes made");
+            response.status(404).json({ error: 'User not found or no changes made' });
+        }
+    } catch (error) {
+        console.log("Error while updating catere profile on controller ", error);
+        response.status(500).json({ error: 'Internal Server Error', message: error.message });
+    }
+}
+
+
