@@ -12,7 +12,7 @@ import AllServices from './components/Allservices/AllServices.js';
 import ContactUs from './components/ContactusPage/Contact.js';
 import CaterersDashboard from './components/ServiceProviderDashboard/CaterersDashboard.js';
 import Passes from './components/passesPage/pass.js';
-
+import AdminLogin from './components/AdminLogin/AdminLogin.js'
 import { Route, Routes } from 'react-router-dom';
 function App() {
   return (
@@ -28,10 +28,10 @@ function App() {
         <Route path='/eventRequest' element={<><RequirmentForm /></>}></Route>
         <Route path='/searchServices' element={<><AllServices /></>}></Route>
         <Route path='/contactus' element={<><ContactUs /></>}></Route>
-        <Route path='/admin' element={<><AdmindashBoard /></>}></Route>
         <Route path='/catererprofile' element={<><CaterersDashboard /></>}></Route>
         <Route path='/passes' element={<><Passes/></>}></Route>
-
+        <Route path='/admin' element={<><AdminLogin /></>}></Route>
+        <Route path='/adminHome' element={<><AdmindashBoard /></>}></Route>
       </Routes >
       <Footer />
     </>

@@ -1,7 +1,9 @@
 import './AdminTopNavbar.css';
-import userImage from '../../images/user.jpg'
+import userImage from '../../images/user.jpg';
+import jscookie from 'js-cookie'
 var show = false
 function AdminTopNavbar() {
+const admin_email  = jscookie.get("admin_email");
     function silderBarToggle() {
         var sliderBar = document.getElementById("siderBar");
         var content = document.getElementById("content")
@@ -42,7 +44,7 @@ function AdminTopNavbar() {
                             <a href="#" className="nav-link" >
                                 <img className="rounded-circle me-lg-2" src={userImage} alt=""
                                     style={{ width: " 40px", height: "40px" }} />
-                                <span className="text-light">John Doe</span>
+                                <span className="text-light">{admin_email}</span>
                             </a>
                         </li>
                     </ul>

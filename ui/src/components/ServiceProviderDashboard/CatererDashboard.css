@@ -19,29 +19,6 @@
     --dark: #191C24;
 }
 
-.back-to-top {
-    position: fixed;
-    display: none;
-    right: 45px;
-    bottom: 45px;
-    z-index: 99;
-}
-
-
-/*** Spinner ***/
-#spinner {
-    opacity: 0;
-    visibility: hidden;
-    transition: opacity .5s ease-out, visibility 0s linear .5s;
-    z-index: 99999;
-}
-
-#spinner.show {
-    transition: opacity .5s ease-out, visibility 0s linear 0s;
-    visibility: visible;
-    opacity: 1;
-}
-
 
 /*** Button ***/
 .btn {
@@ -81,7 +58,6 @@
 
 /*** Layout ***/
 .siderbar {
-    /* position: fixed; */
     top: 0;
     left: 0;
     bottom: 0;
@@ -89,7 +65,8 @@
     overflow-y: auto;
     background: var(--light);
     transition: 0.5s;
-    z-index: 999;
+    z-index: 0;
+    background: red;
 }
 
 @media (min-width: 992px) {
@@ -288,6 +265,7 @@
     background-color: rgb(39, 59, 74, 20%);
     border-top-left-radius: 5%;
     border-top-right-radius: 5%;
+    height: 90vh;
 }
 
 #catrerHeader {
@@ -302,4 +280,8 @@
         display: none;
         /* width: 100vw; */
     }
+}
+
+#uls{
+    list-style: none;
 }

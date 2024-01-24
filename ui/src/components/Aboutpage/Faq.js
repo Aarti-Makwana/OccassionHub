@@ -1,15 +1,15 @@
-function Faq(){
-     return(<>
-     <section id="faq" class="faq" style={{backgroundColor: "black"}}>
+function Faq() {
+  return (<>
+    <section id="faq" class="faq" style={{ backgroundColor: "black" }}>
       <div class="container">
         <div class="section-title">
-          <h2> Frequently Asked<span style={{color: "#FF0057"}}>Question</span></h2>
+          <h2> Frequently Asked<span style={{ color: "#FF0057" }}>Question</span></h2>
         </div>
         <div class="accordion accordion-flush" id="faqlist1">
-        
+
           <div class="accordion-item">
             <h2 class="accordion-header">
-              <button class="accordion-button collapsed" type="button"  data-bs-toggle="collapse" data-bs-target="#faq-content-1">
+              <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq-content-1">
                 Non consectetur a erat nam at lectus urna duis?
               </button>
             </h2>
@@ -87,7 +87,7 @@ function Faq(){
         </div>
       </div>
 
-      </section>
-      </>)
+    </section>
+  </>)
 }
 export default Faq

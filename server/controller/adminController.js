@@ -4,6 +4,40 @@ import venueRegistration from "../model/venueRegistration.js";
 import decorationRegistrationModel from "../model/decorationRegistrationModel.js";
 import djRegistrationModel from "../model/djRegistrationModel.js";
 import passesModel from '../model/passesModel.js';
+import dotenv from 'dotenv';
+import jwt from 'jsonwebtoken';
+import bcrypt from 'bcrypt';
+import adminModel from "../model/adminModel.js";
+import requestSchema from '../model/eventRequestModel.js'
+
+dotenv.config();
+var secret_key = process.env.ADMIN_SECRET_KEY
+export const adminLoginController = async(request,response,next)=>{
+    const {email,password} = request.body;
+    try{
+        console.log("===========>",request.body);
+        console.log("===========>",request.body.email);
+        console.log("===========>",request.body.password);
+        var expireTime = {expiresIn : '1d'};
+        var token = jwt.sign({_id:email},secret_key,expireTime); 
+        console.log("token",token)
+        if(!token)
+            response.status(500).json({message:"Error while generating token inside admin login"});
+        var adminObj = await adminModel.findOne({_id:email});
+        console.log(adminObj);
+        var adminPassword = adminObj.password;
+        console.log(adminPassword);
+        if (password === adminPassword) {
+            response.status(201).json({ adminemail: email, token: token });
+            next();
+        } else {
+            response.status(203).json({ message: "Incorrect password" });
+        }
+    }catch(err){
+        console.log("Error in admin login controller : "+err);
+        response.status(203).json({message:"Error while Login"});
+    }
+};
 export const adminShowUserController = async (req, res) => {
     try {
         var data = await usermodel.find();

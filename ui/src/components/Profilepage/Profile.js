@@ -12,6 +12,7 @@ import Caterersreg from '../CatererRegistration/Caterersreg.js'
 import Decorationform from '../DecorationRegistration/Decorationform.js';
 import Venue from '../VenueRegistration/Venueform.js';
 import EditProfile from './EditProfileModal.js';
+import UpdatePasswordModal from './UpdatePasswordModal.js';
 
 var userData = {};
 function Profile() {
@@ -89,6 +90,7 @@ function Profile() {
                             <h2 className="usernameProfile">I am <span className='nameP'>{userDetails.name}</span></h2>
                             {/* <button className="btn btn-danger">Edit Profile</button> */}
                             <EditProfile userData={userDetails} />
+                            <UpdatePasswordModal userData={userDetails} />
                             <hr style={{ height: '3px', backgroundColor: "#ff0057" }} />
                         </div>
                         <div className='py-4'>

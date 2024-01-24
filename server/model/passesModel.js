@@ -1,5 +1,3 @@
-// passesModel
-// ------------------------------------------------------------
 import mongoose from "../connection/dbConfig.js";
 var passesSchema = new mongoose.Schema({
     eventrequested_id: {

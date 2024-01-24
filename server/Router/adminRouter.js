@@ -1,9 +1,10 @@
 import express from 'express';
 import {
     adminShowUserController, adminShowCatererDataController, adminShowDjController, adminshowVeneueController,adminShowEventController,
-    adminShowDecorationController, adminshowPassesDataController
+    adminShowDecorationController, adminshowPassesDataController,adminLoginController
 } from '../controller/adminController.js';
 var adminRouter = express.Router();
+adminRouter.post("/adminLogin",adminLoginController);
 adminRouter.post("/userData", adminShowUserController);
 adminRouter.post("/catererData", adminShowCatererDataController);
 adminRouter.post("/djData", adminShowDjController);

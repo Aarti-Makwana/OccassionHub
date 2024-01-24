@@ -84,13 +84,13 @@ function AllServices() {
                             <div className="col col-lg-3 col-md-6 col-12 my-3">
                                 <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
                                     <div className='carddiv1'>
-                                        <img src={data.docs ? `http://localhost:4001/${data.docs} ` : img} className="card-img-top allImages" alt="..." />
+                                        <img src={data.docs ? `http://localhost:4001/${data.docs} ` : img}  height='200' width='100%' alt="..." />
                                     </div>
-                                    <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>{data.Businessname}</span></h4>
-                                    <div className="card-body">
-                                        <span className="card-text">Service Charge : $ {data.ServiceCharges}</span><br />
-                                        <span className="card-text">Food Type  :  {data.FoodType}</span><br />
-                                        <span className="card-text">Specialization : {data.Specialization}</span><br />
+                                    <h4 className="card-title fw-bold mt-2"><span className='webcolor'>{data.Businessname}</span></h4>
+                                    <div className="mt-2 mb-3 py-1">
+                                        <span style={{color:'whitesmoke'}}>&nbsp;&nbsp;<b className='text-white'>Service Charge : </b> ${data.ServiceCharges}</span><br />
+                                        <span style={{color:'whitesmoke'}}>&nbsp;&nbsp;<b className='text-white'>Food Type : </b>{data.FoodType}</span><br />
+                                        <span style={{color:'whitesmoke'}}>&nbsp;&nbsp;<b className='text-white'>Specialization : </b>{data.Specialization}</span><br />
                                     </div>
                                     {/* <button className='ourbtn mt-1'>Book Now</button> */}
                                     <ChooseServicesModal isOpen={isBookNowModalOpen} closeModal={() => setBookNowModalOpen(false)} catererEmail={data.catererEmail} />
@@ -113,13 +113,13 @@ function AllServices() {
                             <div className="col col-lg-3 col-md-6 col-12 my-3">
                                 <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
                                     <div className='carddiv1'>
-                                        <img src={decorationdata.docs ? `http://localhost:4001/${decorationdata.docs} ` : img} className="card-img-top allImages" alt="..." />
+                                        <img src={decorationdata.docs ? `http://localhost:4001/${decorationdata.docs} ` : img}  height='200' width='100%' alt="..." />
                                     </div>
                                     <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>{decorationdata.Businessname}</span></h4>
-                                    <div className="card-body">
-                                        <span className="card-text">Service Charge : $ {decorationdata.Decorationprice}</span><br />
-                                        <span className="card-text">decoration Type  :  {decorationdata.Decorationtype}</span><br />
-                                        <span className="card-text">Specialization : {decorationdata.ServiceType}</span><br />
+                                    <div className="mt-2 mb-3 py-1">
+                                        <span style={{color:'whitesmoke'}}><b>Service Charge : </b>$ {decorationdata.Decorationprice}</span><br />
+                                        <span style={{color:'whitesmoke'}}><b>decoration Type : </b>{decorationdata.Decorationtype}</span><br />
+                                        <span style={{color:'whitesmoke'}}><b>Specialization : </b>{decorationdata.ServiceType}</span><br />
                                     </div>
                                     <button className='ourbtn mt-1'>Book Now</button>
                                     <button className='ourbtn1 mt-1'>Show Gallery</button>
@@ -141,13 +141,13 @@ function AllServices() {
                             <div className="col col-lg-3 col-md-6 col-12 my-3">
                                 <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
                                     <div className='carddiv1'>
-                                        <img src={djdata.docs ? `http://localhost:4001/${djdata.docs} ` : img} className="card-img-top allImages" alt="..." />
+                                        <img src={djdata.docs ? `http://localhost:4001/${djdata.docs} ` : img}  height='200' width='100%' alt="..." />
                                     </div>
                                     <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>{djdata.Businessname}</span></h4>
-                                    <div className="card-body">
-                                        <span className="card-text">Service Charge : $ {djdata.Djprice}</span><br />
-                                        <span className="card-text">Equipment Type  :  {djdata.EquipmentType}</span><br />
-                                        <span className="card-text">Specialization : {djdata.ServiceType}</span><br />
+                                    <div className="mt-2 mb-3 py-1">
+                                        <span style={{color:'whitesmoke'}}><b>Service Charge : </b>$ {djdata.Djprice}</span><br />
+                                        <span style={{color:'whitesmoke'}}><b>Equipment Type : </b>{djdata.EquipmentType}</span><br />
+                                        <span style={{color:'whitesmoke'}}><b>Specialization : </b>{djdata.ServiceType}</span><br />
                                     </div>
                                     <button className='ourbtn mt-1'>Book Now</button>
                                     <button className='ourbtn1 mt-1'>Show Gallery</button>
@@ -169,13 +169,13 @@ function AllServices() {
                             <div className="col col-lg-3 col-md-6 col-12 my-3">
                                 <div className="card p-2 bg-dark text-white col-lg-3 m-auto" style={{ width: "18rem" }}>
                                     <div className='carddiv1'>
-                                        <img src={"http://localhost:4001/" + data.docs} className="card-img-top allImages" alt="..." />
+                                        <img src={"http://localhost:4001/" + data.docs}  height='200' width='100%' alt="..." />
                                     </div>
                                     <h4 className="card-title fw-bold p-1 mt-2"><span className='webcolor'>{data.VenueName}</span></h4>
-                                    <div className="card-body">
-                                        <span className="card-text">Venu Price: $ {data.venuePrice}</span><br />
-                                        <span className="card-text">Venu Type :  {data.VenueType}</span><br />
-                                        <span className="card-text">Service Type : {data.ServiceType}</span><br />
+                                    <div className="mt-2 mb-3 py-1">
+                                        <span style={{color:'whitesmoke'}}><b>Venu Price : </b>$ {data.venuePrice}</span><br />
+                                        <span style={{color:'whitesmoke'}}><b>Venu Type : </b>{data.VenueType}</span><br />
+                                        <span style={{color:'whitesmoke'}}><b>Service Type : </b>{data.ServiceType}</span><br />
                                     </div>
                                     <button className='ourbtn mt-1'>Book Now</button>
                                     <button className='ourbtn1 mt-1'>Show Gallery</button>

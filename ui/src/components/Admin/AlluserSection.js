@@ -19,8 +19,8 @@ function AlluserSection() {
         });
     },[])
     return (<>
-        <div className="w-100 table-responsive p-2 pt-4 ">
-            <table className="table table-bordered table-hover table-dark">
+        <div className="w-100 table-responsive p-2 pt-4">
+            <table className="table table-bordered table-hover table-dark ">
                 <thead>
                     <tr>
                         <th>No.</th>
