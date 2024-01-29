@@ -72,7 +72,9 @@ import './djRegistrationcss.css';
 import Modal from 'react-bootstrap/Modal';
 import jscookie from 'js-cookie';
 import { RegisterDjData } from '../../store/DjSlice.js'
+import { useNavigate } from 'react-router-dom';
 function DJ() {
+  const navigate = useNavigate();
   const [isDjManagerRegistrationModal, setDjRegistrationModal] = useState(false)
   const [dj, setDjdata] = useState({});
   const getData = (event) => {
@@ -110,6 +112,7 @@ function DJ() {
       if (result.status == 201) {
         alert("registration successfully...!")
         setDjRegistrationModal(false);
+        navigate('/dj')
       }
     }).catch((err) => {
       alert("error in registration......!!");

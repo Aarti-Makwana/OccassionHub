@@ -1,7 +1,7 @@
 import './Navbar.css';
 import { Link } from 'react-router-dom';
 import video from '../images/main_video.mp4'
-import logo from '../images/occassionHub-logo.webp'
+import logo from '../images/logohub.png'
 import bday from '../images/Caterer.jpg';
 import { useEffect, useState } from 'react';
 import { adduser, setNavbar, RegisterUserData, userLogin, confirmResetPassword, forgetPassUser } from '../store/userSlice';
@@ -10,11 +10,16 @@ import Modal from 'react-bootstrap/Modal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import bannerSearchServices from "../images/bannerSearchServices.jpg";
+import upcomingeventbanner from "../images/Rectangle 20.png";
+import aboutpagebanner from "../images/image 14.png";
+import profilebanner from "../images/artist-3480274_1280.jpg";
+import bookticketbanner from "../images/card1.jpg";
 import { user_requestedUrl } from '../urls';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 
 var result = "";
+var username_check = false, email_check = false, password_check = false, mobile_check = false, address_check = false;
 const modalCss = {
     content: {
         backgroundColor: '',
@@ -27,6 +32,7 @@ const modalCss = {
 function Navbar(props) {
 
     const [isLoginmodal, setLoginmodal] = useState(false);
+    const [isLoginStatus, setLoginStatus] = useState(false);
     const [isRegistrationmodal, setRegistrationmodal] = useState(false);
     const [email, setEmail] = useState('');
     const [bannerPath, setBannerPath] = useState(video);
@@ -36,14 +42,6 @@ function Navbar(props) {
     const [isForgoPassmodal, setForgotPassmodal] = useState(false);
     const [isResetPassmodal, setResetPassmodal] = useState(false);
 
-    //Validation Form States....!
-
-    // const [nameError, setNameError] = useState('');
-    // const [emailError, setEmailError] = useState('');
-    // const [passwordError, setPasswordError] = useState('');
-    // const [contactError, setContactError] = useState('');
-    // const [addressError, setAddressError] = useState('');
-    // const [otpError, setOtpError] = useState('');
 
     useEffect(() => {
         const email = jscookie.get('user');
@@ -55,39 +53,47 @@ function Navbar(props) {
             console.log("searchServices", bannerPath)
         } else if (pathname == "/catererprofile") {
             setBannerPath(pathname);
-            console.log("catrerDashBoard", pathname)    
+            console.log("catrerDashBoard", pathname)
         } else {
             setBannerPath(video);
         }
 
         if (pathname == '/admin') {
             setAdminPath(true)
-        } else if(pathname=='/adminHome'){
+        } else if (pathname == '/adminHome') {
             setAdminPath(true);
         }
         else {
             setAdminPath(false);
         }
+        if (pathname == '/upcomingevent') {
+            setBannerPath(pathname);
+        } else if (pathname == "/aboutpage") {
+            setBannerPath(pathname);
+        } else if (pathname == "/profile") {
+            setBannerPath(pathname);
+        }
+        else if (pathname == "/contactus") {
+            setBannerPath(pathname);
+        }
+        else if (pathname == "/bookticket") {
+            setBannerPath(pathname);
+        }
     });
 
     useEffect(() => {
-        console.log("check role : **==================")
         var email = jscookie.get('user');
         var result = axios.post(user_requestedUrl + "/checkRole", { email })
-        console.log("result ++++++++++++++++ ", result);
         result.then((response) => {
-            console.log("response ++++++++++++++++ ", response.status);
             var userrole = response.data.role;
-            console.log("dhdhdhdhdh ", userrole)
             setRole(response.data.role);
         })
             .catch(error => {
                 console.error('Error:', error.message);
             });
-    }, []);
+    }, [isLoginStatus]);
 
     const checkRoutes = () => {
-        console.log("checkroutes ============== ")
 
         setTimeout(() => {
             var pathname1 = window.location.pathname;
@@ -104,7 +110,6 @@ function Navbar(props) {
         }, 100);
 
     }
-
 
     function shownav() {
         var offcanvas = document.getElementById('offcanvasExample');
@@ -138,149 +143,98 @@ function Navbar(props) {
     const navigate = useNavigate();
     const getData = (event) => {
         const { name, value } = event.target;
-
-        // Validation logic for each field
-        // switch (name) {
-        //     case 'name':
-        //         setNameError(value.length > 0 ? 'Valid Name' : 'Name is required');
-        //         break;
-        //     case 'email':
-        //         setEmailError(/^[a-zA-Z][\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value) ? 'Valid Email' : 'Invalid email format');
-        //         break;
-        //     case 'password':
-        //         setPasswordError(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z]).{6,20}$/.test(value) ? 'Valid Password' : 'Unique password ');
-        //         break;
-        //     case 'contect':
-        //         setContactError(/^[6-9]\d{9}$/.test(value) ? 'Valid Number' : 'please enter 10 digits contact');
-        //         break;
-        //     case 'address':
-        //         setAddressError(value.length > 0 ? 'Valid' : 'Address is required');
-        //         break;
-        //     default:
-        //         break;
-        // }
-
         setUserData({
             ...userData,
             [name]: value
         });
+        Validations(name, value);
     }
 
     const handleOtpChange = (event) => {
         setOtp(event.target.value);
     };
 
-    // const getOtp = async (event) => {
-    //     event.preventDefault();
-    //     console.log("user data in getotp ", userData);
-    //     result = adduser(userData);
-    //     console.log("result in registration controller ", result);
-    //     document.getElementById("otpfield").style.display = "block";
-    //     document.getElementById("signupbutton").style.visibility = "visible";
-    //     document.getElementById("getotpbutton").style.display = "none";
-
-    // }
-
     const getOtp = async (event) => {
         event.preventDefault();
+        if (username_check && email_check && password_check && mobile_check && address_check) {
 
-        // Check for errors before proceeding
-        // if (nameError || emailError || passwordError || contactError || addressError) {
-        //     alert('Please fix errors before submitting.');
-        //     return;
-        // }
-
-        console.log("user data in getotp ", userData);
-        result = adduser(userData);
-        result.then((result) => {
-            if (result.status == 201) {
-                console.log("result in registration controller ", result);
-                document.getElementById("otpfield").style.display = "block";
-                document.getElementById("signupbutton").style.visibility = "visible";
-                document.getElementById("getotpbutton").style.display = "none";
-            } else {
-                Swal.fire({
-                    background: "black",
-                    icon: "error",
-                    text: "email is already exists Login......!!",
-                    showCloseButton: true,
-                    focusConfirm: false,
-                });
-                // alert("email is already exists Login......!!")
-            }
-        })
-
-
+            console.log("user data in getotp ", userData);
+            result = adduser(userData);
+            result.then((result) => {
+                if (result.status == 201) {
+                    console.log("result in registration controller ", result);
+                    document.getElementById("otpfield").style.display = "block";
+                    document.getElementById("signupbutton").style.visibility = "visible";
+                    document.getElementById("getotpbutton").style.display = "none";
+                } else {
+                    Swal.fire({
+                        background: "black",
+                        icon: "error",
+                        text: "email is already exists Login......!!",
+                        showCloseButton: true,
+                        focusConfirm: false,
+                    });
+                    // alert("email is already exists Login......!!")
+                }
+            })
+        }
+        else {
+            alert("please fix error");
+            Swal.fire({
+                background: "black",
+                icon: "error",
+                text: "please Solve Error First......!",
+                showCloseButton: true,
+                focusConfirm: false,
+            });
+        }
     }
-
-
-    // const handleSubmit = async (event) => {
-    //     event.preventDefault();
-    //     result.then((result) => {
-    //         if (result.data.Rotp == otp1) {
-    //             console.log("otp match");
-    //             var result = RegisterUserData(userData);
-    //             result.then((result) => {
-    //                 if (result.status == 201) {
-    //                     alert("Registration Successfull");
-    //                     setRegistrationmodal(false);
-    //                     event.target.reset();
-    //                 }
-    //             });
-    //         } else {
-    //             console.log("not match");
-
-    //         }
-    //     });
-    // }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
 
-        // Check for errors before proceeding
-        // if (nameError || emailError || passwordError || contactError || addressError || otpError) {
-        //     alert('Please fix errors before submitting.');
-        //     return;
-        // }
+        if (username_check && email_check && password_check && mobile_check && address_check) {
 
-        result.then((result) => {
-            if (result.data.Rotp == otp1) {
-                console.log("otp match");
-                var result = RegisterUserData(userData);
-                result.then((result) => {
-                    if (result.status == 201) {
-                        Swal.fire({
-                            background: "black",
-                            icon: "success",
-                            text: "Registartion successfully",
-                            showCloseButton: true,
-                            focusConfirm: false,
-                        });
-                        setRegistrationmodal(false);
-                        event.target.reset();
-                    }
-                });
+            result.then((result) => {
+                if (result.data.Rotp == otp1) {
+                    console.log("otp match");
+                    var result = RegisterUserData(userData);
+                    result.then((result) => {
+                        if (result.status == 201) {
+                            Swal.fire({
+                                background: "black",
+                                icon: "success",
+                                text: "Registartion successfully",
+                                showCloseButton: true,
+                                focusConfirm: false,
+                            });
+                            setRegistrationmodal(false);
+                            event.target.reset();
+                        }
+                    });
 
-            } else {
-                Swal.fire({
-                    background: "black",
-                    icon: "error",
-                    text: "Otp Not Match",
-                    showCloseButton: true,
-                    focusConfirm: false,
-                });
-            }
-        });
+                } else {
+                    Swal.fire({
+                        background: "black",
+                        icon: "error",
+                        text: "Otp Not Match",
+                        showCloseButton: true,
+                        focusConfirm: false,
+                    });
+                }
+            });
+        }
+        else {
+            alert("please fix error after otp");
+            Swal.fire({
+                background: "black",
+                icon: "error",
+                text: "please Solve Error after the OTP ......!",
+                showCloseButton: true,
+                focusConfirm: false,
+            });
+        }
     }
-
-
-    // const loginGetData = (event) => {
-    //     const { name, value } = event.target;
-    //     setUserDataLogin({
-    //         ...userLoginData,
-    //         [name]: value
-    //     });
-    // }
 
     const loginGetData = (event) => {
         const { name, value } = event.target;
@@ -290,30 +244,13 @@ function Navbar(props) {
         });
     }
 
-    // var message = "";
-    // const loginHandleSubmit = (event) => {
-    //     event.preventDefault();
-    //     var result = userLogin(userLoginData);
-    //     console.log("result of recruiter : ", result);
-    //     result.then((userResultData) => {
-    //         message = userResultData.data.message
-    //         console.log("userResultData.data.message : ", userResultData.data.message);
-    //         console.log("massage in login  : ", message);
-    //         alert("login Successfully")
-    //         setLoginmodal(false);
-    //         event.target.reset();
-    //     });
-    // }
     var message = "";
     const loginHandleSubmit = (event) => {
         event.preventDefault();
         var result = userLogin(userLoginData);
-        console.log("result of recruiter : ", result);
         result.then((userResultData) => {
             if (userResultData.status == 201) {
                 message = userResultData.data.message
-                console.log("userResultData.data.message : ", userResultData.data.message);
-                console.log("massage in login  : ", message);
                 Swal.fire({
                     background: "black",
                     icon: "success",
@@ -322,7 +259,9 @@ function Navbar(props) {
                     focusConfirm: false,
                 });
                 // alert("login Successfully")
+
                 setLoginmodal(false);
+                setLoginStatus(true)
                 event.target.reset();
             } else {
                 Swal.fire({
@@ -341,21 +280,18 @@ function Navbar(props) {
     const [forgetemail, setforgetEmail] = useState("");
 
     const [Rotp, setRotp] = useState(null);
+
     const forgetPassOtp = async (event) => {
         event.preventDefault();
-        console.log("user data in getotp ", forgetemail);
-        
+
         try {
             const result = await forgetPassUser(forgetemail);
-            setRotp(result.data.Rotp);
-            console.log("rotp : ",typeof Rotp);
-            console.log("result ===== 5555555555555 ",result.data.status);
             if (result.data.status) {
                 console.log("result in forgot password controller ", result);
                 document.getElementById("otpfield").style.display = "block";
                 document.getElementById("signupbutton").style.visibility = "visible";
                 document.getElementById("getotpbutton").style.display = "none";
-            } 
+            }
             else {
                 alert("email does not exist");
                 Swal.fire({
@@ -372,71 +308,171 @@ function Navbar(props) {
         }
     }
 
-
-
-
     const forgotPassHandleSubmit = (e) => {
         e.preventDefault()
-        console.log("otp1 ",typeof otp1)
-            if(Rotp===otp1){
-                setForgotPassmodal(false);
-                setResetPassmodal(true);
-                if(resetPass){
-                    console.log("forget email : "+forgetemail);
-                    console.log("password reset : "+resetPass);
-                    // const obj =  {resetPass,forgetemail} 
-                    const result = confirmResetPassword({forgetemail,resetPass});
-                    result.then((res)=>{
-                        if(res.status==201){
-                            Swal.fire({
-                                background: "black",
-                                icon: "success",
-                                text: "password update successfully",
-                                showCloseButton: true,
-                                focusConfirm: false,
-                            });
-                            setResetPassmodal(false);
-                        }
-                        else{
-                            Swal.fire({
-                                background: "black",
-                                icon: "error",
-                                text: "Error in password updated",
-                                showCloseButton: true,
-                                focusConfirm: false,
-                            });
-                        }
-                    })
-                }else{
-                   
-                }
-            }
-            else{
-                alert("otp not match");
-            }
-    }
-    
-    
+        console.log("otp1 ", typeof otp1)
+        if (Rotp === otp1) {
+            setForgotPassmodal(false);
+            setResetPassmodal(true);
+            if (resetPass) {
+                const result = confirmResetPassword({ forgetemail, resetPass });
+                result.then((res) => {
+                    if (res.status == 201) {
+                        Swal.fire({
+                            background: "black",
+                            icon: "success",
+                            text: "password update successfully",
+                            showCloseButton: true,
+                            focusConfirm: false,
+                        });
+                        setResetPassmodal(false);
+                    }
+                    else {
+                        Swal.fire({
+                            background: "black",
+                            icon: "error",
+                            text: "Error in password updated",
+                            showCloseButton: true,
+                            focusConfirm: false,
+                        });
+                    }
+                })
+            } else {
 
-    
+            }
+        }
+        else {
+            alert("otp not match");
+        }
+    }
+
+
+    const Validations = (name, value) => {
+        console.log("name in validations : ", name);
+        switch (name) {
+            case 'name':
+                var reg = /^[A-Za-z\s]+$/;
+                console.log("username regex");
+                if (value.trim() == "") {
+                    document.getElementById("usernamelabel").style.color = "red";
+                    document.getElementById("usernamelabel").innerHTML = "Name Required";
+                    username_check = false;
+                    return false
+                } else if (reg.test(value)) {
+                    document.getElementById('usernamelabel').style.color = "green";
+                    document.getElementById("usernamelabel").innerHTML = "Looking Good";
+                    username_check = true;
+                    return true
+                } else {
+                    console.log("usernamelabel")
+                    document.getElementById('usernamelabel').style.color = "red";
+                    document.getElementById("usernamelabel").innerHTML = "Invalid name please enter only character";
+                    username_check = false;
+                    return false;
+                }
+                break;
+            case 'email':
+                if (value.trim() == "") {
+                    document.getElementById("emaillabel").style.color = "red";
+                    document.getElementById("emaillabel").innerHTML = "Email Required";
+                    email_check = false;
+                    return false;
+                } else {
+                    var reg = /^\w+([\.-])?\w*@[a-z]*([\.][a-z]{2,3})+$/;
+                    if (reg.test(value)) {
+                        document.getElementById("emaillabel").style.color = "green";
+                        document.getElementById("emaillabel").innerHTML = "Looking Good";
+                        email_check = true;
+                        return true;
+                    } else {
+                        document.getElementById("emaillabel").style.color = "red";
+                        document.getElementById("emaillabel").innerHTML = "Invalid email";
+                        email_check = false;
+                        return false;
+                    }
+                }
+                break;
+            case 'password':
+                if (value.trim() == "") {
+                    document.getElementById("passwordlabel").style.color = "red";
+                    document.getElementById("passwordlabel").innerHTML = "Password Required";
+                    password_check = false;
+                    return false;
+                } else {
+                    var reg = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+                    if (reg.test(value)) {
+                        document.getElementById("passwordlabel").style.color = "green";
+                        document.getElementById("passwordlabel").innerHTML = "Valid Password";
+                        password_check = true;
+                        return true;
+                    } else {
+                        document.getElementById("passwordlabel").style.color = "red";
+                        document.getElementById("passwordlabel").innerHTML = "Invalid Password";
+                        password_check = false;
+                        return false;
+                    }
+                }
+                break;
+
+            case 'contect':
+                var reg = /^[6789][0-9]{9}$/;
+                if (value.trim() == '') {
+                    document.getElementById("contactlabel").style.color = "red";
+                    document.getElementById("contactlabel").innerHTML = "Mobile Number Required";
+                    mobile_check = false;
+                    return false;
+                } else if ((/^[A-Za-z]+$/).test(value)) {
+                    document.getElementById("contactlabel").style.color = "red";
+                    document.getElementById("contactlabel").innerHTML = "Mobile Number must be a digit only";
+                    mobile_check = false;
+                    return false;
+                } else if (!reg.test(value)) {
+                    document.getElementById("contactlabel").style.color = "red";
+                    document.getElementById("contactlabel").innerHTML = "Enter 10 digits Mobile number";
+                    mobile_check = false;
+                    return false;
+                } else {
+                    document.getElementById("contactlabel").style.color = "green";
+                    document.getElementById("contactlabel").innerHTML = "Looking Good";
+                    mobile_check = true;
+                    return true;
+                }
+                break;
+            case 'address':
+                if (value == "") {
+                    document.getElementById("addresslabel").style.color = "red";
+                    document.getElementById("addresslabel").innerHTML = "Address Required";
+                    address_check = false;
+                    return false;
+                } else {
+                    document.getElementById("addresslabel").style.color = "green";
+                    document.getElementById("addresslabel").innerHTML = "";
+                    address_check = true;
+                    return true;
+                }
+                break;
+        }
+
+    }
     if (isAdmin) {
         return (<>
         </>);
-    }
-    else {
+    } else {
         window.addEventListener('scroll', function () {
             if (window.scrollY) {
-                document.getElementById("navbar").style.height = '70px';
-                document.getElementById("logo").style.height = '40px';
+                document.getElementById("navbar").style.height = '90px';
+                document.getElementById("logo").style.height = '120px';
+                document.getElementById("logo").style.width = '120px';
                 document.getElementById("navbar").style.backgroundColor = "rgba(0, 0, 0, 0.5)"
                 document.getElementById("hr").style.display = "none"
                 document.getElementById("navbar").style.position = 'fixed';
                 document.getElementById('content').style.marginTop = '20%'
             }
             else {
+
                 document.getElementById("navbar").style.position = 'absolute';
                 document.getElementById("navbar").style.height = '109px';
-                document.getElementById("logo").style.height = '50px';
+                document.getElementById("logo").style.height = '120px';
                 document.getElementById("navbar").style.backgroundColor = "";
                 document.getElementById('content').style.marginTop = '20%'
             }
@@ -445,20 +481,28 @@ function Navbar(props) {
         return (
             <>
                 <div className="maindiv">
-                    {/* {bannerPath == "/searchServices" ? (
-                        <img src={bannerSearchServices} alt="loaded..." className="searchServicesBanner" />)
-                        : (<video autoPlay loop muted plays-inline="true" className="video" width="100%">
-                            <source src={video} />
-                        </video>
-                        )} */}
-                    {(bannerPath == "/searchServices") ? (
-                        <img src={bannerSearchServices} alt="loaded..." className="searchServicesBanner" />)
-                        : (bannerPath == "/catererprofile") ? (<></>) :
-                            (
-                                <video autoPlay loop muted plays-inline="true" className="video" width="100%">
-                                    <source src={video} />
-                                </video>
-                            )
+
+                    {
+                        (bannerPath == "/searchServices") ?
+                            (<img src={bannerSearchServices} alt="loaded..." className="searchServicesBanner" />)
+                            : (bannerPath == "/catererprofile") ?
+                                (<></>)
+                                : (bannerPath == "/upcomingevent")
+                                    ? (<img src={upcomingeventbanner} alt="loaded..." className="searchServicesBanner" />)
+                                    : (bannerPath == "/aboutpage") ?
+                                        (<img src={aboutpagebanner} alt="loaded..." className="searchServicesBanner" />)
+                                        : (bannerPath == "/profile") ?
+                                            (<img src={profilebanner} alt="loaded..." className="searchServicesBanner" />)
+                                            : (bannerPath == "/contactus") ?
+                                                (<></>)
+                                                : (bannerPath == "/bookticket") ?
+                                                    (<img src={bookticketbanner} alt="loaded..." className="searchServicesBanner" />)
+                                                    :
+                                                    (
+                                                        <video autoPlay loop muted plays-inline="true" className="video" width="100%">
+                                                            <source src={video} />
+                                                        </video>
+                                                    )
                     }
                     <div id="overlay">
                         <nav className="navbar navbar-expand-lg w-100" id="navbar">
@@ -468,8 +512,11 @@ function Navbar(props) {
                                         data-bs-target="#offcanvasExample" aria-controls="offcanvasExample"
                                         style={{ fontSize: "1.5rem", color: "white" }} onClick={() => { shownav() }}></i>
                                 </div>
-                                <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-center">
-                                    <img src={logo} id="logo" height="80vw" alt="" />
+                                <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-center h-100">
+                                    {/* <div> */}
+
+                                    <img src={logo} id="logo" height="120vw" alt="" />
+                                    {/* </div> */}
                                 </div>
                                 <div className="col-lg-4 col-md-4 col-sm-4 col-4 d-flex justify-content-end">
                                     {
@@ -477,7 +524,7 @@ function Navbar(props) {
                                             <>
                                                 <span role='button' >
                                                     <Link to='/profile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes} >Profile</span>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes} >userProfile</span>
                                                     </Link>
                                                 </span>
                                             </>
@@ -485,7 +532,23 @@ function Navbar(props) {
                                             <>
                                                 <span role='button'>
                                                     <Link to='/catererprofile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>Profile</span>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>caterProfile</span>
+                                                    </Link>
+                                                </span>
+                                            </>
+                                        ) : (role == "dj") ? (
+                                            <>
+                                                <span role='button'>
+                                                    <Link to='/dj' className='text-decoration-none text-white'>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>djProfile</span>
+                                                    </Link>
+                                                </span>
+                                            </>
+                                        ) : (role == "decoration") ? (
+                                            <>
+                                                <span role='button'>
+                                                    <Link to='/decorationprofile' className='text-decoration-none text-white'>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>decorationProfile</span>
                                                     </Link>
                                                 </span>
                                             </>
@@ -576,7 +639,7 @@ function Navbar(props) {
                                         <h1 className='mt-3 fs-1 navbarpara2' style={{ color: "green" }}>NewsLetters</h1>
                                     </div>
                                 </>) :
-                                (bannerPath == "/catererprofile") ? "" :
+                                (bannerPath == "/catererprofile") ? "" : (bannerPath == "/contactus") ? "" :
                                     (
                                         <>
                                             <p className='navbarpara1'>Unleash the Extraordinary</p>
@@ -713,7 +776,7 @@ function Navbar(props) {
 
 
 
-               <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false)}} centered   >
+                <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false) }} centered   >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -730,7 +793,7 @@ function Navbar(props) {
                                             <form onSubmit={forgotPassHandleSubmit}>
                                                 <div className="mb-3 mt-4 d-flex flex-row align-items-center">
                                                     <input type="email" name="email" className="form-control input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
-                                                        placeholder="Enter Email" onChange={(event)=>{setforgetEmail(event.target.value)}} />
+                                                        placeholder="Enter Email" onChange={(event) => { setforgetEmail(event.target.value) }} />
                                                     <i className="fa fa-envelope icon" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="mb-3 mt-4" id='otpfield'>
@@ -739,7 +802,7 @@ function Navbar(props) {
                                                         placeholder="Enter Otp" />
                                                 </div>
                                                 <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { forgetPassOtp(event) }}>get OTP</button>
-                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton' onclick={()=>{setResetPassmodal(true);setForgotPassmodal(false)}}>Submit</button>
+                                                <button type="submit" className="btn btn-light mt-3" id='signupbutton' onclick={() => { setResetPassmodal(true); setForgotPassmodal(false) }}>Submit</button>
                                                 {/* <p className='fs-5 mt-2'>Don't have an account? <a className='webcolor' onClick={() => { setLoginmodal(false); setRegistrationmodal(true) }}>SignUp</a></p>
                                                 <a className='webcolor' onClick={() => { setForgotPassmodal(false); setForgotPassmodal(true) }}>Forgot Password</a> */}
                                             </form>
@@ -751,7 +814,7 @@ function Navbar(props) {
                     </Modal.Body>
                 </Modal>
 
-                <Modal size="lg" show={isResetPassmodal} onHide={() => {setResetPassmodal(false)}} centered   >
+                <Modal size="lg" show={isResetPassmodal} onHide={() => { setResetPassmodal(false) }} centered   >
                     <Modal.Body className='p-0'>
                         <div className="login bg-black">
                             <div className="container p-0">
@@ -766,8 +829,8 @@ function Navbar(props) {
                                         <div id='loginForm'>
                                             <h2 className="modal-title text-white" id="staticBackdropLabel" > <span className='webcolor'> Reset Password</span> FORM</h2>
                                             <form onSubmit={forgotPassHandleSubmit}>
-                                            <div className="mb-3 mt-4 d-flex flex-row align-items-center">
-                                                    <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="New Password" onChange={(event)=>{setResetPass(event.target.value)}}/>
+                                                <div className="mb-3 mt-4 d-flex flex-row align-items-center">
+                                                    <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="New Password" onChange={(event) => { setResetPass(event.target.value) }} />
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="mb-3 mt-4 d-flex flex-row align-items-center">

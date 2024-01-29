@@ -21,7 +21,6 @@ function EditCatereProfileModal(props) {
             updatedProfileData.Id = CatereRegistrationInfo._id;
             updatedProfileData.email = CatereRegistrationInfo.catererEmail;
             var result = axios.post(caterre_requestUrl + "/updateCatereProfile", updatedProfileData);
-            console.log(result);
             result.then((data) => {
                 if (data.status == 201) {
                     alert("catere profile updated successfully");
@@ -70,11 +69,6 @@ function EditCatereProfileModal(props) {
                             <input type="text" name="ServiceCharges" className="form-control input-field" id="exampleInputBusinessname" aria-describedby="addressHelp" defaultValue={CatereRegistrationInfo.ServiceCharges}
                                 placeholder="ServiceCharges" onChange={getData} />
                         </div>
-                        {/* <div className="mb-3 mt-4">
-                            <input type="text" name="FoodType" className="form-control input-field" id="exampleInputBusinessname" aria-describedby="addressHelp" defaultValue={CatereRegistrationInfo.FoodType}
-                                placeholder="FoodType" onChange={getData} />
-                        </div> */} 
-
                         <div className="col-md-12">
                             <select className="w-100 mt-4" id="select1" name="FoodType" onChange={getData} defaultValue={CatereRegistrationInfo.FoodType} aria-label="Default select example">
                                 <option selected>Select Food Type</option>

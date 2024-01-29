@@ -25,7 +25,6 @@ function Venue() {
 
   const handleSubmitVenue = (event) => {
     event.preventDefault();
-    console.log('venueData ---> ', venueData);
     const userCookieEmail = jscookie.get("user");
     venueData["venueEmail"] = userCookieEmail;
     const formData = new FormData();
@@ -35,7 +34,6 @@ function Venue() {
       }
     }
     var result = RegistervenueData(formData);
-    console.log("rsult in venueData controller : ", result);
     result.then((result) => {
       if (result.status == 201) {
         alert("registration sucefully...!!");

@@ -1,3 +1,53 @@
+// import mongoose from "../connection/dbConfig.js";
+
+// var customiseThaliSchema = new mongoose.Schema({
+//     eventrequirmentid: {
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: 'requestSchema',
+//         required:false
+//     },
+//     normaluserid:{
+//         type: mongoose.Schema.Types.ObjectId,
+//         ref: 'userModal',
+//         required:false
+//     },
+//     location: {
+//         type:String,
+//         required:false
+//     },
+//     date: {
+//         type:String,
+//         required:false
+//     },
+//     time: {
+//         type:String,
+//         required:false
+//     },
+//     requirments :[{
+//         Roti: [{
+//             type:String,
+//             required:false
+//         }],
+//         Sabji: [{
+//             type:String,
+//             required:false
+//         }],
+//         Starter: [{
+//             type:String,
+//             required:false
+//         }],
+//         Dessert: [{
+//             type:String,
+//             required:false
+//         }],
+//     }],
+//     addtionalmenu: {
+//         type:String,
+//         required:false
+//     },
+// });
+
+// export default mongoose.model('customiseThaliSchema', customiseThaliSchema, 'customiseThaliSchema');
 import mongoose from "../connection/dbConfig.js";
 
 var customiseThaliSchema = new mongoose.Schema({
@@ -6,9 +56,13 @@ var customiseThaliSchema = new mongoose.Schema({
         ref: 'requestSchema',
         required:false
     },
-    normaluserid:{
+    catereid:{
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModal',
+        required:false
+    },
+    userEmail:{
+        type:String,
         required:false
     },
     location: {
@@ -21,6 +75,10 @@ var customiseThaliSchema = new mongoose.Schema({
     },
     time: {
         type:String,
+        required:false
+    },
+    totalguest: {
+        type:Number,
         required:false
     },
     requirments :[{
@@ -45,6 +103,14 @@ var customiseThaliSchema = new mongoose.Schema({
         type:String,
         required:false
     },
+    Price : {
+        type: Number,
+        default:0
+    },
+    status:{
+        type : String,
+        default:"pending"
+    }
 });
 
 export default mongoose.model('customiseThaliSchema', customiseThaliSchema, 'customiseThaliSchema');

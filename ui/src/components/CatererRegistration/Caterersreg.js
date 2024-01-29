@@ -43,7 +43,7 @@ function Caterersreg() {
       if(result.status == 201) {
         alert("registration sucefully...!")
         setCatererRegistrationModal(false);
-        navigate("/");
+        navigate('/catererprofile')
       }
 
     }).catch((err) => {

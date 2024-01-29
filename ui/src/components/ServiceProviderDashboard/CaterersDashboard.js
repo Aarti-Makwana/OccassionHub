@@ -6,6 +6,7 @@ import axios from 'axios';
 import jscookie from 'js-cookie';
 import { useNavigate } from 'react-router-dom';
 import EditCatereProfileModal from './CatereProfileUpdate';
+import CatererResponseModal from './catererResponseModal.js';
 
 function CaterersDashboard() {
     const [activeLink, setActiveLink] = useState('seeRequest');
@@ -21,14 +22,12 @@ function CaterersDashboard() {
     }
     const fetchData = async () => {
         try {
-            console.log("suerInfo on frontend side is----> ",catereRegistrationInfo);
             const response = await axios.post(caterre_requestUrl + '/catereSeeRequestedData', { catereEmail });
             
             setAllRequestedUserData(response.data.allUserRequestedDataForCateres);
             setUserInfo(response.data.userData);
             catereRegistrationInfo.ID = catereRegistrationInfo._id;
             setcatereRegistrationInfo(response.data.catereRegistrationInfo);
-            console.log("suerInfo on frontend side is 2222222222       ----> ",catereRegistrationInfo);
         } catch (err) {
             console.log("Error in catrers dashboard while showing data ", err);
         }
@@ -125,7 +124,8 @@ function CaterersDashboard() {
                                         ))}
                                     </ul>
                                 </div>
-                                   <button className="btn btn-danger w-25 offset-lg-4 offset-1">Accept Request</button>
+                                   {/* <button className="btn btn-danger w-25 offset-lg-4 offset-1">Accept Request</button> */}
+                                   <CatererResponseModal userData={{catereid:data.catereid,date:data.date}}/>
                             </div>
                             {/* See Requirment List end */}
                         </div>

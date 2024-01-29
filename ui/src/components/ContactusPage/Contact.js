@@ -2,11 +2,11 @@
 import './Contactus.css';
 function Contact() {
    return (<>
-      <div className="containerfluid" >
+      <div className="containerfluid  " style={{height:'63vw'}} >
          <div className='' id="curvediv">
-            <h1 className="contact text-center">Contact <span style={{ color: "white" }}>Us</span></h1>
+            <h1 className="contact text-center mt-3">Contact <span style={{ color: "white" }}>Us</span></h1>
             <p className="text-center text-white mt-3">Pellentesque lorem quis in auctor bibendum ullamcorper non purus dui,<br /> ultricies sit eu sit pellentesque duis vitae non est eu, quis metus aliquet laoreet.</p>
-            <div className="container bg-danger mt-5">
+            <div className="container  mt-5">
                <div className="row h-100">
                   <div className="col-sm-6 col-md-6 form-section " style={{ backgroundColor: "#1B1B1B" }}>
                      <div className="login-wrapper">

@@ -13,13 +13,16 @@ import ContactUs from './components/ContactusPage/Contact.js';
 import CaterersDashboard from './components/ServiceProviderDashboard/CaterersDashboard.js';
 import Passes from './components/passesPage/pass.js';
 import AdminLogin from './components/AdminLogin/AdminLogin.js'
+import DjDashboard from './components/ServiceProviderDashboard/DjDashboard.js';
+import DecorationDashboard from './components/ServiceProviderDashboard/DecorationDashboard.js';
 import { Route, Routes } from 'react-router-dom';
+
 function App() {
   return (
     <>
       <Navbar />
       <Routes>
-        <Route path='/' element={<><Home /></>}></Route>
+        <Route path='/' element={<><Home  /></>}></Route>
         <Route path='/upcomingevent' element={<><UpComingEvents /></>}></Route>
         <Route path='/bookticket' element={<><EventsDetails /></>}></Route>
         <Route path='/servicepage' element={<><Servicepage /></>}></Route>
@@ -32,6 +35,8 @@ function App() {
         <Route path='/passes' element={<><Passes/></>}></Route>
         <Route path='/admin' element={<><AdminLogin /></>}></Route>
         <Route path='/adminHome' element={<><AdmindashBoard /></>}></Route>
+        <Route path='/dj' element={<><DjDashboard/></>}></Route>
+        <Route path='/decorationprofile' element={<><DecorationDashboard /></>}></Route>
       </Routes >
       <Footer />
     </>

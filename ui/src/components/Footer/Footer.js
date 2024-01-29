@@ -1,4 +1,5 @@
-import img from '../../images/occassionHub-logo.webp';
+import img from '../../images/logohub.png'
+
 import { useEffect, useState } from 'react';
 function Footer() {
     const [isAdmin, setAdminPath] = useState(true);

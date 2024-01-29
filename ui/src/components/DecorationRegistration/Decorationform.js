@@ -69,8 +69,10 @@ import './decorationRegistrationcss.css';
 import Modal from 'react-bootstrap/Modal';
 import jscookie from 'js-cookie';
 import { RegisterDecorationData } from '../../store/DecorationSlice.js';
+import { useNavigate } from 'react-router-dom';
 
 function Decorationform() {
+  const navigate = useNavigate();
   const [isDecorationManagerRegistrationModal, setDecorationRegistrationModal] = useState(false);
   const [decoration, setDecorationdata] = useState({});
   const getData = (event) => {
@@ -108,6 +110,7 @@ function Decorationform() {
       if (result.status == 201) {
         alert("registration successfully...!")
         setDecorationRegistrationModal(false);
+        navigate('/decorationDashboard')
       }
     }).catch((err) => {
       alert("error in registration......!!");

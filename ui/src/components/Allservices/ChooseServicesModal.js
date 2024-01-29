@@ -6,16 +6,19 @@ import { caterre_requestUrl } from '../../urls.js';
 
 function ChooseServicesModal(props) {
     const [isModalOpen, setModalOpen] = useState(false);
+
     const [selectedDish, setSelectedDish] = useState({
         location: "",
         date: "",
         time: "",
+        totalguest:0,
         Dessert: [],
         Roti: [],
         Sabji: [],
         Starter: [],
         additionalInfo: "",
     });
+
 
     const handleInputChange = (event) => {
         const { name, value } = event.target;
@@ -107,6 +110,9 @@ function ChooseServicesModal(props) {
                             </div>
                             <div className="mb-3 mt-4">
                                 <input type="time" className="form-control input-field" placeholder="Event Time" name="time" onChange={handleInputChange} />
+                            </div>
+                            <div className="mb-3 mt-4">
+                                <input type="number" className="form-control input-field" placeholder="Total Guest" min="1"name="totalguest" onChange={handleInputChange} />
                             </div>
                             <h4 className="text-danger">Customize Your Thali Here</h4>
 

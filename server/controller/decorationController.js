@@ -1,5 +1,6 @@
 import decorationRegistrationModel from '../model/decorationRegistrationModel.js';
 import { fileURLToPath } from 'url';
+import decorationRequestModel from '../model/decorationRequestModel.js';
 import path from 'path';
 export const decorationRegistration = async (request, response) => {
     var __filename = fileURLToPath(import.meta.url);
@@ -49,5 +50,44 @@ export const searchDecorationController = async (request , response)=>{
     } catch (error) {
         console.error("Error in decoration search: ", error);
         response.status(500).json({ error: "Error in  decoration search" });
+    }
+}
+export const seeNormalUserTodecorationRequest = async (request, response) => {
+    try {
+        // request.body
+        const { location, date, starttime, endtime, additionalInfo } = request.body.selectedRequest;
+        const decorationEmail = request.body.decorationEmail;
+        const userEmail = request.body.userEmail;
+        const price = request.body.price;
+
+        const obj = {
+            location, 
+            date,
+            starttime,
+            endtime,
+            additionalInfo,
+            decorationEmail,
+            userEmail,
+            price
+        }
+        console.log("request.body in seeNormalUserTodecorationRequest : ", obj);
+        var result = decorationRequestModel.create(obj);
+        console.log("result in seeNormalUserTodecorationRequest : " , result);
+    }
+    catch (error) {
+        console.log("eroor : " , error);
+    }
+}
+
+export const decorationSeeRequestedData = async (request , response)=>{
+
+    console.log("rekjkhjhbsfhmn in decoration controllerrr : ", request.body);
+    try {
+        var decorationRequestData = await decorationRequestModel.find({decorationEmail : request.body.decorationEmail})
+        // console.log("result in decoration controller :" , result);
+        response.status(201).json({decorationRequestData});
+    } catch (error) {
+        console.log("error in see decoration request controller : " , error);
+        response.status(500).json({error : "error in see decoration request controller "});
     }
 }
