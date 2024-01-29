@@ -1,7 +1,7 @@
 import express from 'express';
 import {
     adminShowUserController, adminShowCatererDataController, adminShowDjController, adminshowVeneueController,adminShowEventController,
-    adminShowDecorationController, adminshowPassesDataController,adminLoginController
+    adminShowDecorationController, adminshowPassesDataController,adminLoginController,adminshowRequestedUserCatererDataController,adminshowRequestedUserDjDataController,adminviewRequestedUserVenueDataController
 } from '../controller/adminController.js';
 var adminRouter = express.Router();
 adminRouter.post("/adminLogin",adminLoginController);
@@ -12,4 +12,7 @@ adminRouter.post("/veneueData", adminshowVeneueController);
 adminRouter.post("/decorationData", adminShowDecorationController);
 adminRouter.post("/eventData",adminShowEventController);
 adminRouter.post("/passesData", adminshowPassesDataController);
+adminRouter.post("/adminshowRequestedUserCatererData",adminshowRequestedUserCatererDataController);
+adminRouter.post("/adminshowRequestedUserDjData",adminshowRequestedUserDjDataController);
+adminRouter.post("/adminshowRequestedUserVenueData",adminviewRequestedUserVenueDataController);
 export default adminRouter;

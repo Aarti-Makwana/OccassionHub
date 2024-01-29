@@ -7,8 +7,11 @@ import VenueSection from "./VenueSection.js";
 import DjSection from "./DjSection.js";
 import PassDetailSection from "./PassDetailSection.js";
 import EventRequirementDetailSection from "./EventRequirementDetailSection.js";
-
+// import CatererUserData from "./CatererUserData.js";
+import DjRequestData from "./DjUserRequestData.js";
+// import VenueRequestData from "./venueRequestUser.js";
 import { useEffect, useState } from 'react'
+// import DecorationRequestData from "./DecorationRequest.js";
 
 <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 var show = false;
@@ -82,6 +85,30 @@ function AdmindashBoard() {
                                     </p>
                                 </div>
                             </div>
+                            <div className="nav-item dropdown">
+                                <p className="nav-link dropdown-toggle" data-bs-toggle="dropdown">
+                                    <i className="fa bi-person-circle text-center"></i>
+                                    &nbsp;View Requested User Data
+                                </p>
+                                <div className="dropdown-menu bg-dark border-0 p-1">
+                                    <p className="dropdown-item text-white" onClick={() => { setSection('catererUser') }}>
+                                        <i className="fa bi-person-circle text-center" ></i>
+                                        &nbsp;Caterers Manager
+                                    </p>
+                                    <p className="dropdown-item text-white" onClick={() => { setSection('decorationUser') }}>
+                                        <i className="fa bi-person-circle text-center" ></i>
+                                        &nbsp;Decoration Manager
+                                    </p>
+                                    <p className="dropdown-item text-white" onClick={() => { setSection('venueUser') }}>
+                                        <i className="fa bi-person-circle text-center" ></i>
+                                        &nbsp;Venue Manager
+                                    </p>
+                                    <p className="dropdown-item text-white" onClick={() => { setSection('djUser') }}>
+                                        <i className="fa bi-person-circle text-center" ></i>
+                                        &nbsp;Dj Manager
+                                    </p>
+                                </div>
+                            </div>
                             <p className="nav-item nav-link" onClick={() => { setSection('alleventreq') }}>
                                 <i className="fa bi-person-circle text-center"></i>
                                 &nbsp;View All event Request
@@ -122,7 +149,11 @@ function AdmindashBoard() {
                                 'venue': <VenueSection />,
                                 'dj': <DjSection />,
                                 'passdetail': <PassDetailSection />,
-                                'alleventreq': <EventRequirementDetailSection />
+                                'alleventreq': <EventRequirementDetailSection />,
+                                // 'catererUser' :<CatererUserData/>,
+                                'djUser':<DjRequestData/>,
+                                // 'venueUser' : <VenueRequestData/>,
+                                // 'decorationUser':<DecorationRequestData/>
                             }[section]
                         }
                         {/* <div className="w-100 table-responsive p-2 pt-4 ">

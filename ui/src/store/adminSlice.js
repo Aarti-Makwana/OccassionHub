@@ -96,4 +96,33 @@ export const adminShowEventDetails = async () => {
         console.log("Error in Event Data", error);
     }
 }
+
+export const adminShowUserrequestedCatererData = async()=>{
+    try {
+        var response = await axios.post(admin_requestedUrl+"/adminshowRequestedUserCatererData");
+    } catch (error) {
+        
+    }
+}
+
+export const adminShowUserrequestedDjData = async(request,respose)=>{
+    try {
+        var response = await axios.post(admin_requestedUrl+"/adminshowRequestedUserDjData");
+        console.log("response : ",response);
+        console.log("response : ",response.data.AllRequtedUserData); 
+        return response.data.AllRequtedUserData; 
+    } catch (error) {
+        console.log("error in admin show dj Data slice requsted");
+    }
+}
+export const adminShowUserrequestedVenueData = async(request,response)=>{
+    try {
+        var response = await axios.post(admin_requestedUrl+"/adminshowRequestedUserVenueData");
+        console.log("response : ",response);
+        console.log("response : ",response.data.AllRequtedUserData); 
+        return response.data.AllRequtedUserData; 
+    } catch (error) {
+        console.log("error in admin show dj Data slice requsted");
+    }
+}
 export default adminSlice.reducer;

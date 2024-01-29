@@ -6,18 +6,16 @@ import djRegistrationModel from "../model/djRegistrationModel.js";
 import passesModel from '../model/passesModel.js';
 import dotenv from 'dotenv';
 import jwt from 'jsonwebtoken';
-import bcrypt from 'bcrypt';
+import customiseThaliModel from "../model/customiseThaliModel.js";
 import adminModel from "../model/adminModel.js";
 import requestSchema from '../model/eventRequestModel.js'
-
+import requestedDjModel from '../model/requestedDjModel.js';
+// import user
 dotenv.config();
 var secret_key = process.env.ADMIN_SECRET_KEY
 export const adminLoginController = async(request,response,next)=>{
     const {email,password} = request.body;
     try{
-        console.log("===========>",request.body);
-        console.log("===========>",request.body.email);
-        console.log("===========>",request.body.password);
         var expireTime = {expiresIn : '1d'};
         var token = jwt.sign({_id:email},secret_key,expireTime); 
         console.log("token",token)
@@ -86,14 +84,13 @@ export const adminShowDecorationController = async (req, res) => {
         var decorationData = await decorationRegistrationModel.find();
         res.status(201).json({ decorationData: decorationData });
     } catch (error) {
-        console.error("Error in admin Show decoration data controller: ", error);
+        console.error("Error in admin Show decoration data controller : ", error);
         res.status(500).json({ status: false });
     }
 }
 export const adminshowPassesDataController = async (req, res) => {
     try {
         var passes = await passesModel.find();
-        console.log("passes Data :---------------> ", passes);
 
         res.status(201).json({ passes: passes });
     } catch (error) {
@@ -110,5 +107,46 @@ export const adminShowEventController = async (req, res) => {
     catch (error) {
         console.log("error in admin show event controller: ", error);
         res.status(500).json({ status: false });
+    }
+}
+
+export const adminshowRequestedUserCatererDataController = async(request,response)=>{
+    try {
+        var data  = await customiseThaliModel.find();
+        console.log("data in adminshowRequestedUserCatererDataController : ",data);
+        
+    } catch (error) {
+        
+    }
+}
+
+export const adminshowRequestedUserDjDataController = async (request, response) => {
+    try {
+        var DjData = await requestedDjModel.find();
+        console.log("DjData ---------->", DjData);
+
+        const userData = [];
+        for (let i = 0; i < DjData.length; i++) {
+            const requestItem = DjData[i];
+            const dj = await djRegistrationModel.findOne({ DjEmail: requestItem.djEmail });
+            const user = await usermodel.findOne({ email: requestItem.userEmail });
+            userData.push({ ...requestItem.toObject(), user, dj });
+        }
+
+        console.log("userData in see RequetDj To User Controller ", userData);
+        response.status(201).json({ AllRequtedUserData: userData });
+
+    } catch (error) {
+        console.log("error in admin show Requested User DjData Controller: ", error);
+        response.status(500).json({ status: false });
+    }
+}
+
+
+export const adminviewRequestedUserVenueDataController = async(request,response)=>{
+    try {
+   
+    } catch (error) {
+        
     }
 }
