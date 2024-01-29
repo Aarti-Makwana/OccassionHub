@@ -143,6 +143,31 @@ function Navbar(props) {
     const navigate = useNavigate();
     const getData = (event) => {
         const { name, value } = event.target;
+<<<<<<< HEAD
+=======
+
+        // Validation logic for each field
+        // switch (name) {
+        //     case 'name':
+        //         setNameError(value.length > 0 ? 'Valid Name' : 'Name is required');
+        //         break;
+        //     case 'email':
+        //         setEmailError(/^[a-zA-Z][\w-]+(\.[\w-]+)*@([\w-]+\.)+[a-zA-Z]{2,7}$/.test(value) ? 'Valid Email' : 'Invalid email format');
+        //         break;
+        //     case 'password':
+        //         setPasswordError(/^(?=.\d)(?=.[a-z])(?=.*[A-Z]).{6,20}$/.test(value) ? 'Valid Password' : 'Unique password ');
+        //         break;
+        //     case 'contect':
+        //         setContactError(/^[6-9]\d{9}$/.test(value) ? 'Valid Number' : 'please enter 10 digits contact');
+        //         break;
+        //     case 'address':
+        //         setAddressError(value.length > 0 ? 'Valid' : 'Address is required');
+        //         break;
+        //     default:
+        //         break;
+        // }
+
+>>>>>>> 8682a7750ce94e1abd2c97bafa4de032a8d5ce0f
         setUserData({
             ...userData,
             [name]: value
@@ -283,9 +308,19 @@ function Navbar(props) {
 
     const forgetPassOtp = async (event) => {
         event.preventDefault();
+<<<<<<< HEAD
 
         try {
             const result = await forgetPassUser(forgetemail);
+=======
+        console.log("user data in getotp ", forgetemail);
+
+        try {
+            const result = await forgetPassUser(forgetemail);
+            setRotp(result.data.Rotp);
+            console.log("rotp : ", typeof Rotp);
+            console.log("result ===== 5555555555555 ", result.data.status);
+>>>>>>> 8682a7750ce94e1abd2c97bafa4de032a8d5ce0f
             if (result.data.status) {
                 console.log("result in forgot password controller ", result);
                 document.getElementById("otpfield").style.display = "block";
@@ -315,6 +350,12 @@ function Navbar(props) {
             setForgotPassmodal(false);
             setResetPassmodal(true);
             if (resetPass) {
+<<<<<<< HEAD
+=======
+                console.log("forget email : " + forgetemail);
+                console.log("password reset : " + resetPass);
+                // const obj =  {resetPass,forgetemail} 
+>>>>>>> 8682a7750ce94e1abd2c97bafa4de032a8d5ce0f
                 const result = confirmResetPassword({ forgetemail, resetPass });
                 result.then((res) => {
                     if (res.status == 201) {
@@ -338,6 +379,7 @@ function Navbar(props) {
                     }
                 })
             } else {
+<<<<<<< HEAD
 
             }
         }
@@ -454,6 +496,19 @@ function Navbar(props) {
         }
 
     }
+=======
+
+            }
+        }
+        else {
+            alert("otp not match");
+        }
+    }
+
+
+
+
+>>>>>>> 8682a7750ce94e1abd2c97bafa4de032a8d5ce0f
     if (isAdmin) {
         return (<>
         </>);
@@ -851,5 +906,4 @@ function Navbar(props) {
             </>);
     }
 }
-
 export default Navbar;

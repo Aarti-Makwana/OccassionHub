@@ -35,10 +35,15 @@ function UpComingEvents() {
                         eventData.map((data, index) => {
                             return (<div className="row p-4 mb-5 bg-dark rounded w-80 m-auto maindiv">
                                 <div className="col-lg-5 col-md-12" >
+<<<<<<< HEAD
+                                    <img src={`http://localhost:4001/${data.docs}`} id="upcomingSection"></img>
+                                    {/* <div className="position-relative  w-50 h-50 "  ><img src={http://localhost:4001/${data.docs}} id="overlayImage"></img></div> */}
+=======
                                     {/* <img src={`http://localhost:4001/${data.docs}`} id="upcomingSection" /> */}
                                     <div className="position-relative  w-50 h-50 " >
                                         <img src={`http://localhost:4001/${data.docs}`} id="upcomingSection" />
                                     </div>
+>>>>>>> b5d456201fe67f5c15155478f36dc2f15f0387ca
                                 </div>
                                 <div className="col-lg-7 col-md-12 d-flex flex-column " id="upcomingSection2">
                                     <h2 className="my-1 mx-1">
@@ -48,7 +53,11 @@ function UpComingEvents() {
                                     {/* <h4 className="mx-1 text-white">Quantity <span></span> : {data.Quantity}</h4> */}
 
                                     <hr className='text-white' />
+<<<<<<< HEAD
+                                    <p className="text_justify mx-1">Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro reiciendis sit illum iste, voluptatem quibusdam adipisci laboriosam. Impedit suscipit dolorum quisquam architecto corporis ullam voluptates nihil commodi dolor ratione sunt alias facilis at.</p>
+=======
                                     <p className="text_justify mx-1">Lorem ipsum dolor sit amet consectetur adipisicing elit.  nobis eos impedit provident sunt alias facilis at.</p>
+>>>>>>> b5d456201fe67f5c15155478f36dc2f15f0387ca
                                     <h6>
                                         <span><i className="fa fa-calendar-o mx-2 fs-5 webcolor"></i></span><span className='whiteColour mx-2 '>Start Date : {data.Start_Date}</span><br />
                                         <br />
