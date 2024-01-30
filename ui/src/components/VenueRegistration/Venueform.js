@@ -4,9 +4,13 @@ import './venueRegistrationcss.css';
 import jscookie from 'js-cookie';
 import Modal from 'react-bootstrap/Modal';
 import { RegistervenueData } from '../../store/venueSlice.js';
+import { useNavigate } from 'react-router-dom';
+
 function Venue() {
   const [isVenueManagerRegistrationModal, setVenueRegistrationModal] = useState(false);
   const [venueData, setVenuedata] = useState({});
+  const navigate = useNavigate();
+
   const getData = (event) => {
     let { name, value } = event.target;
     if (event.target.type == 'file') {
@@ -38,6 +42,7 @@ function Venue() {
       if (result.status == 201) {
         alert("registration sucefully...!!");
         setVenueRegistrationModal(false);
+        // navigate('/decorationDashboard')
       }
     }).catch((err) => {
       alert("error in registration......!!");

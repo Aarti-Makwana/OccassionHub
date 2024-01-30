@@ -2,6 +2,8 @@ import venueModel from '../model/venueRegistration.js'
 import { fileURLToPath } from 'url';
 import userBookVenue from '../model/userBookVenue.js';
 import path from 'path';
+import usermodel from "../model/usermodel.js";
+
 export const venueRegistration = async (request, response) => {
     var __filename = fileURLToPath(import.meta.url);
     var __dirname = path.dirname(__filename).replace("\\controller", "");
@@ -25,10 +27,17 @@ export const venueRegistration = async (request, response) => {
                     venuePrice: venuePrice,
                     docs: fileName
                 });
+                const role = await usermodel.updateOne({ email: venueEmail }, [
+                    {
+                        $set: {
+                            role: "venue"
+                        }
+                    }
+                ])
                 await newUser.save();
                 response.status(201).json({ newUser: "newUser" });
             } catch (err) {
-                console.error("Error in caterer registration controller: ", error);
+                console.error("Error in venue registration controller: ", error);
                 response.status(500).json({ status: false });
             }
         }

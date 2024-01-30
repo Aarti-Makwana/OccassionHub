@@ -78,6 +78,10 @@ function Navbar(props) {
         }
         else if (pathname == "/bookticket") {
             setBannerPath(pathname);
+        } else if (pathname == "/decorationprofile") {
+            setBannerPath(pathname);
+        } else if (pathname == "/dj") {
+            setBannerPath(pathname);
         }
     });
 
@@ -208,7 +212,9 @@ function Navbar(props) {
                                 showCloseButton: true,
                                 focusConfirm: false,
                             });
+
                             setRegistrationmodal(false);
+                            setLoginStatus(true)
                             event.target.reset();
                         }
                     });
@@ -258,10 +264,8 @@ function Navbar(props) {
                     showCloseButton: true,
                     focusConfirm: false,
                 });
-                // alert("login Successfully")
-
-                setLoginmodal(false);
                 setLoginStatus(true)
+                setLoginmodal(false);
                 event.target.reset();
             } else {
                 Swal.fire({
@@ -452,7 +456,6 @@ function Navbar(props) {
                 }
                 break;
         }
-
     }
     if (isAdmin) {
         return (<>
@@ -487,22 +490,26 @@ function Navbar(props) {
                             (<img src={bannerSearchServices} alt="loaded..." className="searchServicesBanner" />)
                             : (bannerPath == "/catererprofile") ?
                                 (<></>)
-                                : (bannerPath == "/upcomingevent")
-                                    ? (<img src={upcomingeventbanner} alt="loaded..." className="searchServicesBanner" />)
-                                    : (bannerPath == "/aboutpage") ?
-                                        (<img src={aboutpagebanner} alt="loaded..." className="searchServicesBanner" />)
-                                        : (bannerPath == "/profile") ?
-                                            (<img src={profilebanner} alt="loaded..." className="searchServicesBanner" />)
-                                            : (bannerPath == "/contactus") ?
-                                                (<></>)
-                                                : (bannerPath == "/bookticket") ?
-                                                    (<img src={bookticketbanner} alt="loaded..." className="searchServicesBanner" />)
-                                                    :
-                                                    (
-                                                        <video autoPlay loop muted plays-inline="true" className="video" width="100%">
-                                                            <source src={video} />
-                                                        </video>
-                                                    )
+                                : (bannerPath == "/decorationprofile") ?
+                                    (<></>)
+                                    : (bannerPath == "/dj") ?
+                                        (<></>)
+                                        : (bannerPath == "/upcomingevent")
+                                            ? (<img src={upcomingeventbanner} alt="loaded..." className="searchServicesBanner" />)
+                                            : (bannerPath == "/aboutpage") ?
+                                                (<img src={aboutpagebanner} alt="loaded..." className="searchServicesBanner" />)
+                                                : (bannerPath == "/profile") ?
+                                                    (<img src={profilebanner} alt="loaded..." className="searchServicesBanner" />)
+                                                    : (bannerPath == "/contactus") ?
+                                                        (<></>)
+                                                        : (bannerPath == "/bookticket") ?
+                                                            (<img src={bookticketbanner} alt="loaded..." className="searchServicesBanner" />)
+                                                            :
+                                                            (
+                                                                <video autoPlay loop muted plays-inline="true" className="video" width="100%">
+                                                                    <source src={video} />
+                                                                </video>
+                                                            )
                     }
                     <div id="overlay">
                         <nav className="navbar navbar-expand-lg w-100" id="navbar">
@@ -639,7 +646,7 @@ function Navbar(props) {
                                         <h1 className='mt-3 fs-1 navbarpara2' style={{ color: "green" }}>NewsLetters</h1>
                                     </div>
                                 </>) :
-                                (bannerPath == "/catererprofile") ? "" : (bannerPath == "/contactus") ? "" :
+                                (bannerPath == "/catererprofile") ? "" : (bannerPath == "/decorationprofile") ? "" : (bannerPath == "/dj") ? "" : (bannerPath == "/contactus") ? "" :
                                     (
                                         <>
                                             <p className='navbarpara1'>Unleash the Extraordinary</p>
@@ -728,37 +735,36 @@ function Navbar(props) {
                                                     <i className="fa fa-user icon" aria-hidden="true"></i>
                                                     <input type="name" required className="form-control input-field" id="exampleInputName" aria-describedby="nameHelp"
                                                         placeholder="Name" name="name" onChange={getData} />
-                                                    <label className="text-white err"></label>
+                                                    <span id="usernamelabel" className='bg-primary'></span>
                                                 </div>
                                                 <div className="mb-3 mt-4">
                                                     <i className="fa fa-envelope icon" aria-hidden="true"></i>
                                                     <input type="email" required name="email" className="form-control  input-field" id="exampleInputEmail1" aria-describedby="emailHelp"
                                                         placeholder="Enter Email" onChange={getData} />
-                                                    <label className="text-white err"></label>
-
+                                                    <label id="emaillabel"></label>
                                                 </div>
                                                 <div className="mb-3">
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                     <input type="password" required name="password" className="form-control  input-field" id="exampleInputPassword1" placeholder="Password" onChange={getData} />
-                                                    <label className="text-white err1"></label>
+                                                    <label id="passwordlabel"></label>
                                                 </div>
                                                 <div className="mb-3 mt-4">
                                                     <i className="fa fa-phone icon" aria-hidden="true"></i>
                                                     <input type="text" required name="contect" className="form-control input-field" id="exampleInputContact" aria-describedby="contactHelp"
                                                         placeholder="Contact Us" onChange={getData} />
-                                                    <label className="text-white err2"></label>
+                                                    <label id="contactlabel"></label>
                                                 </div>
                                                 <div className="mb-3 mt-4">
                                                     <i className="fa fa-map-marker icon" aria-hidden="true"></i>
                                                     <input type="text" required name="address" className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                         placeholder="Address" onChange={getData} />
-                                                    <label className="text-white err3"></label>
+                                                    <label id="addresslabel"></label>
                                                 </div>
                                                 <div className="mb-3 mt-4" id='otpfield'>
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                     <input type="address" required name="address" onChange={handleOtpChange} className="form-control input-field" id="exampleInputAddress" aria-describedby="addressHelp"
                                                         placeholder="Enter Otp" />
-                                                    <label className="text-white err4"></label>
+                                                    <label id="text-white err4"></label>
 
                                                 </div>
                                                 <button className="btn btn-light mt-3" id='getotpbutton' name="otp" onClick={(event) => { getOtp(event) }}>get OTP</button>

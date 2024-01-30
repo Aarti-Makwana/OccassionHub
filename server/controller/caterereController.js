@@ -63,10 +63,13 @@ export const seeNormalUserToCatereRequestController = async (request, response) 
     try {
         const { location, date, time, totalguest, additionalInfo, Roti, Sabji, Dessert, Starter } = request.body.selectedDish;
         var userEmail = request.body.userEmail;
+        console.log("user email aartiiiii  gav wali ======== ",userEmail);
         const userData = await usermodel.findOne({ email: request.body.catererEmail });
+        const catereBusinessName = await catererRegistrationModel.findOne({catererEmail:request.body.catererEmail});
         const detailsOfNormalUserRequestForCateres = await customiseThaliModel.create({
             catereid: userData._id,
             userEmail: userEmail,
+            catereBusiness:catereBusinessName.Businessname,
             location: location,
             date: date,
             time: time,

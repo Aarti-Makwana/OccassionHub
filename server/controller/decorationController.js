@@ -2,6 +2,8 @@ import decorationRegistrationModel from '../model/decorationRegistrationModel.js
 import { fileURLToPath } from 'url';
 import decorationRequestModel from '../model/decorationRequestModel.js';
 import path from 'path';
+import usermodel from "../model/usermodel.js";
+
 export const decorationRegistration = async (request, response) => {
     var __filename = fileURLToPath(import.meta.url);
     var __dirname = path.dirname(__filename).replace("\\controller", "");
@@ -9,12 +11,9 @@ export const decorationRegistration = async (request, response) => {
     console.log("request.body -----------> : ", request.body);
 
     const { Businessname, Decorationtype, Decorationprice, userEmail } = request.body;
-
-    console.log("request.files.docs-------------->", request.files.docs);
+    console.log("user  email -=========== -=-=-=-=-= ", userEmail);
     var filename = request.files.docs;
-    console.log("filename ++++++++>  : ", filename);
     var fileName = new Date().getTime() + filename.name;
-    console.log("fileName : ", fileName);
 
     var pathName = path.join(__dirname, "/public/assets/images/", fileName);
 
@@ -34,6 +33,14 @@ export const decorationRegistration = async (request, response) => {
                 }
                 const newUser = await decorationRegistrationModel.create(newUserData);
                 console.log("newUser : ", newUser);
+                const role = await usermodel.updateOne({ email: userEmail }, [
+                    {
+                        $set: {
+                            role: "decoration"
+                        }
+                    }
+                ])
+               
                 await newUser.save();
                 response.status(201).json({ newUser: "newUser" });
             } catch (err) {

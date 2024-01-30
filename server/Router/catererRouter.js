@@ -1,5 +1,7 @@
 import express from 'express';
-import { caterrerRegistration , searchCatrerController , seeNormalUserToCatereRequestController ,catereSeeRequestedDataController,updateCatereProfileController,catereSendRequestTouserController} from '../controller/caterereController.js';
+import { caterrerRegistration , searchCatrerController , 
+    seeNormalUserToCatereRequestController ,catereSeeRequestedDataController,
+    updateCatereProfileController,catereSendRequestTouserController} from '../controller/caterereController.js';
 var catrererRouter = express.Router();
 
 catrererRouter.post("/catererRegister", caterrerRegistration);

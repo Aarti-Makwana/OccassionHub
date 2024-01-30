@@ -212,7 +212,9 @@ export const updateUserPasswordController = async (request, response) => {
 };
 
 export const userShowRequestedDataController = async (request,respose)=>{
+
     const {userEmail} = request.body;
+
     try {
         var userdata = await usermodel.findOne({email:userEmail});
         
@@ -225,6 +227,7 @@ export const userShowRequestedDataController = async (request,respose)=>{
 }
 
 export const seeRequetedDataController = async (request, response) => {
+    console.log("seeRequetedDataController is running ");
     const { userEmail } = request.body;
 
     try {
@@ -236,9 +239,11 @@ export const seeRequetedDataController = async (request, response) => {
             const djDetails = await djRegistrationModel.findOne({ DjEmail: request.djEmail });
             result.push({ ...request.toObject(), djDetails });
         }
+        const catereData = await customiseThaliModel.find({userEmail:userEmail});
+        console.log("catere data in see request --->",catereData);
+        console.log("dj data  data in see request --->",result);
 
-        console.log("Data in see request data controller...!!", result);
-        response.status(201).json({ djUserData: result });
+        response.status(201).json({ djUserData: result,catereData:catereData});
     } catch (error) {
         console.log("Error while fetching requested data in controller ", error);
         response.status(500).json({ error: 'Internal Server Error', message: error.message });

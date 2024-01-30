@@ -3,6 +3,7 @@ import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import axios from 'axios';
 import { caterre_requestUrl } from '../../urls.js';
+import jscookie from 'js-cookie';
 
 function ChooseServicesModal(props) {
     const [isModalOpen, setModalOpen] = useState(false);
@@ -68,14 +69,15 @@ function ChooseServicesModal(props) {
         console.log("setselecteddish : ", selectedDish);
     };
 
+    var userEmail = jscookie.get("user");
     const handleSubmit = (event) => {
         event.preventDefault();
-        console.log("Selected Services:", selectedDish);
         setModalOpen(false);
         try {
             var result = axios.post(caterre_requestUrl + "/seeNormalUserToCatereRequest", {
                 selectedDish,
                 catererEmail: props.catererEmail,
+                userEmail
             });
             result.then(response => {
                 // console.log("data on cateres request modal",response.data.detailsOfNormalUserRequestForCateres);

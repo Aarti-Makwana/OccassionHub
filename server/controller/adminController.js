@@ -16,13 +16,15 @@ var secret_key = process.env.ADMIN_SECRET_KEY
 export const adminLoginController = async(request,response,next)=>{
     const {email,password} = request.body;
     try{
+        console.log("admin email : " , email);
+        console.log("admin password : " , password);
         var expireTime = {expiresIn : '1d'};
         var token = jwt.sign({_id:email},secret_key,expireTime); 
         console.log("token",token)
         if(!token)
             response.status(500).json({message:"Error while generating token inside admin login"});
-        var adminObj = await adminModel.findOne({_id:email});
-        console.log(adminObj);
+        var adminObj = await adminModel.findOne({email  :email});
+        console.log("adminOBJ : ", adminObj);
         var adminPassword = adminObj.password;
         console.log(adminPassword);
         if (password === adminPassword) {
@@ -143,10 +145,10 @@ export const adminshowRequestedUserDjDataController = async (request, response) 
 }
 
 
-export const adminviewRequestedUserVenueDataController = async(request,response)=>{
-    try {
+// export const adminviewRequestedUserVenueDataController = async(request,response)=>{
+//     try {
    
-    } catch (error) {
+//     } catch (error) {
         
-    }
-}
+//     }
+// }
