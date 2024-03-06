@@ -101,6 +101,7 @@ export const userLogin = async (userDataLogin) => {
             console.log("userloginSlice : ", result);
             jscookiee.set('userToken', result.data.token, { expires: 1 });
             jscookiee.set("user", result.data.email, { expires: 1 })
+            jscookiee.set("userID", result.data.userId, { expires: 1 })
         }
         return result;
 

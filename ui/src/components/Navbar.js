@@ -7,8 +7,6 @@ import { useEffect, useState } from 'react';
 import { adduser, setNavbar, RegisterUserData, userLogin, confirmResetPassword, forgetPassUser } from '../store/userSlice';
 import jscookie from 'js-cookie';
 import Modal from 'react-bootstrap/Modal';
-import { useDispatch, useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
 import bannerSearchServices from "../images/bannerSearchServices.jpg";
 import upcomingeventbanner from "../images/Rectangle 20.png";
 import aboutpagebanner from "../images/image 14.png";
@@ -29,23 +27,29 @@ const modalCss = {
         height: '700px'
     }
 }
-function Navbar(props) {
+
+function Navbar() {
 
     const [isLoginmodal, setLoginmodal] = useState(false);
     const [isLoginStatus, setLoginStatus] = useState(false);
     const [isRegistrationmodal, setRegistrationmodal] = useState(false);
     const [email, setEmail] = useState('');
     const [bannerPath, setBannerPath] = useState(video);
-    const navbar = useSelector(state => state.user);
     const [isAdmin, setAdminPath] = useState(true);
     const [role, setRole] = useState('login');
     const [isForgoPassmodal, setForgotPassmodal] = useState(false);
     const [isResetPassmodal, setResetPassmodal] = useState(false);
-
+    const [userData, setUserData] = useState({});
+    const [userLoginData, setUserDataLogin] = useState();
+    const [otp1, setOtp] = useState('');
+    const [resetPass, setResetPass] = useState("");
+    const [forgetemail, setforgetEmail] = useState("");
+    const [Rotp, setRotp] = useState(null);
 
     useEffect(() => {
         const email = jscookie.get('user');
         setEmail(email);
+        setLoginStatus(false);
         const pathname = window.location.pathname;
         console.log(pathname)
         if (pathname == "/searchServices") {
@@ -58,7 +62,7 @@ function Navbar(props) {
             setBannerPath(video);
         }
 
-        if (pathname == '/admin') {
+        if (pathname == '/admin' || pathname == '/getquatation'|| pathname === '/viewquatation') {
             setAdminPath(true)
         } else if (pathname == '/adminHome') {
             setAdminPath(true);
@@ -141,10 +145,6 @@ function Navbar(props) {
         });
     }
 
-    const [userData, setUserData] = useState({});
-    const [userLoginData, setUserDataLogin] = useState();
-    const [otp1, setOtp] = useState('');
-    const navigate = useNavigate();
     const getData = (event) => {
         const { name, value } = event.target;
         setUserData({
@@ -267,6 +267,14 @@ function Navbar(props) {
                 setLoginStatus(true)
                 setLoginmodal(false);
                 event.target.reset();
+            } else if (userResultData.status == 204) {
+                Swal.fire({
+                    background: "black",
+                    icon: "success",
+                    text: "Your accound has been temporary Blocked Please call the admin for Unblock...!",
+                    showCloseButton: true,
+                    focusConfirm: false,
+                });
             } else {
                 Swal.fire({
                     background: "black",
@@ -280,16 +288,13 @@ function Navbar(props) {
         });
     }
 
-    const [resetPass, setResetPass] = useState("");
-    const [forgetemail, setforgetEmail] = useState("");
-
-    const [Rotp, setRotp] = useState(null);
-
     const forgetPassOtp = async (event) => {
         event.preventDefault();
 
         try {
             const result = await forgetPassUser(forgetemail);
+            console.log("result in forgetpassotp : ", result);
+            setRotp(result.data.Rotp);
             if (result.data.status) {
                 console.log("result in forgot password controller ", result);
                 document.getElementById("otpfield").style.display = "block";
@@ -314,7 +319,8 @@ function Navbar(props) {
 
     const forgotPassHandleSubmit = (e) => {
         e.preventDefault()
-        console.log("otp1 ", typeof otp1)
+        console.log("otp1 ", otp1)
+        console.log("Rotp ", Rotp)
         if (Rotp === otp1) {
             setForgotPassmodal(false);
             setResetPassmodal(true);
@@ -403,7 +409,7 @@ function Navbar(props) {
                     password_check = false;
                     return false;
                 } else {
-                    var reg = /^(?=.[a-z])(?=.[A-Z])(?=.\d)(?=.[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+                    var reg = /^[A-Za-z\d@$!%*?&]{8,}$/;
                     if (reg.test(value)) {
                         document.getElementById("passwordlabel").style.color = "green";
                         document.getElementById("passwordlabel").innerHTML = "Valid Password";
@@ -457,9 +463,9 @@ function Navbar(props) {
                 break;
         }
     }
+
     if (isAdmin) {
-        return (<>
-        </>);
+        return (<></>);
     } else {
         window.addEventListener('scroll', function () {
             if (window.scrollY) {
@@ -472,7 +478,6 @@ function Navbar(props) {
                 document.getElementById('content').style.marginTop = '20%'
             }
             else {
-
                 document.getElementById("navbar").style.position = 'absolute';
                 document.getElementById("navbar").style.height = '109px';
                 document.getElementById("logo").style.height = '120px';
@@ -484,7 +489,6 @@ function Navbar(props) {
         return (
             <>
                 <div className="maindiv">
-
                     {
                         (bannerPath == "/searchServices") ?
                             (<img src={bannerSearchServices} alt="loaded..." className="searchServicesBanner" />)
@@ -531,7 +535,7 @@ function Navbar(props) {
                                             <>
                                                 <span role='button' >
                                                     <Link to='/profile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes} >userProfile</span>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes} >Profile</span>
                                                     </Link>
                                                 </span>
                                             </>
@@ -539,7 +543,7 @@ function Navbar(props) {
                                             <>
                                                 <span role='button'>
                                                     <Link to='/catererprofile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>caterProfile</span>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>Profile</span>
                                                     </Link>
                                                 </span>
                                             </>
@@ -547,97 +551,44 @@ function Navbar(props) {
                                             <>
                                                 <span role='button'>
                                                     <Link to='/dj' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>djProfile</span>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>Profile</span>
                                                     </Link>
                                                 </span>
                                             </>
                                         ) : (role == "decoration") ? (
                                             <>
                                                 <span role='button'>
-                                                    <Link to='/decorationprofile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>decorationProfile</span>
+                                                    <Link to='/decorationDashboard' className='text-decoration-none text-white'>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>Profile</span>
                                                     </Link>
                                                 </span>
                                             </>
-                                        ) : (<>
-                                            <span role='button' onClick={() => { setLoginmodal(true) }} >
-                                                <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
-                                            </span>
-                                        </>) : (<>
-                                            <span role='button' onClick={() => { setLoginmodal(true) }} >
-                                                <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
-                                            </span>
-                                        </>)
+                                        ) : (role == "venue") ? (
+                                            <>
+                                                <span role='button'>
+                                                    <Link to='/venueDashboard' className='text-decoration-none text-white'>
+                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>Profile</span>
+                                                    </Link>
+                                                </span>
+                                            </>
+                                        )
+                                            :
+                                            (<>
+                                                <span role='button' onClick={() => { setLoginmodal(true) }} >
+                                                    <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
+                                                </span>
+                                            </>) : (<>
+                                                <span role='button' onClick={() => { setLoginmodal(true) }} >
+                                                    <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
+                                                </span>
+                                            </>)
                                     }
-                                    {/* {
-                                        (role == "user") ? (
-                                            <>
-                                                <span role='button' >
-                                                    <Link to='/profile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes} >Profile</span>
-                                                    </Link>
-                                                </span>
-                                            </>
-                                        ) : (role == "catrer") ? (
-                                            <>
-                                                <span role='button'>
-                                                    <Link to='/catererprofile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>Profile</span>
-                                                    </Link>
-                                                </span>
-                                            </>
-                                        ) : (<>
-                                            <span role='button' onClick={() => { setLoginmodal(true) }} >
-                                                <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
-                                            </span>
-                                        </>)
-                                    } */}
-                                    {/* {
-                                        (email) ? ((role == "user") ? (
-                                            <>
-                                                <span role='button' >
-                                                    <Link to='/profile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes} >Profile</span>
-                                                    </Link>
-                                                </span>
-                                            </>
-                                        ) : (role == "catrer") ? (
-                                            <>
-                                                <span role='button'>
-                                                    <Link to='/catererprofile' className='text-decoration-none text-white'>
-                                                        <i className="bi bi-person" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" onClick={checkRoutes}>Profile</span>
-                                                    </Link>
-                                                </span>
-                                            </>
-                                        ) : (<>
-                                            <span role='button' onClick={() => { setLoginmodal(true) }} >
-                                                <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
-                                            </span>
-                                        </>)) : (<>
-                                            <span role='button' onClick={() => { setLoginmodal(true) }} >
-                                                <i className="bi bi-box-arrow-in-right" style={{ color: 'white', fontSize: '1.4rem' }} > </i><span className="fs-5" >Login</span>
-                                            </span>
-                                        </>)
-                                    } */}
                                 </div>
                             </div>
                         </nav>
                         <div className="col-lg-12 ms-3" id="hr"></div>
                         <div className='text-center text-white p-4' id='content' style={{ marginTop: "11%" }}>
-                            {/* {bannerPath == "/searchServices" ? (
-                                <>
-                                    <div className="container d-flex flex-column justift-content-center position-relative fs-1">
-                                        <h3 className='fs-1  navbarpara1'>Relax</h3>
-                                        <h2 className='fs-1  navbarpara1'> With Us</h2>
-                                        <h1 className='mt-3 fs-1 navbarpara2' style={{ color: "green" }}>NewsLetters</h1>
-                                    </div>
-                                </>)
-                                : (
-                                    <>
-                                        <p className='navbarpara1'>Unleash the Extraordinary</p>
-                                        <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
-                                    </>
-                                )} */}
+
                             {bannerPath == "/searchServices" ? (
                                 <>
                                     <div className="container d-flex flex-column justift-content-center position-relative fs-1">
@@ -646,13 +597,25 @@ function Navbar(props) {
                                         <h1 className='mt-3 fs-1 navbarpara2' style={{ color: "green" }}>NewsLetters</h1>
                                     </div>
                                 </>) :
-                                (bannerPath == "/catererprofile") ? "" : (bannerPath == "/decorationprofile") ? "" : (bannerPath == "/dj") ? "" : (bannerPath == "/contactus") ? "" :
-                                    (
-                                        <>
-                                            <p className='navbarpara1'>Unleash the Extraordinary</p>
-                                            <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
-                                        </>
-                                    )
+                                (bannerPath == "/catererprofile" || bannerPath == "/decorationprofile" || bannerPath == "/dj" || bannerPath == "/venue") ?
+                                    "" :
+                                    (bannerPath == "/contactus") ? "" :
+                                        (bannerPath == "/aboutpage") ?
+                                            <>
+                                                <p className='navbarpara1'>Enjoy Our Event with us</p>
+                                                <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
+                                            </> : (bannerPath == "/servicepage") ?
+                                                <>
+                                                    <div className="container d-flex flex-column justift-content-center position-relative fs-1">
+                                                        <h3 className='fs-1  navbarpara1'>Relax</h3>
+                                                        <h2 className='fs-1  navbarpara1'> With Us</h2>
+                                                        <h1 className='mt-3 fs-1 navbarpara2' style={{ color: "green" }}>NewsLetters</h1>
+                                                    </div>
+                                                </> :
+                                                <>
+                                                    <p className='navbarpara1'>Unleash the Extraordinary</p>
+                                                    <p className='mt-3 navbarpara2'>Evalute <span className='webcolor'> your Experience </span> with our Spectacular<br /> Events...!</p>
+                                                </>
                             }
                         </div>
                     </div>
@@ -735,7 +698,7 @@ function Navbar(props) {
                                                     <i className="fa fa-user icon" aria-hidden="true"></i>
                                                     <input type="name" required className="form-control input-field" id="exampleInputName" aria-describedby="nameHelp"
                                                         placeholder="Name" name="name" onChange={getData} />
-                                                    <span id="usernamelabel" className='bg-primary'></span>
+                                                    <span id="usernamelabel"></span>
                                                 </div>
                                                 <div className="mb-3 mt-4">
                                                     <i className="fa fa-envelope icon" aria-hidden="true"></i>
@@ -778,9 +741,6 @@ function Navbar(props) {
                         </div>
                     </Modal.Body>
                 </Modal>
-
-
-
 
                 <Modal size="lg" show={isForgoPassmodal} onHide={() => { setForgotPassmodal(false) }} centered   >
                     <Modal.Body className='p-0'>
@@ -840,7 +800,7 @@ function Navbar(props) {
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                 </div>
                                                 <div className="mb-3 mt-4 d-flex flex-row align-items-center">
-                                                    <input type="password" name="password" className="form-control input-field" id="exampleInputPassword1" placeholder="Confirm Password" />
+                                                    <input type="password" name="password" className="form-control input-field" id="exampleInputPassword2" placeholder="Confirm Password" />
                                                     <i className="fa fa-unlock-alt icon" aria-hidden="true"></i>
                                                 </div>
                                                 <button type="submit" className="btn btn-light mt-3 fs-6">Submit</button>

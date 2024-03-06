@@ -36,7 +36,7 @@
     display: inline-flex;
     align-items: center;
     justify-content: center;
-    background: #ff0057;
+    background: rgb(39, 59, 74, 1);
     border-radius: 40px;
 }
 

@@ -6,10 +6,11 @@ function VenueSection() {
 
     useEffect(() => {
         var venuedata = adminShowVenueData();
+        console.log("bookdata : ", venuedata)
         venuedata.then((venueData) => {
-            console.log("venue Data : ", venueData);
+            console.log("venue Data : ", venueData.bookdata);
             if (venueData) {
-                setVenueData(venueData);
+                setVenueData(venueData.veneueData);
                 alert("veneue data find sucefully.....!!");
             } else {
                 alert("no veneue Data find");

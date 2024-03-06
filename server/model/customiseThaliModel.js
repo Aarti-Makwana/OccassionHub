@@ -4,66 +4,70 @@ var customiseThaliSchema = new mongoose.Schema({
     eventrequirmentid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'requestSchema',
-        required:false
+        required: false
     },
-    catereid:{
+    catereid: {
         type: mongoose.Schema.Types.ObjectId,
         ref: 'userModal',
-        required:false
+        required: false
     },
-    userEmail:{
-        type:String,
-        required:false
+    userEmail: {
+        type: String,
+        required: false
     },
-    catereBusiness:{
-        type:String,
-        required:false
+    catereEmail: {
+        type: String,
+        required: false
+    },
+    catereBusiness: {
+        type: String,
+        required: false
     },
     location: {
-        type:String,
-        required:false
+        type: String,
+        required: false
     },
     date: {
-        type:String,
-        required:false
+        type: String,
+        required: false
     },
     time: {
-        type:String,
-        required:false
+        type: String,
+        required: false
     },
     totalguest: {
-        type:Number,
-        required:false
+        type: Number,
+        required: false
     },
-    requirments :[{
+    requirments: [{
         Roti: [{
-            type:String,
-            required:false
+            type: String,
+            required: false
         }],
         Sabji: [{
-            type:String,
-            required:false
+            type: String,
+            required: false
         }],
         Starter: [{
-            type:String,
-            required:false
+            type: String,
+            required: false
         }],
         Dessert: [{
-            type:String,
-            required:false
+            type: String,
+            required: false
         }],
     }],
     addtionalmenu: {
-        type:String,
-        required:false
+        type: String,
+        required: false
     },
-    Price : {
+    Price: {
         type: Number,
-        default:0
+        default: 0
     },
-    status:{
-        type : String,
-        default:"pending"
+    status: {
+        type: String,
+        default: "pending"
     }
 });
 

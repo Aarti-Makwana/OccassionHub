@@ -26,8 +26,8 @@ var requestedDjSchema = new mongoose.Schema({
         required :true
     },
     status : {
-        type :"string",
-        default : 'requsted'
+        type :String,
+        default : 'pending'
     },
     djprice : {
         type :Number,

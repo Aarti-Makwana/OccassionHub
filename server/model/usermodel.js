@@ -27,7 +27,16 @@ var userSchema = new mongoose.Schema({
         type: String,
         require: false,
         default: "user"
-    }
+    },
+    img :{
+        default :"1707306633104userProfile.png",
+        type:String,
+        required:true
+    },userstatus:{
+        default : "unblock",
+        type:String,
+        required:true
+    }
 });
 
 export default mongoose.model('userModel', userSchema, 'user');

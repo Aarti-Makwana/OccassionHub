@@ -12,7 +12,7 @@ function ChooseServicesModal(props) {
         location: "",
         date: "",
         time: "",
-        totalguest:0,
+        totalguest: 0,
         Dessert: [],
         Roti: [],
         Sabji: [],
@@ -80,8 +80,12 @@ function ChooseServicesModal(props) {
                 userEmail
             });
             result.then(response => {
-                // console.log("data on cateres request modal",response.data.detailsOfNormalUserRequestForCateres);
-                // Sweet alert lagega yaha....
+                if (!isAlreadyBookedOrNot) {
+                    alert("This catere is already booked on that day");
+                }
+                else {
+                    alert("Catere Booked sucessfully");
+                }
             })
                 .catch(err => {
                     console.log("Error in cateres request modal ", err);
@@ -89,6 +93,22 @@ function ChooseServicesModal(props) {
 
         } catch (err) {
             console.log("Error on cateres request modal data is not coming", err);
+        }
+    }
+
+    const isAlreadyBookedOrNot = async () => {
+        var userEventdate = document.getElementById("userEventdate").value;
+        console.log(userEventdate, "userEventdate");
+        try {
+            let response = await axios.post(caterre_requestUrl + '/isAleradyBookedOrNot', { catererEmail: props.catererEmail, userEventdate });
+            if (response.status == 201) {
+                alert(response.data.msg);
+                setModalOpen(false);
+                isModalOpen();
+                return true
+            }
+        } catch (err) {
+            console.log("Error while user booked catere ", err);
         }
     }
 
@@ -108,13 +128,13 @@ function ChooseServicesModal(props) {
                                 <input type="text" className="form-control input-field" placeholder="Event Location" name="location" onChange={handleInputChange} />
                             </div>
                             <div className="mb-3">
-                                <input type="date" className="form-control input-field" placeholder="Event Date" name="date" onChange={handleInputChange} />
+                                <input type="date" className="form-control input-field" placeholder="Event Date" name="date" id="userEventdate" onChange={handleInputChange} onBlur={isAlreadyBookedOrNot} />
                             </div>
                             <div className="mb-3 mt-4">
                                 <input type="time" className="form-control input-field" placeholder="Event Time" name="time" onChange={handleInputChange} />
                             </div>
                             <div className="mb-3 mt-4">
-                                <input type="number" className="form-control input-field" placeholder="Total Guest" min="1"name="totalguest" onChange={handleInputChange} />
+                                <input type="number" className="form-control input-field" placeholder="Total Guest" min="1" name="totalguest" onChange={handleInputChange} />
                             </div>
                             <h4 className="text-danger">Customize Your Thali Here</h4>
 

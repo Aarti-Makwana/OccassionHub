@@ -1,6 +1,8 @@
 import { adminShowUserData } from "../../store/adminSlice.js";
 import { useEffect, useState } from 'react'
-
+import { admin_requestedUrl } from "../../urls.js";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 function AlluserSection() {
     const [userdata, setUserData] = useState([]);
@@ -17,10 +19,25 @@ function AlluserSection() {
                 alert("no user data find");
             }
         });
-    },[])
+    }, [])
+
+    const blockUser = async (email) => {
+        console.log("email : ", email);
+        var response = await axios.post(admin_requestedUrl + "/adminBlockUser", { email: email });;
+        console.log("response : ", response);
+        setUserData(response.data.userdata);
+        if (response.status == 201) {
+            Swal.fire({
+                icon: 'success',
+                text: "user " + response.data.massage + " sucefully",
+                background: 'black'
+            })
+        }
+    }
+
     return (<>
-        <div className="w-100 table-responsive p-2 pt-4">
-            <table className="table table-bordered table-hover table-dark ">
+        <div className="w-100 table-responsive p-2">
+            <table className="table table-hover table-dark ">
                 <thead>
                     <tr>
                         <th>No.</th>
@@ -28,6 +45,8 @@ function AlluserSection() {
                         <th>Email</th>
                         <th>Contact</th>
                         <th>Address</th>
+                        <th>Role</th>
+                        <th>Manage</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -40,6 +59,8 @@ function AlluserSection() {
                                 <td>{data.email}</td>
                                 <td>{data.contect}</td>
                                 <td>{data.address}</td>
+                                <td>{data.role}</td>
+                                <td><button className="btn btn-outline-danger" onClick={() => { blockUser(data.email) }}>{data.userstatus}</button></td>
                             </tr>);
                         })
                     }

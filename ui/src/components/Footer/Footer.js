@@ -5,7 +5,7 @@ function Footer() {
     const [isAdmin, setAdminPath] = useState(true);
     useEffect(() => {
         const pathname = window.location.pathname;
-        if (pathname == '/admin') {
+        if (pathname == '/admin' || pathname == '/adminHome' || pathname == '/getquatation' || pathname === '/viewquatation') {
             setAdminPath(true)
         }
         else {

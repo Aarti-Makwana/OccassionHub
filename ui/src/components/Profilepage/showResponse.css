@@ -1,11 +1,11 @@
-.scroller{
+/* .scroller{
     height: 60vh;
     overflow-y: scroll;
-}
+} */
 .subScroller{
-    height: 25vh;
+    height: 100%;
     overflow-y: scroll;
-    overflow-x:hidden;
+    /* overflow-x:hidden;    */
 }
 
 .subScroller::-webkit-scrollbar {

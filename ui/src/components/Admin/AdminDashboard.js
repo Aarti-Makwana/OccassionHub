@@ -6,17 +6,20 @@ import DecorationSection from "./DecorationSection.js";
 import VenueSection from "./VenueSection.js";
 import DjSection from "./DjSection.js";
 import PassDetailSection from "./PassDetailSection.js";
+import Dashboard from "./Dashboard.js";
 import EventRequirementDetailSection from "./EventRequirementDetailSection.js";
-// import CatererUserData from "./CatererUserData.js";
+import CatererUserData from "./CatererUserData.js";
 import DjRequestData from "./DjUserRequestData.js";
-// import VenueRequestData from "./venueRequestUser.js";
+import VenueRequestData from "./VenueRequestData.js";
 import { useEffect, useState } from 'react'
-// import DecorationRequestData from "./DecorationRequest.js";
+import DecorationRequestData from "./DecorationRequestData.js";
+
+import logo from '../../images/logohub.png';
 
 <link href="lib/tempusdominus/css/tempusdominus-bootstrap-4.min.css" rel="stylesheet" />
 var show = false;
 function AdmindashBoard() {
-    const [section, setSection] = useState('profile');
+    const [section, setSection] = useState('dashboard');
     console.log("section ... : ", section);
 
     function silderBarToggle() {
@@ -37,25 +40,25 @@ function AdmindashBoard() {
         <>
             <div className="container-fluid position-relative d-flex p-0 ">
                 <div className="sidebar" id="siderBar">
-                    <nav className="navbar navbar-light pe-2">
-                        <div className="d-flex justify-content-between ps-3 pe-3  w-100">
-                            <h3 href="" className="navbar-brand text-end webcolor fw-bolder">
+                    <nav className="navbar navbar-light bg-dark p-0">
+                        <div className="d-flex justify-content-start align-items-center w-100 navbar-div bg-dark p-0">
+                            <img src={logo} height='70' />
+                            <h3 href="" className="navbar-brand text-end text-white fw-bolder">
                                 OCCASSION HUB
                             </h3>
                             <h2 className="text-white sidebar-toggler m-2 text-decoration-none flex-shrink-0" id="sidebar-toggler" onClick={silderBarToggle}>
                                 <i className="bi bi-x-circle-fill"></i>
                             </h2>
                         </div>
-                        <div className="d-flex align-items-center ms-4 mb-1">
+                        {/* <div className="d-flex align-items-center ms-4 mb-1">
                             <div className="">
-                                <h4 className="mb-0 text-white text-start">Dheeraj singh chouhan</h4>
-                                <h6 className=" text-white text-start">Admin</h6>
+                                <h5 className="mb-0 text-white text-start">Dheeraj singh chouhan</h5>
                             </div>
-                        </div>
+                        </div> */}
                         <div className="navbar-nav w-100 ">
-                            <p role="button" className="nav-item nav-link" onClick={() => { setSection('profile') }}>
+                            <p role="button" className="nav-item nav-link" onClick={() => { setSection('dashboard') }}>
                                 <i className="bi bi-person-circle text-center"></i>
-                                &nbsp;Profile
+                                &nbsp;Dashboard
                             </p>
                             <p className="nav-item nav-link" onClick={() => { setSection('alluser') }}>
                                 <i className="bi bi-person-circle text-center"></i>
@@ -139,10 +142,10 @@ function AdmindashBoard() {
 
                 <div className="content" id="content" style={{ display: "flex", flexDirection: "column" }}>
                     <AdminTopNavbar />
-                    <div className="container-fluid p-0 bg-dark" style={{ flexGrow: 1, }}>
+                    <div className="container-fluid p-0 bg-black" style={{ flexGrow: 1, }}>
                         {
                             {
-                                'profile': <h1 className="text-white">Profile</h1>,
+                                'dashboard' : <Dashboard />,
                                 'alluser': <AlluserSection />,
                                 'caterer': <CatererSection />,
                                 'decoration': <DecorationSection />,
@@ -150,10 +153,10 @@ function AdmindashBoard() {
                                 'dj': <DjSection />,
                                 'passdetail': <PassDetailSection />,
                                 'alleventreq': <EventRequirementDetailSection />,
-                                // 'catererUser' :<CatererUserData/>,
+                                'catererUser' :<CatererUserData/>,
                                 'djUser':<DjRequestData/>,
-                                // 'venueUser' : <VenueRequestData/>,
-                                // 'decorationUser':<DecorationRequestData/>
+                                'venueUser' : <VenueRequestData/>,
+                                'decorationUser':<DecorationRequestData/>
                             }[section]
                         }
                         {/* <div className="w-100 table-responsive p-2 pt-4 ">

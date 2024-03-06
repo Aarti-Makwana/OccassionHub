@@ -24,6 +24,42 @@ var decorationSchema = new mongoose.Schema({
     docs: {
         type: String,
         required: true
+    },
+    adminRequest: [
+        {
+            eventId: {
+                type: String,
+                required: false
+            },
+            Price: {
+                type: Number,
+                required: false,
+                default: 0
+            },
+            status: {
+                type: String,
+                required: false,
+                default: 'pending'
+            }
+        }
+    ],
+    AadharNo: {
+        type: Number,
+    },
+    BankName: {
+        type: String,
+
+    },
+    BranchName: {
+        type: String,
+
+    },
+    IfscCode: {
+        type: String,
+
+    },
+    AccountNo: {
+        type: Number,
     }
 });
 

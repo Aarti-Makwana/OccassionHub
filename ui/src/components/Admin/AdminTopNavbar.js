@@ -20,23 +20,23 @@ const admin_email  = jscookie.get("admin_email");
     }
 
     return (<>
-        <nav className="navbar navbar-expand-lg bg-black  px-4 py-0">
+        <nav className="navbar navbar-expand-lg bg-dark  px-4 py-0">
             <div className="container-fluid">
                 <button className="navbar-toggler" type="button" onClick={silderBarToggle}>
                     <i className="fa fa-solid fa-bars fs-3 text-white"></i>
                 </button>
-                <a className="navbar-brand mx-2 mx-lg-5 text-light" href="#">ADMIN</a>
+                <a className="navbar-brand mx-2 mx-lg-5 text-light" href="#">ADMIN DASHBOARD</a>
                 <div className="contentlinks">
                     <ul className="navbar-nav align-items-center ms-auto">
                         <li className="nav-item">
                             <a href="#" className="nav-link" >
-                                <i className="fa fa-envelope me-lg-2 text-white"></i>
+                                <i className="fa fa-envelope me-lg-2 text-warning"></i>
                                 <span className="text-light">Message</span>
                             </a>
                         </li>
                         <li className="nav-item">
                             <a href="#" className="nav-link">
-                                <i className="fa fa-bell me-lg-2 text-white"></i>
+                                <i className="fa fa-bell me-lg-2 text-danger"></i>
                                 <span className="text-light">Notification</span>
                             </a>
                         </li>

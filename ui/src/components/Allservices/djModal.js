@@ -1,6 +1,5 @@
 import Modal from 'react-bootstrap/Modal';
-import { caterre_requestUrl } from '../../urls';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import axios from 'axios';
 import Swal from 'sweetalert2';
 import { dj_requestUrl } from '../../urls';
@@ -25,18 +24,39 @@ function DjModal(props) {
         djData1["djEmail"] = djEmail;
         try {
             var responseData = await axios.post(dj_requestUrl + "/djBookUser", djData1);
-            console.log("responseData L ",responseData);
+            console.log("responseData L ", responseData);
             console.log("request send sucefully");
-            
-            responseData.then((result)=>{
-                if(result.status==201){
-                    alert("request send sucefully");
-                }
-            })
+            if (responseData.status === 201) {
+                alert("request send sucefully");
+                setResponseToUserModal(false);
+            }
         } catch (error) {
-
+            console.log("Error  : ", error);
         }
     }
+
+    const checkdate = async (event) => {
+        var date = document.getElementById("cheakdate").value;
+        console.log(date, " : ------------> date");
+        try {
+            var responseData = await axios.post(dj_requestUrl + "/djBookDatecheak", { date, djEmail });
+            console.log(responseData, "---->responseData");
+            if (responseData.status == 201) {
+                Swal.fire({
+                    title: 'Already Book ',
+                    text: responseData.data.message,
+                    icon: 'question',
+                    showCancelButton: true,
+                    confirmButtonText: 'Yes',
+                    background: "black",
+                });
+                setResponseToUserModal(false);
+            }
+        } catch (error) {
+            console.error("Error checking date:", error);
+        }
+    }
+
     return (<>
         <button className='ourbtn mt-1' onClick={() => { setResponseToUserModal(true) }}>Book Now</button>
         <Modal size="md-down" show={isResponseToUserModal} onHide={() => { setResponseToUserModal(false) }} centered  >
@@ -48,7 +68,7 @@ function DjModal(props) {
                     <h2 className="modal-title text-white text-center" >Book DJ For Event</h2>
                     <form onSubmit={handleSubmitDjData} method="post">
                         <div className="mb-3">
-                            <input type="date" className="form-control input-field" placeholder="Event Date" name="date" onChange={getData} />
+                            <input type="date" className="form-control input-field" placeholder="Event Date" onBlur={checkdate} name="date" id='cheakdate' onChange={getData} />
                         </div>
                         <div className="mb-3 mt-4">
                             <input type="time" className="form-control input-field" placeholder="Event Time" name="time" onChange={getData} />
@@ -60,7 +80,7 @@ function DjModal(props) {
                             <input type="number" className="form-control input-field" id="exampleInputName" placeholder="Enter hours" onChange={getData} name="djhours" />
                         </div>
                         <div className="d-flex justify-content-center">
-                            <button type="submit" className="ourbtn w-50 mt-3 mb-3" style={{ color: 'black' }}>Sbmit</button>
+                            <button type="submit" className="ourbtn w-50 mt-3 mb-3" style={{ color: 'black' }}>Submit</button>
                         </div>
                     </form>
                 </div>

@@ -7,7 +7,7 @@ import path from 'path';
 export const passesDataController = async (request, response) => {
     try {
         var __filename = fileURLToPath(import.meta.url);
-        var _dirname = path.dirname(_filename).replace("\\controller", "");
+        var __dirname = path.dirname(__filename).replace("\\controller", "");
         console.log("request.body : ", request.body);
         const { userEmail, passesPrice, cheakdate, Quantity } = request.body;
         var filename = request.files.docs;
@@ -52,8 +52,8 @@ export const passesDataController = async (request, response) => {
                                 eventtype: requestData[i].eventtype,
                                 passesPrice: passesPrice,
                                 Quantity: Quantity,
-                                startTime: requestData[i].startTime,
-                                EndTime: requestData[i].EndTime,
+                                startTime: requestData[i].starttime,
+                                EndTime: requestData[i].endtime,
                                 Start_Date: requestData[i].startedate,
                                 address: requestData[i].location,
                                 docs: fileName

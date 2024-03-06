@@ -7,7 +7,6 @@ var decorationRequestSchema = new mongoose.Schema({
     decorationEmail: {
         type: String,
         required: true,
-        unique: true
     },
     location: {
         type: String,
@@ -34,7 +33,7 @@ var decorationRequestSchema = new mongoose.Schema({
         required : true,
         default: "pending"
     },
-    price : {
+    Price : {
         type : Number,
         required : true
     }

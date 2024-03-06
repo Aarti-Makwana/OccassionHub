@@ -3,11 +3,13 @@ import mongoose from "../connection/dbConfig.js";
 var adminSchema = mongoose.Schema({
     _id : {
         type:String,
-        required:true
+        required:true,
+        default:"admin@gmail.com"
     },
     password:{
         type:String,
-        required:true
+        required:true,
+        default:"Admin@123"
     }
 });
 

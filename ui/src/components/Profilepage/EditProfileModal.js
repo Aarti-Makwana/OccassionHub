@@ -84,7 +84,7 @@ function EditProfileModal(props) {
     }
 
     return (<>
-        <p className="btn btn-danger" onClick={() => { setEditprofilemodal(true) }}>Edit Profile</p>
+        <p className="btn btn-danger mx-2" onClick={() => { setEditprofilemodal(true) }}>Edit Profile</p>
         <Modal size="md-down" show={isEditprofilemodal} onHide={() => { setEditprofilemodal(false) }} centered  >
             <Modal.Body className='bg-black' style={{ padding: '0 10%' }}>
                 <div className='mt-4' >

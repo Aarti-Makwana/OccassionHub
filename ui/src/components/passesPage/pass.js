@@ -142,6 +142,7 @@ function Passes() {
                     showCloseButton: true,
                     focusConfirm: false,
                 });
+                event.traget.reset();
             } else if (data.status == 204) {
                 Swal.fire({
                     background: "black",
@@ -180,9 +181,9 @@ function Passes() {
     }
     return (<>
         <div>
-            <div className="container bg-black w-75 ml-3">
-                <div className="row" id="outdiv">
-                    <div className="col-lg-6 ml-3 mt-1" style={{ marginRight: "6rem" }}>
+            <div className="container-fluid bg-dark w-100 mb-4 py-3">
+                <div className="row m-auto w-50" id="outdiv">
+                    <div className="col-lg-12 mt-1 w-50 m-auto py-3" >
                         <section className="h-50 h-custom gradient-custom-2">
                             <h1 style={{ color: "#FF0057" }} className="text-center">Passes<span style={{ color: "white" }}> Details</span></h1>
                             <form className="px-md-2 form-group" onSubmit={handleSubmit}>
@@ -224,8 +225,8 @@ function Passes() {
                                         </div>
                                     </div>
 
-                                    <div className="d-flex justify-content-center mt-3">
-                                        <button type="submit" className="ourbtn w-50">Submit</button>
+                                    <div className="d-flex justify-content-center my-4">
+                                        <button type="submit" className="ourbtn w-75">Submit</button>
                                     </div>
                                 </div>
                             </form>

@@ -2,18 +2,16 @@ import requetSchema from '../model/eventRequestModel.js'
 import usermodel from '../model/usermodel.js'
 
 export const userEventRequestController = async (request, response) => {
-  const { userEmail,eventname, totalguest, eventtype, budget, location, startedate, enddate, meal, addtionalinfo, serviceschoose, isdjbooked, extralocationcharge } = request.body;
+  const { userEmail, eventname, totalguest, eventtype, budget, location, startedate, starttime , endtime , enddate, meal, addtionalinfo, serviceschoose, customiseThali, venuetype, decorationtype } = request.body;
   console.log("request event controller ,", request.body);
-  // const userEmail = request.cookies.user;
-  console.log("user email from req.body : ", userEmail);
-
   try {
     const user = await usermodel.findOne({ email: userEmail });
 
-    console.log("user Data in try : " , user);
+    console.log("user Data in try : ", user);
 
     var requetSchemaForm = await requetSchema.create({
       userid: user._id,
+      userEmail: userEmail,
       eventname: eventname,
       totalguest: totalguest,
       eventtype: eventtype,
@@ -21,11 +19,16 @@ export const userEventRequestController = async (request, response) => {
       location: location,
       startedate: startedate,
       enddate: enddate,
+      starttime: starttime,
+      endtime: endtime,
       meal: meal,
       addtionalinfo: addtionalinfo,
       serviceschoose: serviceschoose,
-      // isdjbooked:isdjbooked,
-      // extralocationcharge:extralocationcharge
+      isdjbooked: serviceschoose.dj,
+      islocationExtraCharge: serviceschoose.extralocationcharge,
+      customiseThali: customiseThali,
+      decorationtype: decorationtype,
+      venuetype: venuetype
     });
 
     console.log("requetSchemaForm on controller ", requetSchemaForm)

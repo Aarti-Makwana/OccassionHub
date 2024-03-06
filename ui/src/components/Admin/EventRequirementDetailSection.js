@@ -1,15 +1,18 @@
 import { adminShowEventDetails } from "../../store/adminSlice.js";
 import { useEffect, useState } from 'react'
+import { useNavigate } from 'react-router-dom';
 
 function EventRequirementDetailSection() {
     const [event, setEventData] = useState([]);
 
+    const history = useNavigate();
+
     useEffect(() => {
         var eventData = adminShowEventDetails();
         eventData.then((eventdata) => {
-            console.log("Event data page", eventdata);
+            // console.log("Event data page", eventdata);
             if (eventdata) {
-                alert("event data find successfully");
+                // alert("event data find successfully");
                 setEventData(eventdata);
             }
             else {
@@ -17,6 +20,11 @@ function EventRequirementDetailSection() {
             }
         })
     }, []);
+
+    const getQuatation = (eventdata) =>{
+        console.log("eventData : " , eventdata);
+        history('/getquatation', { state : { eventdata } });
+    }
 
     return (<>
         <h5 style={{ color: '#FF0057', textAlign: 'center', fontSize: '2.5rem' }}>Event Requirement List</h5>
@@ -34,6 +42,7 @@ function EventRequirementDetailSection() {
                             <th>Start Date</th>
                             <th>Last Date</th>
                             <th>Budget</th>
+                            <th>Get Quot</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -41,11 +50,11 @@ function EventRequirementDetailSection() {
                         {
                             event.map((eventData, index) => (
                                 <tr key={index}>
-                                    <td>{index + 1 + " ."}</td>
-                                    <td>{eventData.userid}</td>
-                                    <td>{eventData.eventname}</td>
-                                    <td>{eventData.eventtype}</td>
-                                    <td>
+                                    <td className="text-nowrap">{index + 1 + " ."}</td>
+                                    <td className="text-nowrap">{eventData.userEmail}</td>
+                                    <td className="text-nowrap">{eventData.eventname}</td>
+                                    <td className="text-nowrap">{eventData.eventtype}</td>
+                                    <td className="text-nowrap">
                                         {
                                             eventData.serviceschoose.map((service, i, arr) => (
                                                 <div key={i}>
@@ -60,10 +69,13 @@ function EventRequirementDetailSection() {
                                             ))
                                         }
                                     </td>
-                                    <td>{eventData.totalguest}</td>
-                                    <td>{eventData.startedate}</td>
-                                    <td>{eventData.enddate}</td>
-                                    <td>{eventData.budget}</td>
+                                    <td className="text-nowrap">{eventData.totalguest}</td>
+                                    <td className="text-nowrap">{eventData.startedate}</td>
+                                    <td className="text-nowrap">{eventData.enddate}</td>
+                                    <td className="text-nowrap">{eventData.budget}</td>
+                                    <td className="text-nowrap"><button className="btn btn-outline-danger" onClick={() => {
+                                        getQuatation(eventData)
+                                    }}>Get Quatation</button></td>
                                 </tr>
                             ))
                         }

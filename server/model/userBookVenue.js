@@ -13,14 +13,44 @@ var userBookVenue = new mongoose.Schema({
         type: String,
         required: false
     },
-    time: {
+    numRooms: {
         type: String,
         required: false
     },
-    venuehours: {
-        type: Number,
+    functionTime: {
+        type: String,
+        required: false
+    },
+    functionType: {
+        type: String,
         required: true
     },
+    AdditionalInfo: {
+        type: String,
+        required: true
+    },
+    calculateAmount: [{
+        roomCharge: {
+            type: Number,
+            required: false
+        },
+        otherCharge:{
+            type:Number,
+            required:false
+        },
+        totalAmount:{
+            type: Number,
+            required: false
+        },
+        explaination:{
+            type: String,
+            required: false
+        }
+    }],
+    status: {
+        type: String,
+        default: "pending"
+    }
 });
 
 export default mongoose.model("userBookVenue", userBookVenue, "userBookVenue");

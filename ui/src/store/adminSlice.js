@@ -12,19 +12,19 @@ const adminSlice = createSlice({
 
     }
 });
-export const adminLogin =async (adminCredential)=>{  
-    try{
+export const adminLogin = async (adminCredential) => {
+    try {
         console.log(adminCredential);
-        var result = await axios.post(admin_requestedUrl+'/adminLogin',adminCredential); 
-        console.log("adminSlice : ",result);
-        console.log("token : ",result.data.token);
-        if(result.status==201)
-            jscookie.set("admin_email",adminCredential.email);
+        var result = await axios.post(admin_requestedUrl + '/adminLogin', adminCredential);
+        console.log("adminSlice : ", result);
+        console.log("token : ", result.data.token);
+        if (result.status == 201)
+            jscookie.set("admin_email", adminCredential.email);
 
-        jscookie.set('admin_jwt_token',result.data.token,{expires:1});
+        jscookie.set('admin_jwt_token', result.data.token, { expires: 1 });
         return result;
-    }catch(err){
-        console.log("error in adminSlice : ",err);
+    } catch (err) {
+        console.log("error in adminSlice : ", err);
     }
 }
 export const adminShowUserData = async () => {
@@ -61,10 +61,10 @@ export const adminShowDjData = async () => {
 export const adminShowVenueData = async () => {
     try {
         var veneueDataRes = await axios.post(admin_requestedUrl + "/veneueData");
-        console.log("DJ Data in slice : ", veneueDataRes.data.veneueData);
-        return veneueDataRes.data.veneueData;
+        // console.log("DJ Data in slice : ", veneueDataRes.data.veneueData);
+        return veneueDataRes.data;
     } catch (error) {
-        console.log("error in admin show venue Data slice ");
+        console.log("error in admin show venue Data slice ");
     }
 }
 
@@ -97,32 +97,49 @@ export const adminShowEventDetails = async () => {
     }
 }
 
-export const adminShowUserrequestedCatererData = async()=>{
+export const adminShowUserrequestedCatererData = async () => {
     try {
-        var response = await axios.post(admin_requestedUrl+"/adminshowRequestedUserCatererData");
+        var response = await axios.post(admin_requestedUrl + "/adminshowRequestedUserCatererData");
+        console.log(response + "-----------------> response : ", response);
+        console.log("response : ", response.data.AllRequtedUserData);
+        return response.data.AllRequtedUserData;
     } catch (error) {
-        
+        console.log("error in admin show dj Data slice requsted");
     }
 }
 
-export const adminShowUserrequestedDjData = async(request,respose)=>{
+export const adminShowUserrequestedDjData = async (request, respose) => {
     try {
-        var response = await axios.post(admin_requestedUrl+"/adminshowRequestedUserDjData");
-        console.log("response : ",response);
-        console.log("response : ",response.data.AllRequtedUserData); 
-        return response.data.AllRequtedUserData; 
+        var response = await axios.post(admin_requestedUrl + "/adminshowRequestedUserDjData");
+        console.log("response : ", response);
+        console.log("response : ", response.data.AllRequtedUserData);
+        return response.data.AllRequtedUserData;
     } catch (error) {
         console.log("error in admin show dj Data slice requsted");
     }
 }
-export const adminShowUserrequestedVenueData = async(request,response)=>{
+export const adminShowUserrequestedVenueData = async (request, response) => {
     try {
-        var response = await axios.post(admin_requestedUrl+"/adminshowRequestedUserVenueData");
-        console.log("response : ",response);
-        console.log("response : ",response.data.AllRequtedUserData); 
-        return response.data.AllRequtedUserData; 
+        var response = await axios.post(admin_requestedUrl + "/adminshowRequestedUserVenueData");
+        console.log("response : ", response);
+        console.log("response : ", response.data.AllRequtedUserData);
+        return response.data.AllRequtedUserData;
     } catch (error) {
-        console.log("error in admin show dj Data slice requsted");
+        console.log("error in admin show venue Data slice requsted");
     }
 }
+
+export const adminShowUserrequestedDecorationData = async (request, response) => {
+    try {
+        var response = await axios.post(admin_requestedUrl + "/adminshowRequestedUserDecorationData");
+        console.log("response : ", response);
+        console.log("response : ", response.data.AllRequtedUserData);
+        return response.data.AllRequtedUserData;
+    } catch (error) {
+        console.log("error in admin show decoration Data slice requsted");
+    }
+}
+
+
+
 export default adminSlice.reducer;

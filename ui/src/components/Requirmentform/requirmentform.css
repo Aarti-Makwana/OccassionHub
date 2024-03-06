@@ -71,3 +71,6 @@ height: max-content;
 .lastCheckBox{
    margin-right: 91vw;
 }
+#mealsection , #venusection , #decorationsection , #djsection {
+    display: none;
+}

@@ -17,7 +17,7 @@ function ShowsResponseModal() {
         var response = await axios.post(user_requestedUrl + "/seeRequetedData", { userEmail });
         setDjData(response.data.djUserData);
         setcatereData(response.data.catereData);
-        console.log("caterer data -00000-000- 0-0-0-0- ",response.data.djUserData)
+        console.log("caterer data -00000-000- 0-0-0-0- ", response.data.djUserData)
         setModalOpen(true);
     }
     return (
@@ -26,15 +26,15 @@ function ShowsResponseModal() {
                 <i className="fa fa-bell" aria-hidden="true"></i>
             </button>
             <Modal size="lg" show={isModalOpen} centered>
-                <Modal.Body className='bg-black' style={{ padding: '0 10%' }}>
+                <Modal.Body className='bg-black px-2'>
                     <div className='mt-4'>
                         <div className='d-flex justify-content-end'>
                             <button className='btn-close' aria-label="Close" onClick={() => setModalOpen(false)}></button>
                         </div>
-                        <div className="container-fluid scroller">
+                        <div className="container-fluid scroller w-100 bg-success">
                             <div className="container-fluid  subScroller">
                                 <h5 className="modal-title text-white text-center my-3" >Catere Response</h5>
-                                <table class="table table-dark table-striped">
+                                <table class="table table-dark table-striped w-100">
                                     <thead>
                                         <tr>
                                             <th scope="col">Sno</th>
@@ -57,15 +57,12 @@ function ShowsResponseModal() {
                                                             <button className="btn btn-danger">Book</button>
                                                         </td>
                                                     </tr>
-
                                                     : ""
                                             ))
                                         }
                                     </tbody>
                                 </table>
                             </div>
-
-                            
                             <div className="container-fluid subScroller">
                                 <h5 className="modal-title text-white text-center my-3" >DJ Response</h5>
                                 <table class="table table-dark table-striped">
@@ -112,16 +109,12 @@ function ShowsResponseModal() {
                                     </thead>
                                     <tbody>
                                         {
-                                            
+
                                         }
                                     </tbody>
                                 </table>
                             </div>
-
-
-                            
                         </div>
-
                     </div>
                 </Modal.Body>
             </Modal>

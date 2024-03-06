@@ -21,10 +21,47 @@ var djSchema = new mongoose.Schema({
         type: String,
         default: "Dj"
     },
-    docs:{
-        type:String,
-        required:true
+    docs: {
+        type: String,
+        required: true
+    },
+    adminRequest: [
+        {
+            eventId: {
+                type: String,
+                required: false
+            },
+            Price: {
+                type: Number,
+                required: false,
+                default: 0
+            },
+            status: {
+                type: String,
+                required: false,
+                default: 'pending'
+            }
+        }
+    ],
+    AadharNo: {
+        type: String,
+        unique: true
+    },
+    BankName: {
+        type: String,
+
+    },
+    BranchName: {
+        type: String,
+
+    },
+    IfscCode: {
+        type: String,
+
+    },
+    AccountNo: {
+        type: Number,
     }
 });
 
-export default mongoose.model('DjModel', djSchema, "Dj");
+export default mongoose.model('DjModel', djSchema, "Dj");
